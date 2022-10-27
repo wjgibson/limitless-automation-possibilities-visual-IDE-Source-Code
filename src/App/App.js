@@ -80,7 +80,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-import Sidebar from "./Sidebar";
+import Sidebar from "../Elements/Sidebar";
 
 import "./index.css";
 
