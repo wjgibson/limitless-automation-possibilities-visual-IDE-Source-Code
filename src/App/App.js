@@ -81,6 +81,7 @@ const DnDFlow = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            deleteKeyCode={["Delete", "Backspace"]}
             fitView
           >
             <Controls />
