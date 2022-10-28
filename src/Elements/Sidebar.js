@@ -9,7 +9,7 @@ export default () => {
   return (
     <aside>
       <div className="description">
-        You can drag these nodes to the pane on the right.
+        You can drag these nodes to the pane on the left.
       </div>
       <div
         className="dndnode input"
