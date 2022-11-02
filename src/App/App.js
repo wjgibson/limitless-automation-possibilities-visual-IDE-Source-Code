@@ -12,23 +12,37 @@ import Sidebar from "../Elements/Sidebar";
 
 import "./index.css";
 
-const initialNodes = [
-  {
-    id: "1",
-    type: "input",
-    data: { label: "input node" },
-    position: { x: 250, y: 5 },
-  },
-];
+const flowKey = "test";
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+  const onSave = useCallback(() => {
+    if (reactFlowInstance) {
+      const flow = reactFlowInstance.toObject();
+      localStorage.setItem(flowKey, JSON.stringify(flow));
+      console.log(JSON.stringify(flow));
+    }
+  }, [reactFlowInstance]);
+
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow = JSON.parse(localStorage.getItem(flowKey));
+
+      if (flow) {
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      }
+    };
+
+    restoreFlow();
+  }, [setNodes]);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -86,6 +100,10 @@ const DnDFlow = () => {
           >
             <Controls />
           </ReactFlow>
+        </div>
+        <div className="save__controls">
+          <button onClick={onSave}>save</button>
+          <button onClick={onRestore}>restore</button>
         </div>
         <Sidebar />
       </ReactFlowProvider>

@@ -1,3 +1,11 @@
+.save__controls {
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  z-index: 4;
+  font-size: 12px;
+}
+
 .dndflow {
   flex-direction: column;
   display: flex;
