@@ -12,10 +12,14 @@ import Sidebar from "../Elements/Sidebar";
 
 import "./index.css";
 
-const flowKey = "test";
+let flowKey = "";
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+
+function setFlowKey(name) {
+  flowKey = name;
+}
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
@@ -25,6 +29,8 @@ const DnDFlow = () => {
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
+      let name = prompt("Configuration Name");
+      setFlowKey(name);
       const flow = reactFlowInstance.toObject();
       localStorage.setItem(flowKey, JSON.stringify(flow));
       console.log(JSON.stringify(flow));
@@ -33,6 +39,8 @@ const DnDFlow = () => {
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
+      let restoreName = prompt("Configuration to restore");
+      setFlowKey(restoreName);
       const flow = JSON.parse(localStorage.getItem(flowKey));
 
       if (flow) {
