@@ -39,6 +39,7 @@ const DnDFlow = () => {
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
+      console.log(window.localStorage);
       let restoreName = prompt("Configuration to restore");
       setFlowKey(restoreName);
       const flow = JSON.parse(localStorage.getItem(flowKey));

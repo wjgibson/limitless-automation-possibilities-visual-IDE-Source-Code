@@ -20,10 +20,31 @@ export default () => {
       </div>
       <div
         className="dndnode"
-        onDragStart={(event) => onDragStart(event, "default")}
+        onDragStart={(event) => onDragStart(event, "sequence")}
         draggable
       >
-        Default Node
+        Sequence
+      </div>
+      <div
+        className="dndnode"
+        onDragStart={(event) => onDragStart(event, "step")}
+        draggable
+      >
+        Step
+      </div>
+      <div
+        className="dndnode"
+        onDragStart={(event) => onDragStart(event, "control module")}
+        draggable
+      >
+        Control Module
+      </div>
+      <div
+        className="dndnode"
+        onDragStart={(event) => onDragStart(event, "caste 2 sequence")}
+        draggable
+      >
+        Caste 2 Sequence
       </div>
       <div
         className="dndnode output"
