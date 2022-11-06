@@ -61,7 +61,7 @@ describe("Sidebar.cy.js", () => {
   });
 
   //Testing for onDragStart Event//
-  it("input node fires onDragStart Event", () => {
+  it("input node draggable", () => {
     const onChangeSpy = cy.spy().as("onChangeSpy");
     cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
 
@@ -79,7 +79,7 @@ describe("Sidebar.cy.js", () => {
       .trigger("mouseup", { force: true });
   });
 
-  it("sequence node fires onDragStart Event", () => {
+  it("sequence node draggable", () => {
     const onChangeSpy = cy.spy().as("onChangeSpy");
     cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
 
@@ -97,7 +97,7 @@ describe("Sidebar.cy.js", () => {
       .trigger("mouseup", { force: true });
   });
 
-  it("step node fires onDragStart Event", () => {
+  it("step node draggable", () => {
     const onChangeSpy = cy.spy().as("onChangeSpy");
     cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
 
@@ -115,7 +115,7 @@ describe("Sidebar.cy.js", () => {
       .trigger("mouseup", { force: true });
   });
 
-  it("control module node fires onDragStart Event", () => {
+  it("control module node draggable", () => {
     const onChangeSpy = cy.spy().as("onChangeSpy");
     cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
 
@@ -133,7 +133,7 @@ describe("Sidebar.cy.js", () => {
       .trigger("mouseup", { force: true });
   });
 
-  it("caste 2 node fires onDragStart Event", () => {
+  it("caste 2 node draggable", () => {
     const onChangeSpy = cy.spy().as("onChangeSpy");
     cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
 
@@ -151,7 +151,7 @@ describe("Sidebar.cy.js", () => {
       .trigger("mouseup", { force: true });
   });
 
-  it("output node fires onDragStart Event", () => {
+  it("output node draggable", () => {
     const onChangeSpy = cy.spy().as("onChangeSpy");
     cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
 
