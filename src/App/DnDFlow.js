@@ -9,6 +9,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import Sidebar from "../Elements/Sidebar";
+import SRControls from "../Elements/SRControls";
 
 import "./index.css";
 
@@ -39,7 +40,6 @@ const DnDFlow = () => {
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      console.log(window.localStorage);
       let restoreName = prompt("Configuration to restore");
       setFlowKey(restoreName);
       const flow = JSON.parse(localStorage.getItem(flowKey));
@@ -110,10 +110,7 @@ const DnDFlow = () => {
             <Controls />
           </ReactFlow>
         </div>
-        <div className="save__controls">
-          <button onClick={onSave}>save</button>
-          <button onClick={onRestore}>restore</button>
-        </div>
+        <SRControls save={onSave} restore={onRestore} />
         <Sidebar />
       </ReactFlowProvider>
     </div>
