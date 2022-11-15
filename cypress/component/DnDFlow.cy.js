@@ -1,13 +1,11 @@
 import DnDFlow from "../../src/App/DnDFlow";
 
 describe("reactflow.cy.js", () => {
-  // const onClickSave = cy.onSave().as("onClickSave");
+  // const rfProvider = "[aria-label=rfProvider]";
 
   it("DnDFlow mounts correctly", () => {
     cy.mount(<DnDFlow></DnDFlow>);
   });
 
-  // it("DNDFlow saves", () => {
-  //   cy.(<DnDFlow></DnDFlow>);
-  // });
+  // cy.get(rfProvider);
 });
