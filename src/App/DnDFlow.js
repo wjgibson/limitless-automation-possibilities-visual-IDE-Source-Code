@@ -92,7 +92,7 @@ const DnDFlow = () => {
   );
 
   return (
-    <div className="dndflow">
+    <div aria-label="rfProvider" className="dndflow">
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow

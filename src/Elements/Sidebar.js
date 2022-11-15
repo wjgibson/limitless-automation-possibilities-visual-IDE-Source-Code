@@ -1,3 +1,4 @@
+//import all types and create components in a loop
 import React from "react";
 
 export default () => {

@@ -62,8 +62,7 @@ describe("Sidebar.cy.js", () => {
 
   //Testing for onDragStart Event//
   it("input node draggable", () => {
-    const onChangeSpy = cy.spy().as("onChangeSpy");
-    cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
+    cy.mount(<Sidebar></Sidebar>);
 
     cy.get(input)
       .trigger("mousedown", { button: 0 })
@@ -80,8 +79,7 @@ describe("Sidebar.cy.js", () => {
   });
 
   it("sequence node draggable", () => {
-    const onChangeSpy = cy.spy().as("onChangeSpy");
-    cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
+    cy.mount(<Sidebar></Sidebar>);
 
     cy.get(sequence)
       .trigger("mousedown", { button: 0 })
@@ -98,8 +96,7 @@ describe("Sidebar.cy.js", () => {
   });
 
   it("step node draggable", () => {
-    const onChangeSpy = cy.spy().as("onChangeSpy");
-    cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
+    cy.mount(<Sidebar></Sidebar>);
 
     cy.get(step)
       .trigger("mousedown", { button: 0 })
@@ -116,8 +113,7 @@ describe("Sidebar.cy.js", () => {
   });
 
   it("control module node draggable", () => {
-    const onChangeSpy = cy.spy().as("onChangeSpy");
-    cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
+    cy.mount(<Sidebar></Sidebar>);
 
     cy.get(controlModule)
       .trigger("mousedown", { button: 0 })
@@ -134,8 +130,7 @@ describe("Sidebar.cy.js", () => {
   });
 
   it("caste 2 node draggable", () => {
-    const onChangeSpy = cy.spy().as("onChangeSpy");
-    cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
+    cy.mount(<Sidebar></Sidebar>);
 
     cy.get(caste2)
       .trigger("mousedown", { button: 0 })
@@ -152,8 +147,7 @@ describe("Sidebar.cy.js", () => {
   });
 
   it("output node draggable", () => {
-    const onChangeSpy = cy.spy().as("onChangeSpy");
-    cy.mount(<Sidebar onClick={onChangeSpy}></Sidebar>);
+    cy.mount(<Sidebar></Sidebar>);
 
     cy.get(output)
       .trigger("mousedown", { button: 0 })
