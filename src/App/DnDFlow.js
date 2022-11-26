@@ -10,6 +10,7 @@ import "reactflow/dist/style.css";
 
 import Sidebar from "../Elements/Sidebar";
 import SRControls from "../Elements/SRControls";
+import nodeTypes from "../resources/nodeTypes";
 
 import "./index.css";
 
@@ -97,6 +98,7 @@ const DnDFlow = () => {
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
             nodes={nodes}
+            nodeTypes={nodeTypes}
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
