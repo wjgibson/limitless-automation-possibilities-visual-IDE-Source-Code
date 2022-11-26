@@ -17,6 +17,8 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
+  const isValidConnection = (connection) => connection.target === "sequence";
+
   data.opcid = 45;
   setSeqType(2);
 
@@ -30,8 +32,16 @@ function ControlModuleNode({ data }) {
           <p>seqType: {data.sType}</p>
         </Panel>
       </Collapse>
-      <Handle type="source" position={Position.Top} id="cModIN" />
-      <Handle type="source" position={Position.Bottom} id="cModOut" />
+      <Handle
+        type="target"
+        position={Position.Top}
+        isValidConnection={isValidConnection}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        isValidConnection={isValidConnection}
+      />
     </div>
   );
 }
