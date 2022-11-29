@@ -47,7 +47,7 @@ export default () => {
       <div
         aria-label="caste2"
         className="dndnode"
-        onDragStart={(event) => onDragStart(event, "caste 2 sequence")}
+        onDragStart={(event) => onDragStart(event, "caste2")}
         draggable
       >
         Caste 2 Sequence
