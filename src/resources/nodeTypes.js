@@ -1,6 +1,6 @@
-import TextUpdaterNode from "../Elements/CustomNode";
+import ControlModuleNode from "../Elements/ControlModuleNode";
 
 var nodeTypes = {
-  custom: TextUpdaterNode,
+  controlModule: ControlModuleNode,
 };
 export default nodeTypes;

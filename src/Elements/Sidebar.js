@@ -39,7 +39,7 @@ export default () => {
       <div
         aria-label="controlModule"
         className="dndnode"
-        onDragStart={(event) => onDragStart(event, "custom")}
+        onDragStart={(event) => onDragStart(event, "controlModule")}
         draggable
       >
         Control Module
