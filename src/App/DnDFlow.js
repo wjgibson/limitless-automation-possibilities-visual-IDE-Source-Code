@@ -17,7 +17,8 @@ import "./index.css";
 let flowKey = "";
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+let seqType = 2;
+const getId = () => `sequence_${id++}`;
 
 function setFlowKey(name) {
   flowKey = name;
@@ -81,10 +82,10 @@ const DnDFlow = () => {
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode = {
-        id: type,
+        id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type} node | type: ${seqType} | id: ${id}` },
       };
 
       setNodes((nds) => nds.concat(newNode));

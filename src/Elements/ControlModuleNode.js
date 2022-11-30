@@ -2,7 +2,7 @@ import { Handle, Position } from "reactflow";
 
 import React from "react";
 import { Collapse, Divider, Badge } from "antd";
-import styles from "../Elements/elements.css";
+import "../Elements/elements.css";
 const { Panel } = Collapse;
 
 const text = `
@@ -17,13 +17,14 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
-  const isValidConnection = (connection) => connection.target === "sequence";
+  const isValidConnection = (connection) => connection.seqType <= data.sType;
+  // const notValidConnection = (connection) => connection.target
 
-  data.opcid = 45;
-  setSeqType(1);
+  data.uid = 45;
+  setSeqType(5);
 
   return (
-    <div className={styles.conMod}>
+    <div className="conMod">
       <Badge count={data.sType}></Badge>
       <p>Control Module</p>
       <Divider />
@@ -31,6 +32,7 @@ function ControlModuleNode({ data }) {
         <Panel header="Description" key="1">
           <p>opcid: {data.opcid}</p>
           <p>seqType: {data.sType}</p>
+          <p>{text}</p>
         </Panel>
       </Collapse>
       <Handle
