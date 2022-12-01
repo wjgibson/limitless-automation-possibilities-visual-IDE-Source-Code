@@ -17,8 +17,9 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
-  const isValidConnection = (connection) => connection.seqType <= data.sType;
-  // const notValidConnection = (connection) => connection.target
+  // const isValidConnection = (connection) => connection.seqType <= data.sType;
+  const isValidConnection = (connection) =>
+    connection.target.includes("sequence");
 
   data.uid = 45;
   setSeqType(5);

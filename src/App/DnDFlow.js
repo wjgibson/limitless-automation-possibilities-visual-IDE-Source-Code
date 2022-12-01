@@ -82,10 +82,10 @@ const DnDFlow = () => {
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode = {
-        id: getId(),
+        id: `${getId()}_${type}`,
         type,
         position,
-        data: { label: `${type} node | type: ${seqType} | id: ${id}` },
+        data: { label: `${type} node | ${id}_${type} type ${seqType}` },
       };
 
       setNodes((nds) => nds.concat(newNode));
