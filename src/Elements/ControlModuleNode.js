@@ -21,6 +21,8 @@ function ControlModuleNode({ data }) {
   // const isValidConnection = (connection) => connection.target === "sequence";
 
   //Doesn't work because the connection.target only has access to a node's id, not any other info
+  //An id cannot contain the sequence level of the node, as a user has to change that level, which would dynamically change \
+  //the id of the node. This would mean every other connection and node would have to be updated with the new id
   const isValidConnection = (connection) => connection.target <= data.sType;
 
   data.uid = 45;
