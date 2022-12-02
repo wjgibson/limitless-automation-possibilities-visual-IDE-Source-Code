@@ -24,7 +24,7 @@ function ControlModuleNode({ data }) {
   };
 
   //could make a monitor service that custom node files and this file will call
-  const isValidConnection = cvalid.validate(source_ID, target_ID);
+  // const isValidConnection = cvalid.validate(source_ID, target_ID);
   // const isValidConnection = (connection, instance) => {
   //   let flow = instance.toObject();
   //   let print = JSON.stringify(flow);
