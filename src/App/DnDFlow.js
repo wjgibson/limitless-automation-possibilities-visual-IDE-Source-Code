@@ -57,10 +57,7 @@ const DnDFlow = () => {
   const onConnect = useCallback(
     (params) =>
       setEdges((eds) =>
-        addEdge(
-          { ...params, type: "step", animated: true, markerEnd: MarkerType },
-          eds
-        )
+        addEdge({ ...params, type: "step", animated: true }, eds)
       ),
     []
   );
