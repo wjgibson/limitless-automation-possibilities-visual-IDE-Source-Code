@@ -3,6 +3,9 @@ import { Handle, Position } from "reactflow";
 import React from "react";
 import { Collapse, Divider, Badge } from "antd";
 import "../Elements/elements.css";
+//import for monitoring service
+// import cvaldi from 'sdfsdfsdf'
+
 const { Panel } = Collapse;
 
 const text = `
@@ -13,19 +16,25 @@ This is a user defined description for this node
 // const handleStyle = { left: 10 };
 
 function ControlModuleNode({ data }) {
-  const setSeqType = (type) => {
-    data.sType = type;
+  data.sType = 0;
+
+  const incSeqType = () => {
+    data.sType++;
+    console.log(data.sType);
   };
 
-  // const isValidConnection = (connection) => connection.seqType <= data.sType;
-  const isValidConnection = (connection) =>
-    connection.target.includes("sequence");
+  //could make a monitor service that custom node files and this file will call
+  const isValidConnection = cvalid.validate(source_ID, target_ID);
+  // const isValidConnection = (connection, instance) => {
+  //   let flow = instance.toObject();
+  //   let print = JSON.stringify(flow);
+  //   console.log(print);
+  // };
 
   data.uid = 45;
-  setSeqType(5);
-
   return (
     <div className="conMod">
+      <button onClick={incSeqType}>Increment Level</button>
       <Badge count={data.sType}></Badge>
       <p>Control Module</p>
       <Divider />
@@ -39,12 +48,14 @@ function ControlModuleNode({ data }) {
       <Handle
         type="target"
         position={Position.Top}
-        isValidConnection={isValidConnection}
+        // isValidConnection={isValidConnection}
+        level={data.sType}
       />
       <Handle
         type="source"
         position={Position.Bottom}
-        isValidConnection={isValidConnection}
+        // isValidConnection={isValidConnection}
+        level={data.sType}
       />
     </div>
   );
