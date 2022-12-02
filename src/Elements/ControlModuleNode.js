@@ -3,17 +3,12 @@ import { Handle, Position } from "reactflow";
 import React from "react";
 import { Collapse, Divider, Badge } from "antd";
 import "../Elements/elements.css";
-//import for monitoring service
-// import cvaldi from 'sdfsdfsdf'
 
 const { Panel } = Collapse;
 
 const text = `
 This is a user defined description for this node
 `;
-
-//How to define style and location for handles. Might be used later
-// const handleStyle = { left: 10 };
 
 function ControlModuleNode({ data }) {
   data.sType = 0;
@@ -22,14 +17,11 @@ function ControlModuleNode({ data }) {
     data.sType++;
     console.log(data.sType);
   };
+  //Making the validation rule state that the id must be the string "sequence" wont work as ids must be unique among every node
+  // const isValidConnection = (connection) => connection.target === "sequence";
 
-  //could make a monitor service that custom node files and this file will call
-  // const isValidConnection = cvalid.validate(source_ID, target_ID);
-  // const isValidConnection = (connection, instance) => {
-  //   let flow = instance.toObject();
-  //   let print = JSON.stringify(flow);
-  //   console.log(print);
-  // };
+  //Doesn't work because the connection.target only has access to a node's id, not any other info
+  const isValidConnection = (connection) => connection.target <= data.sType;
 
   data.uid = 45;
   return (
@@ -48,13 +40,13 @@ function ControlModuleNode({ data }) {
       <Handle
         type="target"
         position={Position.Top}
-        // isValidConnection={isValidConnection}
+        isValidConnection={isValidConnection}
         level={data.sType}
       />
       <Handle
         type="source"
         position={Position.Bottom}
-        // isValidConnection={isValidConnection}
+        isValidConnection={isValidConnection}
         level={data.sType}
       />
     </div>
