@@ -5,6 +5,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Controls,
+  MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -54,7 +55,13 @@ const DnDFlow = () => {
   }, [setNodes]);
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) =>
+      setEdges((eds) =>
+        addEdge(
+          { ...params, type: "step", animated: true, markerEnd: MarkerType },
+          eds
+        )
+      ),
     []
   );
 
