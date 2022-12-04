@@ -18,7 +18,7 @@ let flowKey = "";
 
 let id = 0;
 let seqType = 2;
-const getId = () => `lsdnflaksn_sequence_${id++}`;
+const getId = () => `sequence_${id++}`;
 
 function setFlowKey(name) {
   flowKey = name;
@@ -85,7 +85,7 @@ const DnDFlow = () => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node | id: ${id} type ${seqType}` },
+        data: { label: `${type} node | id: ${id}` },
       };
 
       setNodes((nds) => nds.concat(newNode));

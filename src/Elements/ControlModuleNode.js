@@ -1,44 +1,32 @@
-import { Handle, Position } from "reactflow";
+import { Handle, Position, useReactFlow } from "reactflow";
 
-import React from "react";
-import { Collapse, Divider, Badge } from "antd";
+import { memo, React, useState } from "react";
 import "../Elements/elements.css";
-
-const { Panel } = Collapse;
+import Validator from "../resources/Validator";
 
 const text = `
 This is a user defined description for this node
 `;
 
-function ControlModuleNode({ data }) {
-  data.sType = 0;
+const ControlModuleNode = memo(({ data }) => {
+  const [seqType, setSeqType] = useState(0);
+  const reactFlowInstance = useReactFlow();
 
-  const incSeqType = () => {
-    data.sType++;
-    console.log(data.sType);
-  };
-  //Making the validation rule state that the id must be the string "sequence" wont work as ids must be unique among every node
-  // const isValidConnection = (connection) => connection.target === "sequence";
+  function isValidConnection(connection) {
+    Validator(reactFlowInstance, connection);
+  }
 
-  //Doesn't work because the connection.target only has access to a node's id, not any other info
-  //An id cannot contain the sequence level of the node, as a user has to change that level, which would dynamically change \
-  //the id of the node. This would mean every other connection and node would have to be updated with the new id
-  const isValidConnection = (connection) => connection.target <= data.sType;
+  function incSeqType() {
+    setSeqType(seqType + 1);
+  }
 
   data.uid = 45;
   return (
     <div className="conMod">
-      <button onClick={incSeqType}>Increment Level</button>
-      <Badge count={data.sType}></Badge>
+      {/* <button onClick={incSeqType()}>Click me</button> */}
+      <p>{seqType}</p>
+      {/* <Badge count={data.sType}></Badge> */}
       <p>Control Module</p>
-      <Divider />
-      <Collapse accordion>
-        <Panel header="Description" key="1">
-          <p>opcid: {data.opcid}</p>
-          <p>seqType: {data.sType}</p>
-          <p>{text}</p>
-        </Panel>
-      </Collapse>
       <Handle
         type="target"
         position={Position.Top}
@@ -53,6 +41,6 @@ function ControlModuleNode({ data }) {
       />
     </div>
   );
-}
+});
 
 export default ControlModuleNode;
