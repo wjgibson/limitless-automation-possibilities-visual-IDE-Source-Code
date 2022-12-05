@@ -1,7 +1,7 @@
 import { Handle, Position } from "reactflow";
 import React, {  useState } from "react";
 import { Button, Collapse, Divider} from "antd";
-import DownDownMenu from "./dropDownMenu.js";
+import DownDownMenu from "./DropDownMenu.js";
 import "../Elements/elements.css";
 
 const { Panel } = Collapse;
@@ -10,8 +10,8 @@ function ControlModuleNode({ data }) {
   const setSeqType = (type) => {
     data.sType = type;
   };
-let sequenceLayer = 2
- 
+  const [sequenceLayer, setSeqLayer] = useState(1)
+
   const isValidConnection = (connection) => connection.target === "sequence";
 
   data.opcid = 45;
@@ -22,7 +22,7 @@ let sequenceLayer = 2
     <div className="conMod">
       <div id="sequenceLayer" ><div id="sequanceLayerBubble">{sequenceLayer}</div></div>
       <p>Control Module</p>
-      <DownDownMenu></DownDownMenu>
+      <DownDownMenu setSeqLayer={setSeqLayer}></DownDownMenu>
       <Handle
         type="target"
         position={Position.Top}
@@ -33,9 +33,9 @@ let sequenceLayer = 2
         position={Position.Bottom}
         isValidConnection={isValidConnection}
       />
-      
     </div>
   );
+
 }
 
 

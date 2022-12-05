@@ -1,28 +1,55 @@
-import React from 'react';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Dropdown, message, Space, Tooltip } from 'antd';
-const handleButtonClick = (e) => {
-  message.info('Click on left button.');
-  console.log('click left button', e);
+import React, {  useState } from "react";
+import { UserOutlined, BarsOutlined} from '@ant-design/icons';
+import { Button, Dropdown, message, Space, Divider, Input } from 'antd';
+import "./elements.css"
+
+
+export default function DropDownMenu({setSeqLayer}){
+
+  const [state, setState] = useState({data:""})
+
+  function changeState(){
+    setState({data:""})
+  }
+
+let dropMenuChoice =""  
+
+    const [open, setOpen] = useState(false)
+const handleOpenChange = (flag) => {
+  setOpen(flag);
 };
+function dropDownMenuButtonClick(){
+if(dropMenuChoice =="2"){
+
+  
+}
+}
+
 const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
+  if (e.key == 2){
+    document.getElementById("dropDownMenuButton").disabled =false;
+    document.getElementById("dropDownMenuInput").disabled = false;
+    document.getElementById("dropDownMenuInput").type = "number";
+    dropMenuChoice="2"
+    
+  }
+  if (e.key == 1){
+    document.getElementById("dropDownMenuButton").disabled =false;
+    document.getElementById("dropDownMenuInput").disabled = false;
+    document.getElementById("dropDownMenuInput").type = "color";
+    dropMenuChoice="1"
+  }
 };
+
 const items = [
   {
-    label: '1st menu item',
+    label: 'Change Color',
     key: '1',
     icon: <UserOutlined />,
   },
   {
-    label: '2nd menu item',
+    label: 'Change Sequence Layer',
     key: '2',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '3rd menu item',
-    key: '3',
     icon: <UserOutlined />,
   },
 ];
@@ -30,15 +57,38 @@ const menuProps = {
   items,
   onClick: handleMenuClick,
 };
-const App = () => (
-    <Dropdown menu={menuProps}>
-    <Button>
+return(
+    <Dropdown
+    menu={menuProps}
+    placement="bottomRight"
+    arrow
+    onOpenChange={handleOpenChange}
+      open={open}
+    dropdownRender={(menu) => (
+      <div className="dropdown-content">
+        {menu}
+        <Divider
+          style={{
+            margin: 0,
+          }}
+        />
+        <Space
+          style={{
+            padding: 8,
+          }}
+        >
+          <Input  type="number" id="dropDownMenuInput"   style={{}}></Input>
+          <Button id="dropDownMenuButton" type="primary" onClick={() => setSeqLayer(document.getElementById("dropDownMenuInput").value)} style={{}}>Enter</Button>
+        </Space>
+      </div>
+    )}
+  >
+    <a onClick={(e) => e.preventDefault()}>
       <Space>
-        Button
-        <DownOutlined />
+      <BarsOutlined />
       </Space>
-    </Button>
-    </Dropdown>
-
+    </a>
+  </Dropdown>
     );
-export default App;
+    
+}
