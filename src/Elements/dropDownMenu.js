@@ -79,7 +79,7 @@ return(
           <Button id="dropDownMenuButtonSetSeqLayer" type="primary" onClick={() => props.setSeqLayer(document.getElementById("dropDownMenuInputSetSeqLayer").value)} style={{visibility:"Visibilty"}}>Enter</Button>
 
           <Input  type="color" id="dropDownMenuInputSetColor"   style={{visibility:"hidden"}}></Input>
-          <Button id="dropDownMenuButtonSetColor" type="primary" onClick={console.log()} style={{visibility:"hidden"}}>Enter</Button>
+          <Button id="dropDownMenuButtonSetColor" type="primary" onClick={()=> props.setColor(document.getElementById("dropDownMenuInputSetColor").value)} style={{visibility:"hidden"}}>Enter</Button>
         </Space>
       </div>
     )}

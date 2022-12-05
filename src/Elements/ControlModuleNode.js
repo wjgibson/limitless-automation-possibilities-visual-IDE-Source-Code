@@ -21,10 +21,10 @@ function ControlModuleNode({ data }) {
 
 
   return (
-    <div className="conMod" style={{}}>
+    <div className="conMod" style={{backgroundImage: "radial-gradient(white 35%, "+color+")"}}>
       <div id="sequenceLayer" ><div id="sequanceLayerBubble">{sequenceLayer}</div></div>
-      <p>Control Module</p>
       <DownDownMenu setSeqLayer={setSeqLayer} setColor={setColor}></DownDownMenu>
+      <p>Control Module</p>
       <Handle
         type="target"
         position={Position.Top}
