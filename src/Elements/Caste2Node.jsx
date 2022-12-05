@@ -17,7 +17,10 @@ function Caste2Node({ data }) {
         data.sType = type;
     };
 
-    const isValidConnection = (connection) => connection.target === "controlModule";
+    const isValidConnection = ((connection) => connection.source === "controlModule")
+        && ((connection) => connection.target === "sequence")
+        && ((connection) => connection.target === "step");
+    //Need incrementation way for step/sequence
 
     data.opcid = 45;
     setSeqType(1);
@@ -26,6 +29,8 @@ function Caste2Node({ data }) {
         <div className={styles.conMod}>
             <Badge count={data.sType}></Badge>
             <p>Caste 2 Sequence</p>
+            {/* Details for a node may use later*/}
+            {/*
             <Divider />
             <Collapse accordion>
                 <Panel header="Description" key="1">
@@ -33,6 +38,7 @@ function Caste2Node({ data }) {
                     <p>seqType: {data.sType}</p>
                 </Panel>
             </Collapse>
+            */}
             <Handle
                 type="target"
                 position={Position.Top}
@@ -43,6 +49,18 @@ function Caste2Node({ data }) {
                 position={Position.Bottom}
                 isValidConnection={isValidConnection}
             />
+            {/*
+            <Handle
+                type="left"
+                position={Position.Left}
+                isValidConnection={isValidConnection3}
+            />
+            <Handle
+                type="right"
+                position={Position.Right}
+                isValidConnection={isValidConnection4}
+            />
+            */}
         </div>
     );
 }
