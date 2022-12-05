@@ -1,7 +1,7 @@
 import { Handle, Position } from "reactflow";
 import React, {  useState } from "react";
 import { Button, Collapse, Divider, Space} from "antd";
-import DownDownMenu from "./DropDownMenu.js";
+import DownDownMenu from "./dropDownMenu.js";
 import "../Elements/elements.css";
 
 const { Panel } = Collapse;
