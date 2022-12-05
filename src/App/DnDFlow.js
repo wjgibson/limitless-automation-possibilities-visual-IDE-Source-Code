@@ -81,7 +81,7 @@ const DnDFlow = () => {
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode = {
-        id: type,
+        id: getId(),
         type,
         position,
         data: { label: `${type} node` },

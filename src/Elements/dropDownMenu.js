@@ -4,7 +4,7 @@ import { Button, Dropdown, message, Space, Divider, Input } from 'antd';
 import "./elements.css"
 
 
-export default function DropDownMenu({setSeqLayer}){
+export default function DropDownMenu(props){
 
   const [state, setState] = useState({data:""})
 
@@ -18,25 +18,23 @@ let dropMenuChoice =""
 const handleOpenChange = (flag) => {
   setOpen(flag);
 };
-function dropDownMenuButtonClick(){
-if(dropMenuChoice =="2"){
 
-  
-}
-}
 
 const handleMenuClick = (e) => {
   if (e.key == 2){
-    document.getElementById("dropDownMenuButton").disabled =false;
-    document.getElementById("dropDownMenuInput").disabled = false;
-    document.getElementById("dropDownMenuInput").type = "number";
+    document.getElementById("dropDownMenuInputSetSeqLayer").style.visibility = "visible";
+    document.getElementById("dropDownMenuButtonSetSeqLayer").style.visibility = "visible";
+    document.getElementById("dropDownMenuInputSetColor").style.visibility = "hidden";
+    document.getElementById("dropDownMenuButtonSetColor").style.visibility = "hidden";
     dropMenuChoice="2"
     
   }
   if (e.key == 1){
-    document.getElementById("dropDownMenuButton").disabled =false;
-    document.getElementById("dropDownMenuInput").disabled = false;
-    document.getElementById("dropDownMenuInput").type = "color";
+
+    document.getElementById("dropDownMenuInputSetColor").style.visibility = "visible";
+    document.getElementById("dropDownMenuButtonSetColor").style.visibility = "visible";
+    document.getElementById("dropDownMenuInputSetSeqLayer").style.visibility = "hidden";
+    document.getElementById("dropDownMenuButtonSetSeqLayer").style.visibility = "hidden";
     dropMenuChoice="1"
   }
 };
@@ -77,8 +75,11 @@ return(
             padding: 8,
           }}
         >
-          <Input  type="number" id="dropDownMenuInput"   style={{}}></Input>
-          <Button id="dropDownMenuButton" type="primary" onClick={() => setSeqLayer(document.getElementById("dropDownMenuInput").value)} style={{}}>Enter</Button>
+          <Input  type="number" id="dropDownMenuInputSetSeqLayer"   style={{visibility:"Visibilty"}}></Input>
+          <Button id="dropDownMenuButtonSetSeqLayer" type="primary" onClick={() => props.setSeqLayer(document.getElementById("dropDownMenuInputSetSeqLayer").value)} style={{visibility:"Visibilty"}}>Enter</Button>
+
+          <Input  type="color" id="dropDownMenuInputSetColor"   style={{visibility:"hidden"}}></Input>
+          <Button id="dropDownMenuButtonSetColor" type="primary" onClick={console.log()} style={{visibility:"hidden"}}>Enter</Button>
         </Space>
       </div>
     )}

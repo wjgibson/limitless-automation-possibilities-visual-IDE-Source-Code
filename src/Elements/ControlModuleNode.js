@@ -10,6 +10,8 @@ function ControlModuleNode({ data }) {
   const setSeqType = (type) => {
     data.sType = type;
   };
+
+  const[color, setColor]= useState()
   const [sequenceLayer, setSeqLayer] = useState(1)
 
   const isValidConnection = (connection) => connection.target === "sequence";
@@ -19,10 +21,10 @@ function ControlModuleNode({ data }) {
 
 
   return (
-    <div className="conMod">
+    <div className="conMod" style={{}}>
       <div id="sequenceLayer" ><div id="sequanceLayerBubble">{sequenceLayer}</div></div>
       <p>Control Module</p>
-      <DownDownMenu setSeqLayer={setSeqLayer}></DownDownMenu>
+      <DownDownMenu setSeqLayer={setSeqLayer} setColor={setColor}></DownDownMenu>
       <Handle
         type="target"
         position={Position.Top}
