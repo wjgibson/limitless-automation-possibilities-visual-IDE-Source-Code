@@ -28,7 +28,7 @@
 }
 
 .dndflow .dndnode {
-  border: 3px solid white;
+  border: 5px solid black;
   border-radius: 20%;
   margin-bottom: 10%;
   display: flex;
@@ -37,7 +37,8 @@
   cursor: grab;
   font-size: large;
   padding: 5%;
-  color: white;
+  color: black;
+  background: white;
 }
 
 .dndflow .dndnode.input {

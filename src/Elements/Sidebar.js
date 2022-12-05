@@ -1,5 +1,6 @@
 //import all types and create components in a loop
 import React from "react";
+import { Button, Space } from "antd";
 
 export default () => {
   const onDragStart = (event, nodeType) => {
