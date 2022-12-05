@@ -1,6 +1,44 @@
 .conMod {
-  color: DodgerBlue;
+  color: black;
   padding: 40px;
   font-family: Arial;
   text-align: center;
+  background-image: radial-gradient(white 35%, rgba(93, 247, 51, 0.82));
+  border-radius: 8%;
+  border-color: black;
+  border-style: solid;
+  border-width: 4px;
 }
+
+.conMod:hover #sequenceLayer{
+  opacity: 1;
+  top:-23%;
+  right: -17%;
+  font-size: 200%;
+}
+
+#sequenceLayer{
+  color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: .5;
+  padding: 4%;
+  transition: all 750ms cubic-bezier(.02,.96,.11,.97);
+  border-radius: 50%;
+  border-color: #36454F;
+  border-style: solid;
+  border-width: 4px;
+  background-color: #FF2800;
+}
+
+#sequanceLayerBubble{
+  border-radius: 50%;
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #FF2800;
+  padding: 5px;
+  font-size: 100%;
+}
+
