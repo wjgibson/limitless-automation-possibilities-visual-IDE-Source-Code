@@ -1,6 +1,6 @@
 import { Handle, Position } from "reactflow";
 import React, {  useState } from "react";
-import { Button, Collapse, Divider} from "antd";
+import { Button, Collapse, Divider, Space} from "antd";
 import DownDownMenu from "./DropDownMenu.js";
 import "../Elements/elements.css";
 
@@ -21,10 +21,13 @@ function ControlModuleNode({ data }) {
 
 
   return (
-    <div className="conMod" style={{backgroundImage: "radial-gradient(white 35%, "+color+")"}}>
-      <div id="sequenceLayer" ><div id="sequanceLayerBubble">{sequenceLayer}</div></div>
+    
+    <div className="conMod" style={{backgroundImage: "radial-gradient(white 25%, "+color+")"}}>
+      <Space warp>
       <DownDownMenu setSeqLayer={setSeqLayer} setColor={setColor}></DownDownMenu>
+      <div id="sequenceLayer" ><div id="sequanceLayerBubble">{sequenceLayer}</div></div>
       <p>Control Module</p>
+      </Space>
       <Handle
         type="target"
         position={Position.Top}

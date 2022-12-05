@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import { UserOutlined, BarsOutlined} from '@ant-design/icons';
+import { UserOutlined, BarsOutlined, BgColorsOutlined, DatabaseOutlined} from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Divider, Input } from 'antd';
 import "./elements.css"
 
@@ -43,12 +43,12 @@ const items = [
   {
     label: 'Change Color',
     key: '1',
-    icon: <UserOutlined />,
+    icon: <BgColorsOutlined />,
   },
   {
     label: 'Change Sequence Layer',
     key: '2',
-    icon: <UserOutlined />,
+    icon: <DatabaseOutlined />,
   },
 ];
 const menuProps = {
