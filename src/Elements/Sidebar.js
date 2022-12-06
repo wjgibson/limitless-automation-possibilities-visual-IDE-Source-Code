@@ -13,28 +13,12 @@ export default () => {
         You can drag these nodes to the pane on the left.
       </div>
       <div
-        aria-label="input"
-        className="dndnode input"
-        onDragStart={(event) => onDragStart(event, "input")}
-        draggable
-      >
-        Input Node
-      </div>
-      <div
         aria-label="sequence"
         className="dndnode"
         onDragStart={(event) => onDragStart(event, "sequence")}
         draggable
       >
         Sequence
-      </div>
-      <div
-        aria-label="step"
-        className="dndnode"
-        onDragStart={(event) => onDragStart(event, "step")}
-        draggable
-      >
-        Step
       </div>
       <div
         aria-label="controlModule"
@@ -51,14 +35,6 @@ export default () => {
         draggable
       >
         Caste 2 Sequence
-      </div>
-      <div
-        aria-label="output"
-        className="dndnode output"
-        onDragStart={(event) => onDragStart(event, "output")}
-        draggable
-      >
-        Output Node
       </div>
     </aside>
   );
