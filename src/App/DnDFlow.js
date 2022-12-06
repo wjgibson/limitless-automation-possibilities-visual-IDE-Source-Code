@@ -55,7 +55,10 @@ const DnDFlow = () => {
   }, [setNodes]);
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) =>
+      setEdges((eds) =>
+        addEdge({ ...params, type: "step", animated: true }, eds)
+      ),
     []
   );
 
@@ -81,7 +84,7 @@ const DnDFlow = () => {
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode = {
-        id: type,
+        id: getId(),
         type,
         position,
         data: { label: `${type} node` },

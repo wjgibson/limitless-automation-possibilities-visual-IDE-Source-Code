@@ -1,16 +1,10 @@
 import { Handle, Position } from "reactflow";
+import React, { useState } from "react";
+import { Button, Collapse, Divider, Space } from "antd";
+import DownDownMenu from "./dropDownMenu.js";
+import "../Elements/elements.css";
 
-import React from "react";
-import { Collapse, Divider, Badge } from "antd";
-import styles from "../Elements/elements.css";
 const { Panel } = Collapse;
-
-const text = `
-This is a user defined description for this node
-`;
-
-//How to define style and location for handles. Might be used later
-// const handleStyle = { left: 10 };
 
 function ControlModuleNode({ data }) {
   const setSeqType = (type) => {
@@ -22,8 +16,17 @@ function ControlModuleNode({ data }) {
   setSeqType(1);
 
   return (
-    <div className={styles.conMod}>
-      <Badge count={data.sType}></Badge>
+    <div
+      className="conMod"
+      style={{ backgroundImage: "radial-gradient(white 25%, " + color + ")" }}
+    >
+      <DownDownMenu
+        setSeqLayer={setSeqLayer}
+        setColor={setColor}
+      ></DownDownMenu>
+      <div id="sequenceLayer">
+        <div id="sequanceLayerBubble">{sequenceLayer}</div>
+      </div>
       <p>Control Module</p>
       <Handle
         type="target"
