@@ -1,8 +1,9 @@
 import { Handle, Position } from "reactflow";
 
-import React from "react";
-import { Collapse, Divider, Badge } from "antd";
-import styles from "../Elements/elements.css";
+import { React, useState } from "react";
+import { Collapse } from "antd";
+import "../Elements/elements.css";
+import DownDownMenu from "./dropDownMenu.js";
 
 const { Panel } = Collapse;
 
@@ -10,39 +11,46 @@ const text = `
 This is a user defined description for this node
 `;
 
-//How to define style and location for handles. Might be used later
-// const handleStyle = { left: 10 };
-
 function SequenceNode({ data }) {
-    const setSeqType = (type) => {
-        data.sType = type;
-    };
-    const isValidConnection = ((connection) => connection.target === "caste2")
-    || ((connection) => connection.target === "sequence")
+  const setSeqType = (type) => {
+    data.sType = type;
+  };
 
-    //Needs incrementation
+  const [color, setColor] = useState();
+  const [sequenceLayer, setSeqLayer] = useState(1);
 
+  const isValidConnection =
+    ((connection) => connection.target === "caste2") ||
+    ((connection) => connection.target === "sequence");
 
-    data.opcid = 45;
-    setSeqType(1);
-    // 3+, or converts to 2?
+  data.opcid = 45;
+  setSeqType(1);
 
-    return (
-        <div className={styles.conMod}>
-            <Badge count={data.sType}></Badge>
-            <p>Sequence</p>
-            <Handle
-                type="target"
-                position={Position.Top}
-                isValidConnection={isValidConnection}
-            />
-            <Handle
-                type="source"
-                position={Position.Bottom}
-                isValidConnection={isValidConnection}
-            />
-        </div>
-    );
+  return (
+    <div
+      className="conMod"
+      style={{ backgroundImage: "radial-gradient(white 25%, " + color + ")" }}
+    >
+      <DownDownMenu
+        setSeqLayer={setSeqLayer}
+        setColor={setColor}
+      ></DownDownMenu>
+      <div id="sequenceLayer">
+        <div id="sequanceLayerBubble">{sequenceLayer}</div>
+      </div>
+      <p>Sequence</p>
+      <Handle
+        type="target"
+        position={Position.Top}
+        isValidConnection={isValidConnection}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        isValidConnection={isValidConnection}
+      />
+    </div>
+  );
 }
 
 export default SequenceNode;
