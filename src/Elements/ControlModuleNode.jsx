@@ -11,6 +11,9 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
+  const [color, setColor] = useState();
+  const [sequenceLayer, setSeqLayer] = useState(1);
+
   const isValidConnection = (connection) => connection.target === "";
   data.opcid = 45;
   setSeqType(1);
