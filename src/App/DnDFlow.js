@@ -13,6 +13,8 @@ import SRControls from "../Elements/SRControls";
 
 import "./index.css";
 
+import APIHelper from "../resources/APIHelper";
+
 let flowKey = "";
 
 let id = 0;
@@ -33,6 +35,7 @@ const DnDFlow = () => {
       let name = prompt("Configuration Name");
       setFlowKey(name);
       const flow = reactFlowInstance.toObject();
+      APIHelper.makePost("updateConfiguration");
       localStorage.setItem(flowKey, JSON.stringify(flow));
       console.log(JSON.stringify(flow));
     }
@@ -42,7 +45,7 @@ const DnDFlow = () => {
     const restoreFlow = async () => {
       let restoreName = prompt("Configuration to restore");
       setFlowKey(restoreName);
-      const flow = JSON.parse(localStorage.getItem(flowKey));
+      const flow = APIHelper.doGet(`getConfigJSON:${flowKey}`);
 
       if (flow) {
         setNodes(flow.nodes || []);
