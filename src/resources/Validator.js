@@ -1,9 +1,9 @@
 function Validator(instance, connection) {
-  const sourceNodeLevel = instance.getNode(connection.source).data.sType;
-  const targetNodeLevel = instance.getNode(connection.target).data.sType;
+  const sourceNodeLevel = instance.getNode(connection.source).data.seqType;
+  const targetNodeLevel = instance.getNode(connection.target).data.seqType;
 
-  // console.log(sourceNodeLevel);
-  // console.log(targetNodeLevel);
+  console.log(sourceNodeLevel);
+  console.log(targetNodeLevel);
 
   if (targetNodeLevel >= sourceNodeLevel) {
     console.log("false");
