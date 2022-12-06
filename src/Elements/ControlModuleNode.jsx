@@ -17,10 +17,7 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
-  const isValidConnection = (connection) => connection.target === "controlModule";
-    //bottom connection connects to any target connection part of another node due to some non constraint
-    // Important for later as a null is needed unless ControlModule connects to something lower
-    //*Something Lower* would need a null instead to block.
+  const isValidConnection = (connection) => connection.target === "";
   data.opcid = 45;
   setSeqType(1);
 
