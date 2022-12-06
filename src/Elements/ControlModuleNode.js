@@ -17,7 +17,7 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
-  const isValidConnection = (connection) => connection.target === "caste2";
+  const isValidConnection = (connection) => connection.source === "controlModule";
 
   data.opcid = 45;
   setSeqType(1);
@@ -26,15 +26,6 @@ function ControlModuleNode({ data }) {
     <div className={styles.conMod}>
       <Badge count={data.sType}></Badge>
       <p>Control Module</p>
-        {/*
-      <Divider />
-      <Collapse accordion>
-        <Panel header="Description" key="1">
-          <p>opcid: {data.opcid}</p>
-          <p>seqType: {data.sType}</p>
-        </Panel>
-      </Collapse>
-      */}
       <Handle
         type="target"
         position={Position.Top}

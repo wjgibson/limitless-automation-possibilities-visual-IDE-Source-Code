@@ -3,6 +3,7 @@ import { Handle, Position } from "reactflow";
 import React from "react";
 import { Collapse, Divider, Badge } from "antd";
 import styles from "../Elements/elements.css";
+
 const { Panel } = Collapse;
 
 const text = `
@@ -16,28 +17,20 @@ function SequenceNode({ data }) {
     const setSeqType = (type) => {
         data.sType = type;
     };
-    const isValidConnection = ((connection) => connection.source=== "step")
-        && ((connection) => connection.source === "caste2");
+    const isValidConnection = ((connection) => connection.target === "caste2")
+    || ((connection) => connection.target === "sequence")
+
     //Needs incrementation
 
 
     data.opcid = 45;
     setSeqType(1);
-    // 3+ ?
+    // 3+, or converts to 2?
 
     return (
         <div className={styles.conMod}>
             <Badge count={data.sType}></Badge>
             <p>Sequence</p>
-            {/*
-      <Divider />
-      <Collapse accordion>
-        <Panel header="Description" key="1">
-          <p>opcid: {data.opcid}</p>
-          <p>seqType: {data.sType}</p>
-        </Panel>
-      </Collapse>
-      */}
             <Handle
                 type="target"
                 position={Position.Top}
