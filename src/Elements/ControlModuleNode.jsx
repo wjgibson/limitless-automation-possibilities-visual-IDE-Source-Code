@@ -1,6 +1,6 @@
 import { Handle, Position } from "reactflow";
-import React, {  useState } from "react";
-import { Button, Collapse, Divider, Space} from "antd";
+import React, { useState } from "react";
+import { Button, Collapse, Divider, Space } from "antd";
 import DownDownMenu from "./dropDownMenu.js";
 import "../Elements/elements.css";
 
@@ -11,23 +11,23 @@ function ControlModuleNode({ data }) {
     data.sType = type;
   };
 
-  const[color, setColor]= useState()
-  const [sequenceLayer, setSeqLayer] = useState(1)
-
-  const isValidConnection = (connection) => connection.target === "sequence";
-
+  const isValidConnection = (connection) => connection.target === "";
   data.opcid = 45;
   setSeqType(1);
 
-
   return (
-    
-    <div className="conMod" style={{backgroundImage: "radial-gradient(white 25%, "+color+")"}}>
-      <Space warp>
-      <DownDownMenu setSeqLayer={setSeqLayer} setColor={setColor}></DownDownMenu>
-      <div id="sequenceLayer" ><div id="sequanceLayerBubble">{sequenceLayer}</div></div>
+    <div
+      className="conMod"
+      style={{ backgroundImage: "radial-gradient(white 25%, " + color + ")" }}
+    >
+      <DownDownMenu
+        setSeqLayer={setSeqLayer}
+        setColor={setColor}
+      ></DownDownMenu>
+      <div id="sequenceLayer">
+        <div id="sequanceLayerBubble">{sequenceLayer}</div>
+      </div>
       <p>Control Module</p>
-      </Space>
       <Handle
         type="target"
         position={Position.Top}
@@ -40,9 +40,5 @@ function ControlModuleNode({ data }) {
       />
     </div>
   );
-
 }
-
-
-
 export default ControlModuleNode;
