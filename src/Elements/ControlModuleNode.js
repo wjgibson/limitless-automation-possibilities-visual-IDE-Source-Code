@@ -1,11 +1,9 @@
 import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect } from "react";
-import { Collapse, Card } from "antd";
+import { Card } from "antd";
 import DownDownMenu from "./dropDownMenu.js";
 import "../Elements/elements.css";
 import Validator from "../resources/Validator";
-
-const { Panel } = Collapse;
 
 function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();

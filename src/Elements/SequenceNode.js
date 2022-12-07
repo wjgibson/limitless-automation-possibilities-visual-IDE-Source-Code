@@ -1,6 +1,6 @@
 import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect } from "react";
-import { Collapse } from "antd";
+import { Card } from "antd";
 import "../Elements/elements.css";
 import DownDownMenu from "./dropDownMenu.js";
 import Validator from "../resources/Validator";
@@ -30,26 +30,49 @@ function SequenceNode({ data }) {
   data.opcid = 45;
 
   return (
-    <div
-      className="conMod"
-      style={{ backgroundImage: "radial-gradient(white 25%, " + color + ")" }}
+    <Card
+      title={
+        <div>
+          <h3
+            style={{
+              display: "inline",
+              color: "white",
+              mixBlendMode: "difference",
+            }}
+          >
+            Sequence
+          </h3>
+          <DownDownMenu
+            setSeqLayer={setSeqType}
+            setColor={setColor}
+            style={{ display: "inline", float: "right" }}
+          ></DownDownMenu>
+        </div>
+      }
+      bordered={false}
+      style={{
+        width: 300,
+        backgroundColor: color,
+        mixBlendMode: "difference",
+      }}
     >
-      <DownDownMenu setSeqLayer={setSeqType} setColor={setColor}></DownDownMenu>
-      <div id="sequenceLayer">
-        <div id="sequanceLayerBubble">{seqType}</div>
+      <div className="dynamicTextColor">
+        <div>
+          <div>Type: {seqType}</div>
+        </div>
+        <p>Control Module</p>
+        <Handle
+          type="target"
+          position={Position.Top}
+          isValidConnection={isValidConnection}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          isValidConnection={isValidConnection}
+        />
       </div>
-      <p>Sequence</p>
-      <Handle
-        type="target"
-        position={Position.Top}
-        isValidConnection={isValidConnection}
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        isValidConnection={isValidConnection}
-      />
-    </div>
+    </Card>
   );
 }
 
