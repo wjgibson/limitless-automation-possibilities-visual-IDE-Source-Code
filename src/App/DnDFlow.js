@@ -10,21 +10,19 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import Sidebar from "../Elements/Sidebar";
-import SRControls from "../Elements/SRControls";
 import nodeTypes from "../resources/nodeTypes";
 
 import "./index.css";
 
 import APIHelper from "../resources/APIHelper";
 
-import { Breadcrumb, Layout, Menu } from "antd";
-import items from "../Elements/Menu";
+import { Layout } from "antd";
+import CustomMenu from "../Elements/Menu";
 const { Header, Content, Footer, Sider } = Layout;
 
 let flowKey = "";
 
 let id = 0;
-let seqType = 2;
 const getId = () => `sequence_${id++}`;
 
 function setFlowKey(name) {
@@ -114,12 +112,7 @@ const DnDFlow = () => {
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="logo" />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
+        <CustomMenu></CustomMenu>
       </Sider>
       <Layout className="site-layout">
         <Header className="site-layout-background" />
