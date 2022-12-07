@@ -2,22 +2,17 @@ import { React, useState, useEffect } from "react";
 import APIHelper from "../resources/APIHelper";
 
 export default (props) => {
-  const [configList, setconfigList] = useState([]);
+  const [configList, setConfigList] = useState([]);
 
   useEffect(() => {
-    let mounted = true;
-    getConfigurations().then((items) => {
-      if (mounted) {
-        setconfigList(items);
-      }
-    });
-    return () => (mounted = false);
+    getConfigurations();
   }, [configList]);
+  useEffect(() => {
+    setConfigList(configList);
+  });
 
   async function getConfigurations() {
-    console.log(APIHelper.doGet("getAllConfigs"));
-    APIHelper.doGet("getAllConfigs");
-    // setconfigList(APIHelper.doGet("getAllConfigs"));
+    setConfigList(await APIHelper.doGet("getAllConfigs"));
   }
 
   return (
@@ -28,11 +23,11 @@ export default (props) => {
       <button aria-label="restore" onClick={props.restore}>
         restore
       </button>
-      <ul>
-        {configList.Map((item) => (
-          <li key={item.item}>{item.item}</li>
+      <div>
+        {configList.map((s) => (
+          <div key={s.cid}>{s.name}</div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
