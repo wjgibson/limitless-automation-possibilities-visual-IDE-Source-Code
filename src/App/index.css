@@ -10,31 +10,35 @@
   flex-direction: column;
   display: flex;
   flex-grow: 1;
-  height: 100%;
+  height: 100vh;
 }
 
 .dndflow aside {
-  border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 20px;
-  background: #fcfcfc;
+  background: #00284f;
 }
 
 .dndflow aside .description {
   margin-bottom: 10px;
+  background: #00284f;
+  color: white;
+  padding: 10%;
+  border-radius: 5%;
 }
 
 .dndflow .dndnode {
-  height: 20px;
-  padding: 4px;
-  border: 3px solid #1a192b;
-  border-radius: 2px;
-  margin-bottom: 20px;
+  border: 5px solid black;
+  border-radius: 20%;
+  margin-bottom: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: grab;
   font-size: large;
+  padding: 5%;
+  color: black;
+  background: white;
 }
 
 .dndflow .dndnode.input {
