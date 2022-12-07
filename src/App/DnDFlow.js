@@ -154,7 +154,7 @@ const DnDFlow = () => {
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                   <ReactFlow
                     nodes={nodes}
-                    // nodeTypes={nodeTypes}
+                    nodeTypes={nodeTypes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
