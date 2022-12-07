@@ -1,14 +1,16 @@
 import {
   BuildOutlined,
-  SaveOutlined,
   DownloadOutlined,
   PlusOutlined,
+  SaveOutlined,
 } from "@ant-design/icons";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import APIHelper from "../resources/APIHelper";
 
 import { Menu } from "antd";
+import { useReactFlow } from "reactflow";
 
 function getItem(label, key, icon, children, handler) {
   return {
@@ -22,7 +24,10 @@ function getItem(label, key, icon, children, handler) {
 
 const CustomMenu = (props) => {
   const [configList, setConfigList] = useState([]);
-  const reactFlowInstance = props.instance;
+  const [items, setItems] = useState([]);
+  const [openConfig, setOpenConfig] = useState("");
+
+  const reactFlowInstance = useReactFlow();
 
   useEffect(() => {
     getConfigurations();
@@ -32,41 +37,78 @@ const CustomMenu = (props) => {
     setConfigList(configList);
   }, []);
 
+  useEffect(() => {
+    console.log(`loaded: ${openConfig}`);
+  }, [openConfig]);
+
+  useEffect(() => {
+    let configs = configList.map((config) => getItem(config.name, config.cid));
+    console.log(configs);
+    setItems([
+      getItem("Save Configuration", "1", <SaveOutlined />),
+      getItem("Pull Configuration", "2", <DownloadOutlined />),
+      getItem("Configurations", "sub1", <BuildOutlined />, [
+        ...configs,
+        getItem("New", "5", <PlusOutlined />),
+      ]),
+    ]);
+  }, [configList]);
+
   async function getConfigurations() {
     // console.log(await APIHelper.doGet("getAllConfigs"));
+
     setConfigList(await APIHelper.doGet("getAllConfigs"));
   }
 
-  function displayConfigurations() {
-    return configList.forEach(function callBack(value, index) {
-      getItem(value.name, index);
+  async function checkForConfigSelection(instance, selected) {
+    if (selected.key === "1") {
+      saveConfiguration(instance, selected);
+    } else if (selected.key === "2") {
+      restoreConfiguration(selected);
+    } else if (selected.key === "5") {
+      insertNewConfiguration(instance);
+    } else {
+      console.log(`selected key: ${selected.key}`);
+      setOpenConfig(selected.key);
+    }
+  }
+
+  async function saveConfiguration(instance) {
+    let json = {
+      jsonData: instance,
+      cid: openConfig,
+    };
+    let body = JSON.stringify(json);
+    console.log(json);
+    APIHelper.makePost("updateConfig", body);
+  }
+
+  async function restoreConfiguration(selected) {
+    await APIHelper.doGet("getConfigJSON", selected.cid);
+  }
+
+  async function insertNewConfiguration(instance) {
+    let name = prompt("Enter the new configuration name");
+    let json = {
+      jsonData: instance,
+      name: name,
+    };
+    let body = JSON.stringify(json);
+    await APIHelper.makePost("insertNewConfig", body).then(() => {
+      getConfigurations();
     });
   }
 
-  async function checkForSelection() {}
-
-  //could write these functions here or maybe pass them in as functions to an onClick Handler.
-  //i.e {props.save} and {props.restore} would be given to the save and restore items respectfully
-  //We would have to figure out how to tell which configuration is selected, though. Eef.
-  async function saveConfiguration() {}
-
-  async function restoreConfiguration() {}
-
-  const items = [
-    getItem("Save Configuration", "1", <SaveOutlined />),
-    getItem("Pull Configuration", "2", <DownloadOutlined />),
-    getItem("Configurations", "sub1", <BuildOutlined />, [
-      displayConfigurations(),
-      getItem("New", "5", <PlusOutlined />),
-    ]),
-  ];
-
+  const onClick = (e) => {
+    checkForConfigSelection(reactFlowInstance, e);
+  };
   return (
     <Menu
       theme="dark"
       defaultSelectedKeys={["1"]}
       mode="inline"
       items={items}
+      onClick={onClick}
     />
   );
 };

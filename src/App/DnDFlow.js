@@ -106,20 +106,20 @@ const DnDFlow = () => {
 
   return (
     <Layout>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <div className="logo" />
-        <CustomMenu></CustomMenu>
-      </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" />
-        <Content>
-          <div className="site-layout-background">
-            <div aria-label="rfProvider" className="dndflow">
-              <ReactFlowProvider>
+      <ReactFlowProvider>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+        >
+          <div className="logo" />
+          <CustomMenu instance={reactFlowInstance}></CustomMenu>
+        </Sider>
+        <Layout className="site-layout">
+          <Header className="site-layout-background" />
+          <Content>
+            <div className="site-layout-background">
+              <div aria-label="rfProvider" className="dndflow">
                 <div className="reactflow-wrapper" ref={reactFlowWrapper}>
                   <ReactFlow
                     nodes={nodes}
@@ -139,11 +139,11 @@ const DnDFlow = () => {
                   </ReactFlow>
                 </div>
                 <Sidebar />
-              </ReactFlowProvider>
+              </div>
             </div>
-          </div>
-        </Content>
-      </Layout>
+          </Content>
+        </Layout>
+      </ReactFlowProvider>
     </Layout>
   );
 };

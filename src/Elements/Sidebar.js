@@ -29,14 +29,6 @@ export default () => {
       >
         Control Module
       </div>
-      <div
-        aria-label="caste2"
-        className="dndnode"
-        onDragStart={(event) => onDragStart(event, "caste2")}
-        draggable
-      >
-        Caste 2 Sequence
-      </div>
     </aside>
   );
 };
