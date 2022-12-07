@@ -90,7 +90,10 @@ const DnDFlow = () => {
   }, [setNodes]);
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) =>
+      setEdges((eds) =>
+        addEdge({ ...params, type: "step", animated: true }, eds)
+      ),
     []
   );
 

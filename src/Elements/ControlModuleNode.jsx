@@ -1,0 +1,49 @@
+import { Handle, Position } from "reactflow";
+import React, { useState } from "react";
+import { Collapse } from "antd";
+import DownDownMenu from "./dropDownMenu.js";
+import "../Elements/elements.css";
+
+const { Panel } = Collapse;
+
+function ControlModuleNode({ data }) {
+  const setSeqType = (type) => {
+    data.sType = type;
+  };
+
+  const [color, setColor] = useState();
+  const [sequenceLayer, setSeqLayer] = useState(1);
+
+  const isValidConnection = (connection) => connection.target === "";
+  data.opcid = 45;
+  setSeqType(1);
+
+  return (
+    <div
+      className="conMod"
+      style={{ backgroundImage: "radial-gradient(white 25%, " + color + ")" }}
+    >
+      <DownDownMenu
+        setSeqLayer={setSeqLayer}
+        setColor={setColor}
+      ></DownDownMenu>
+      <div id="sequenceLayer">
+        <div id="sequanceLayerBubble">{sequenceLayer}</div>
+      </div>
+      <p>Control Module</p>
+      <Handle
+        type="target"
+        position={Position.Top}
+        isValidConnection={isValidConnection}
+        level={data.sType}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        isValidConnection={isValidConnection}
+        level={data.sType}
+      />
+    </div>
+  );
+}
+export default ControlModuleNode;
