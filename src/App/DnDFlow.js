@@ -18,6 +18,7 @@ import APIHelper from "../resources/APIHelper";
 
 import { Layout } from "antd";
 import CustomMenu from "../Elements/Menu";
+import { OmitProps } from "antd/es/transfer/ListBody";
 const { Header, Content, Footer, Sider } = Layout;
 
 let flowKey = "";
@@ -113,7 +114,7 @@ const DnDFlow = () => {
           onCollapse={(value) => setCollapsed(value)}
         >
           <div className="logo" />
-          <CustomMenu nodeArray={nodes} edgesArray={edges}></CustomMenu>
+          <CustomMenu instance={reactFlowInstance}></CustomMenu>
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" />
