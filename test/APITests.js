@@ -4,7 +4,7 @@ const expect = require("chai").expect;
 describe("getAllConfigsTest not empty", () => {
   it("should return a json object", () => {
     return request.get("getAllConfigsTest").then((res) => {
-      expect(res.body.data).not.to.be.empty;
+      expect(res.body).not.to.be.empty;
     });
   });
 });
