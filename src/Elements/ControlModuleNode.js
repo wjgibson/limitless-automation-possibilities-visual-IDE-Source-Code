@@ -63,12 +63,6 @@ function ControlModuleNode({ data }) {
           isValidConnection={isValidConnection}
           level={data.sType}
         />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          isValidConnection={isValidConnection}
-          level={data.sType}
-        />
       </div>
     </Card>
   );

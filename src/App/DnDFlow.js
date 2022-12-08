@@ -113,7 +113,7 @@ const DnDFlow = () => {
           onCollapse={(value) => setCollapsed(value)}
         >
           <div className="logo" />
-          <CustomMenu instance={reactFlowInstance}></CustomMenu>
+          <CustomMenu nodeArray={nodes} edgesArray={edges}></CustomMenu>
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" />

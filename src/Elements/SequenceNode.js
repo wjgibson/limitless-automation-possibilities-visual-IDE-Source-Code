@@ -60,7 +60,7 @@ function SequenceNode({ data }) {
         <div>
           <div>Type: {seqType}</div>
         </div>
-        <p>Control Module</p>
+        <p>Sequence</p>
         <Handle
           type="target"
           position={Position.Top}

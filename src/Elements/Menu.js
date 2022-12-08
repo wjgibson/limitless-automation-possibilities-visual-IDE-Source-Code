@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import APIHelper from "../resources/APIHelper";
 
 import { Menu } from "antd";
-import { useReactFlow } from "reactflow";
 
 function getItem(label, key, icon, children, handler) {
   return {
@@ -27,7 +26,10 @@ const CustomMenu = (props) => {
   const [items, setItems] = useState([]);
   const [openConfig, setOpenConfig] = useState("");
 
-  const reactFlowInstance = useReactFlow();
+  let nodes = props.nodesArray;
+  let edges = props.edgesArray;
+
+  let data = formatJSON(edges, nodes);
 
   useEffect(() => {
     getConfigurations();
@@ -60,26 +62,34 @@ const CustomMenu = (props) => {
     setConfigList(await APIHelper.doGet("getAllConfigs"));
   }
 
-  async function checkForConfigSelection(instance, selected) {
+  function formatJSON(nodes, edges) {
+    let json = {
+      nodes: nodes,
+      edges: edges,
+    };
+    return json;
+  }
+
+  async function checkForConfigSelection(selected) {
     if (selected.key === "1") {
-      saveConfiguration(instance, selected);
+      saveConfiguration(data, openConfig);
     } else if (selected.key === "2") {
       restoreConfiguration(selected);
     } else if (selected.key === "5") {
-      insertNewConfiguration(instance);
+      insertNewConfiguration(data);
     } else {
       console.log(`selected key: ${selected.key}`);
       setOpenConfig(selected.key);
     }
   }
 
-  async function saveConfiguration(instance) {
+  async function saveConfiguration() {
     let json = {
-      jsonData: instance,
+      jsonData: data,
       cid: openConfig,
     };
     let body = JSON.stringify(json);
-    console.log(json);
+    console.log(`updateConfig json data: ${JSON.stringify(json)}`);
     APIHelper.makePost("updateConfig", body);
   }
 
@@ -87,10 +97,10 @@ const CustomMenu = (props) => {
     await APIHelper.doGet("getConfigJSON", selected.cid);
   }
 
-  async function insertNewConfiguration(instance) {
+  async function insertNewConfiguration() {
     let name = prompt("Enter the new configuration name");
     let json = {
-      jsonData: instance,
+      jsonData: data,
       name: name,
     };
     let body = JSON.stringify(json);
@@ -100,7 +110,8 @@ const CustomMenu = (props) => {
   }
 
   const onClick = (e) => {
-    checkForConfigSelection(reactFlowInstance, e);
+    console.log(`selected: ${e}`);
+    checkForConfigSelection(e);
   };
   return (
     <Menu
