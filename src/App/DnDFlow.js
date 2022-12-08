@@ -12,19 +12,19 @@ import "reactflow/dist/style.css";
 import Sidebar from "../Elements/Sidebar";
 import nodeTypes from "../resources/nodeTypes";
 
+import { v4 as uuidv4 } from "uuid";
+
 import "./index.css";
 
 import APIHelper from "../resources/APIHelper";
 
 import { Layout } from "antd";
 import CustomMenu from "../Elements/Menu";
-import { OmitProps } from "antd/es/transfer/ListBody";
 const { Header, Content, Footer, Sider } = Layout;
 
 let flowKey = "";
 
-let id = 0;
-const getId = () => `sequence_${id++}`;
+const getId = () => `sequence_${uuidv4()}`;
 
 function setFlowKey(name) {
   flowKey = name;
@@ -38,31 +38,31 @@ const DnDFlow = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const onSave = useCallback(() => {
+  const onSave = (cid) => {
     if (reactFlowInstance) {
-      let name = prompt("Configuration Name");
-      setFlowKey(name);
       const flow = reactFlowInstance.toObject();
-      APIHelper.makePost("updateConfiguration");
-      localStorage.setItem(flowKey, JSON.stringify(flow));
-      console.log(JSON.stringify(flow));
+      let json = {
+        jsonData: flow,
+        cid: cid,
+      };
+      let body = JSON.stringify(json);
+      console.log(`updateConfig json data: ${JSON.stringify(json)}`);
+      APIHelper.makePost("updateConfig", body);
     }
-  }, [reactFlowInstance]);
+  };
 
-  const onRestore = useCallback(() => {
+  const onRestore = (cid) => {
     const restoreFlow = async () => {
-      let restoreName = prompt("Configuration to restore");
-      setFlowKey(restoreName);
-      const flow = APIHelper.doGet(`getConfigJSON:${flowKey}`);
+      const response = await APIHelper.doGet(`getConfigJSON${cid}`);
+      const flow = response[0].json;
 
       if (flow) {
         setNodes(flow.nodes || []);
         setEdges(flow.edges || []);
       }
     };
-
     restoreFlow();
-  }, [setNodes]);
+  };
 
   const onConnect = useCallback(
     (params) =>
@@ -97,7 +97,7 @@ const DnDFlow = () => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node | id: ${id}` },
+        data: { label: `${type} node` },
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -114,7 +114,7 @@ const DnDFlow = () => {
           onCollapse={(value) => setCollapsed(value)}
         >
           <div className="logo" />
-          <CustomMenu instance={reactFlowInstance}></CustomMenu>
+          <CustomMenu save={onSave} restore={onRestore}></CustomMenu>
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" />

@@ -27,8 +27,8 @@ const CustomMenu = (props) => {
   const [openConfig, setOpenConfig] = useState("");
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-  let nodes = props.nodesArray;
-  let edges = props.edgesArray;
+  // let nodes = props.nodesArray;
+  // let edges = props.edgesArray;
 
   useEffect(() => {
     getConfigurations();
@@ -79,17 +79,11 @@ const CustomMenu = (props) => {
   }
 
   async function saveConfiguration() {
-    let json = {
-      jsonData: reactFlowInstance,
-      cid: openConfig,
-    };
-    let body = JSON.stringify(json);
-    console.log(`updateConfig json data: ${JSON.stringify(json)}`);
-    APIHelper.makePost("updateConfig", body);
+    props.save(openConfig);
   }
 
   async function restoreConfiguration(selected) {
-    await APIHelper.doGet("getConfigJSON", selected.cid);
+    props.restore(openConfig);
   }
 
   async function insertNewConfiguration() {
