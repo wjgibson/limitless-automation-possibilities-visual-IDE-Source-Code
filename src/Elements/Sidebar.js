@@ -1,5 +1,6 @@
 //import all types and create components in a loop
 import React from "react";
+import { Button, Space } from "antd";
 
 export default () => {
   const onDragStart = (event, nodeType) => {
@@ -27,14 +28,6 @@ export default () => {
         draggable
       >
         Control Module
-      </div>
-      <div
-        aria-label="caste2"
-        className="dndnode"
-        onDragStart={(event) => onDragStart(event, "caste2")}
-        draggable
-      >
-        Caste 2 Sequence
       </div>
     </aside>
   );
