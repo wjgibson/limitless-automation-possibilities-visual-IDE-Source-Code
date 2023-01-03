@@ -65,6 +65,19 @@ const DnDFlow = () => {
     restoreFlow();
   };
 
+  const onInsert = () => {
+    const insertNewConfig = async () => {
+      let name = prompt("Enter the new configuration name");
+      let json = {
+        jsonData: reactFlowInstance,
+        name: name,
+      };
+      let body = JSON.stringify(json);
+      await APIHelper.makePost("insertNewConfig", body);
+    };
+    insertNewConfig();
+  };
+
   const onConnect = useCallback(
     (params) =>
       setEdges((eds) =>
@@ -115,7 +128,11 @@ const DnDFlow = () => {
           onCollapse={(value) => setCollapsed(value)}
         >
           <div className="logo" />
-          <CustomMenu save={onSave} restore={onRestore}></CustomMenu>
+          <CustomMenu
+            save={onSave}
+            restore={onRestore}
+            insert={onInsert}
+          ></CustomMenu>
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" />

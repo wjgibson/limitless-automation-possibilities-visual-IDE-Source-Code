@@ -32,7 +32,7 @@ const CustomMenu = (props) => {
 
   useEffect(() => {
     getConfigurations();
-  }, []);
+  }, [configList]);
 
   useEffect(() => {
     setConfigList(configList);
@@ -44,7 +44,6 @@ const CustomMenu = (props) => {
 
   useEffect(() => {
     let configs = configList.map((config) => getItem(config.name, config.cid));
-    console.log(configs);
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
       getItem("Pull Configuration", "2", <DownloadOutlined />),
@@ -87,15 +86,8 @@ const CustomMenu = (props) => {
   }
 
   async function insertNewConfiguration() {
-    let name = prompt("Enter the new configuration name");
-    let json = {
-      jsonData: reactFlowInstance,
-      name: name,
-    };
-    let body = JSON.stringify(json);
-    await APIHelper.makePost("insertNewConfig", body).then(() => {
-      getConfigurations();
-    });
+    props.insert();
+    getConfigurations();
   }
 
   const onClick = (e) => {
