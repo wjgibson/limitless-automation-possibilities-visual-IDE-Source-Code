@@ -3,6 +3,7 @@ import {
   DownloadOutlined,
   PlusOutlined,
   SaveOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 
 import React, { useEffect, useState } from "react";
@@ -11,13 +12,12 @@ import APIHelper from "../resources/APIHelper";
 
 import { Menu } from "antd";
 
-function getItem(label, key, icon, children, handler) {
+function getItem(label, key, icon, children) {
   return {
     key,
     icon,
     children,
     label,
-    handler,
   };
 }
 
@@ -27,12 +27,9 @@ const CustomMenu = (props) => {
   const [openConfig, setOpenConfig] = useState("");
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-  // let nodes = props.nodesArray;
-  // let edges = props.edgesArray;
-
   useEffect(() => {
     getConfigurations();
-  }, [configList]);
+  }, []);
 
   useEffect(() => {
     setConfigList(configList);
@@ -43,7 +40,9 @@ const CustomMenu = (props) => {
   }, [openConfig]);
 
   useEffect(() => {
-    let configs = configList.map((config) => getItem(config.name, config.cid));
+    let configs = configList.map((config) =>
+      getItem(config.name, config.cid, <DeleteOutlined />)
+    );
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
       getItem("Pull Configuration", "2", <DownloadOutlined />),
@@ -59,8 +58,6 @@ const CustomMenu = (props) => {
   }, [props.instance]);
 
   async function getConfigurations() {
-    // console.log(await APIHelper.doGet("getAllConfigs"));
-
     setConfigList(await APIHelper.doGet("getAllConfigs"));
   }
 
@@ -81,17 +78,15 @@ const CustomMenu = (props) => {
     props.save(openConfig);
   }
 
-  async function restoreConfiguration(selected) {
+  async function restoreConfiguration() {
     props.restore(openConfig);
   }
 
   async function insertNewConfiguration() {
-    props.insert();
-    getConfigurations();
+    props.insert(getConfigurations);
   }
 
   const onClick = (e) => {
-    console.log(`selected: ${e}`);
     checkForConfigSelection(e);
   };
   return (

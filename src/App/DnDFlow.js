@@ -65,7 +65,7 @@ const DnDFlow = () => {
     restoreFlow();
   };
 
-  const onInsert = () => {
+  const onInsert = (reload) => {
     const insertNewConfig = async () => {
       let name = prompt("Enter the new configuration name");
       let json = {
@@ -75,7 +75,9 @@ const DnDFlow = () => {
       let body = JSON.stringify(json);
       await APIHelper.makePost("insertNewConfig", body);
     };
-    insertNewConfig();
+    insertNewConfig().then(() => {
+      reload();
+    });
   };
 
   const onConnect = useCallback(
