@@ -36,7 +36,8 @@ const CustomMenu = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(`loaded: ${openConfig}`);
+    console.log(`loaded:`, openConfig);
+    props.addToOpen(openConfig);
   }, [openConfig]);
 
   useEffect(() => {
@@ -70,7 +71,11 @@ const CustomMenu = (props) => {
       insertNewConfiguration(reactFlowInstance);
     } else {
       console.log(`selected key: ${selected.key}`);
-      setOpenConfig(selected.key);
+      console.log(configList);
+      setOpenConfig({
+        id: selected.key,
+        name: configList.filter((config) => config.cid == selected.key)[0].name,
+      });
     }
   }
 
@@ -89,6 +94,7 @@ const CustomMenu = (props) => {
   const onClick = (e) => {
     checkForConfigSelection(e);
   };
+
   return (
     <Menu
       theme="dark"

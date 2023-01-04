@@ -12,8 +12,12 @@ This is a user defined description for this node
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
-  const [color, setColor] = useState();
-  const [seqType, setSeqType] = useState(1);
+  const [color, setColor] = useState(data.color);
+  const [seqType, setSeqType] = useState(data.seqType);
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   useEffect(() => {
     data.seqType = seqType;
