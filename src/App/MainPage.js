@@ -30,7 +30,7 @@ function setFlowKey(name) {
   flowKey = name;
 }
 
-const DnDFlow = () => {
+const MainPage = () => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -54,10 +54,11 @@ const DnDFlow = () => {
   };
 
   const openNewConfig = (config) => {
+    console.log();
     if (
       config !== undefined &&
       config !== "" &&
-      !openConfigs.includes(config)
+      openConfigs.filter((openConfig) => openConfig.id == config.id).length == 0
     ) {
       setOpenConfigs((cl) => [...cl, config]);
     }
@@ -132,8 +133,8 @@ const DnDFlow = () => {
                     <button onClick={() => removeOpenConfigs(config)}>x</button>
                   </div>
                 ),
-                key: config.cid,
-                children: <FlowEditor />,
+                key: config.id,
+                children: <FlowEditor configid={config.id} />,
               };
             })}
           />
@@ -143,4 +144,4 @@ const DnDFlow = () => {
   );
 };
 
-export default DnDFlow;
+export default MainPage;
