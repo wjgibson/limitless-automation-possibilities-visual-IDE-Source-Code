@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -14,18 +14,27 @@ import nodeTypes from "../resources/nodeTypes";
 
 import "../App/index.css";
 
-import { Layout } from "antd";
 import { v4 as uuidv4 } from "uuid";
 
-const { Header, Content, Footer, Sider } = Layout;
+import APIHelper from "../resources/APIHelper";
 
 const getId = () => `sequence_${uuidv4()}`;
 
-const FlowEditor = () => {
+const FlowEditor = (props) => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+  useEffect(() => {
+    onRestore(props.configId);
+  }, []);
+
+  useEffect(() => {
+    if (props.save) {
+      onSave();
+    }
+  }, [props.save]);
 
   const onConnect = useCallback(
     (params) =>
@@ -34,6 +43,35 @@ const FlowEditor = () => {
       ),
     []
   );
+
+  const onSave = () => {
+    if (props.selectedConfig == props.configId) {
+      if (reactFlowInstance) {
+        const flow = reactFlowInstance.toObject();
+        let json = {
+          jsonData: flow,
+          cid: props.configId,
+        };
+        let body = JSON.stringify(json);
+        console.log(`updateConfig json data: ${JSON.stringify(json)}`);
+        APIHelper.makePost("updateConfig", body);
+      }
+    }
+    props.setSave(false);
+  };
+
+  const onRestore = (cid) => {
+    const restoreFlow = async () => {
+      const response = await APIHelper.doGet(`getConfigJSON${cid}`);
+      const flow = response[0].json;
+
+      if (flow) {
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      }
+    };
+    restoreFlow();
+  };
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -86,7 +124,6 @@ const FlowEditor = () => {
               deleteKeyCode={["Delete", "Backspace"]}
               fitView
             >
-              <Background color="#00284f" variant="dots" />
               <Controls />
             </ReactFlow>
           </div>

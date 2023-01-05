@@ -36,6 +36,8 @@ const MainPage = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [openConfigs, setOpenConfigs] = useState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [selectedConfig, setSelectedConfig] = useState("");
+  const [save, setSave] = useState(false);
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -64,17 +66,8 @@ const MainPage = () => {
     }
   };
 
-  const onSave = (cid) => {
-    if (reactFlowInstance) {
-      const flow = reactFlowInstance.toObject();
-      let json = {
-        jsonData: flow,
-        cid: cid,
-      };
-      let body = JSON.stringify(json);
-      console.log(`updateConfig json data: ${JSON.stringify(json)}`);
-      APIHelper.makePost("updateConfig", body);
-    }
+  const onSave = () => {
+    setSave(true);
   };
 
   const onRestore = (cid) => {
@@ -114,6 +107,7 @@ const MainPage = () => {
       >
         <div className="logo" />
         <CustomMenu
+          selectedConfig={selectedConfig}
           save={onSave}
           restore={onRestore}
           insert={onInsert}
@@ -124,6 +118,8 @@ const MainPage = () => {
         <Header className="site-layout-background" />
         <Content>
           <Tabs
+            onTabClick={(e) => setSelectedConfig(e)}
+            style={{ height: "100vh" }}
             type="card"
             items={openConfigs?.map((config) => {
               return {
@@ -134,7 +130,15 @@ const MainPage = () => {
                   </div>
                 ),
                 key: config.id,
-                children: <FlowEditor configid={config.id} />,
+                children: (
+                  <FlowEditor
+                    configId={config.id}
+                    save={save}
+                    setSave={setSave}
+                    selectedConfig={selectedConfig}
+                    background={<Background color="#00284f" variant="dots" />}
+                  />
+                ),
               };
             })}
           />

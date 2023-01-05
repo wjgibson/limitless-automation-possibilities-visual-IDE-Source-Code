@@ -64,7 +64,7 @@ const CustomMenu = (props) => {
 
   async function checkForConfigSelection(selected) {
     if (selected.key === "1") {
-      saveConfiguration(reactFlowInstance, openConfig);
+      saveConfiguration(reactFlowInstance, props.selectedConfig);
     } else if (selected.key === "2") {
       restoreConfiguration(selected);
     } else if (selected.key === "5") {
@@ -80,7 +80,7 @@ const CustomMenu = (props) => {
   }
 
   async function saveConfiguration() {
-    props.save(openConfig);
+    props.save();
   }
 
   async function restoreConfiguration() {
