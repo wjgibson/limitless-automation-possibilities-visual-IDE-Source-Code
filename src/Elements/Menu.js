@@ -46,7 +46,6 @@ const CustomMenu = (props) => {
     );
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
-      getItem("Pull Configuration", "2", <DownloadOutlined />),
       getItem("Configurations", "sub1", <BuildOutlined />, [
         ...configs,
         getItem("New", "5", <PlusOutlined />),
@@ -65,8 +64,6 @@ const CustomMenu = (props) => {
   async function checkForConfigSelection(selected) {
     if (selected.key === "1") {
       saveConfiguration(reactFlowInstance, props.selectedConfig);
-    } else if (selected.key === "2") {
-      restoreConfiguration(selected);
     } else if (selected.key === "5") {
       insertNewConfiguration(reactFlowInstance);
     } else {
@@ -81,10 +78,6 @@ const CustomMenu = (props) => {
 
   async function saveConfiguration() {
     props.save();
-  }
-
-  async function restoreConfiguration() {
-    props.restore(openConfig);
   }
 
   async function insertNewConfiguration() {

@@ -8,6 +8,7 @@ import ReactFlow, {
   Background,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import { CloseOutlined } from "@ant-design/icons";
 
 import Sidebar from "../Elements/Sidebar";
 import nodeTypes from "../resources/nodeTypes";
@@ -115,18 +116,29 @@ const MainPage = () => {
         ></CustomMenu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" />
         <Content>
           <Tabs
             onTabClick={(e) => setSelectedConfig(e)}
             style={{ height: "100vh" }}
             type="card"
+            tabBarStyle={{ backgroundColor: "#001529" }}
             items={openConfigs?.map((config) => {
               return {
                 label: (
-                  <div>
+                  <div style={{ color: "white", mixBlendMode: "difference" }}>
                     <span>{`${config.name}`}</span>
-                    <button onClick={() => removeOpenConfigs(config)}>x</button>
+                    <button
+                      style={{ border: "0px", backgroundColor: "transparent" }}
+                      onClick={() => removeOpenConfigs(config)}
+                    >
+                      <CloseOutlined
+                        style={{
+                          color: "white",
+                          mixBlendMode: "difference",
+                          float: "left",
+                        }}
+                      />
+                    </button>
                   </div>
                 ),
                 key: config.id,

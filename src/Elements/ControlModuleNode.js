@@ -8,7 +8,7 @@ import Validator from "../resources/Validator";
 function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
-  const [color, setColor] = useState();
+  const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(1);
 
   useEffect(() => {

@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+html {
+  overflow: hidden;
+}
+
 .dndflow {
   flex-direction: column;
   display: flex;

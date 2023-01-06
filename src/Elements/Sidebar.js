@@ -1,33 +1,66 @@
 //import all types and create components in a loop
-import React from "react";
+import { React, useState } from "react";
+import { Card, Tooltip } from "antd";
+import { SettingOutlined, NodeIndexOutlined } from "@ant-design/icons";
 
 export default () => {
   const onDragStart = (event, nodeType) => {
+    onClose();
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
   };
 
+  const [open, setOpen] = useState(false);
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <aside>
-      <div aria-label="description" className="description">
-        You can drag these nodes to the pane on the left.
-      </div>
-      <div
-        aria-label="sequence"
-        className="dndnode"
-        onDragStart={(event) => onDragStart(event, "sequence")}
-        draggable
+    <>
+      <Card
+        title="Nodes"
+        placement="right"
+        onClose={onClose}
+        open={open}
+        style={{
+          textAlign: "center",
+        }}
+        width="200"
       >
-        Sequence
-      </div>
-      <div
-        aria-label="controlModule"
-        className="dndnode"
-        onDragStart={(event) => onDragStart(event, "controlModule")}
-        draggable
-      >
-        Control Module
-      </div>
-    </aside>
+        <Tooltip
+          title="Sequence Node"
+          placement="left"
+          color="#000c17"
+          key={"sequence"}
+        >
+          <Card
+            style={{ height: "auto" }}
+            aria-label="sequence"
+            className="dndnode"
+            onDragStart={(event) => onDragStart(event, "sequence")}
+            draggable
+          >
+            <NodeIndexOutlined style={{ fontSize: "30px" }}></NodeIndexOutlined>
+          </Card>
+        </Tooltip>
+        <Tooltip
+          title="Control Modules Node"
+          placement="left"
+          color="#000c17"
+          key={"controlModule"}
+        >
+          <Card
+            style={{ height: "auto" }}
+            aria-label="controlModule"
+            className="dndnode"
+            onDragStart={(event) => onDragStart(event, "controlModule")}
+            draggable
+          >
+            <SettingOutlined style={{ fontSize: "30px" }}></SettingOutlined>
+          </Card>
+        </Tooltip>
+      </Card>
+    </>
   );
 };
