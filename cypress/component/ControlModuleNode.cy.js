@@ -1,12 +1,17 @@
-import DnDFlow from "../../src/App/DnDFlow";
+import FlowEditor from "../../src/Elements/FlowEditor";
 import ControlModuleNode from "../../src/Elements/ControlModuleNode";
+
+//Will need to test the following:
+//Color change
+//SeqType change
+//Title change
 
 describe("ControlModuleNode.cy.js", () => {
   it("ControlModuleNode mounts correctly", () => {
     cy.mount(
-      <DnDFlow>
+      <FlowEditor>
         <ControlModuleNode></ControlModuleNode>
-      </DnDFlow>
+      </FlowEditor>
     );
   });
 });

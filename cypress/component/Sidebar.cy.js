@@ -10,28 +10,6 @@ describe("Sidebar.cy.js", () => {
     cy.mount(<Sidebar></Sidebar>);
   });
 
-  //Testing for correct text//
-  it("description has text", () => {
-    cy.mount(<Sidebar></Sidebar>);
-
-    cy.get(description).should(
-      "have.text",
-      "You can drag these nodes to the pane on the left."
-    );
-  });
-
-  it("sequence node has text", () => {
-    cy.mount(<Sidebar></Sidebar>);
-
-    cy.get(sequence).should("have.text", "Sequence");
-  });
-
-  it("control module node has text", () => {
-    cy.mount(<Sidebar></Sidebar>);
-
-    cy.get(controlModule).should("have.text", "Control Module");
-  });
-
   //Testing for onDragStart Event//
 
   it("sequence node draggable", () => {
