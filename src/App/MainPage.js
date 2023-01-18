@@ -8,7 +8,7 @@ import ReactFlow, {
   Background,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
 
 import Sidebar from "../Elements/Sidebar";
 import nodeTypes from "../resources/nodeTypes";
@@ -25,6 +25,8 @@ import FlowEditor from "../Elements/FlowEditor";
 
 const { Header, Content, Footer, Sider } = Layout;
 
+
+
 let flowKey = "";
 
 function setFlowKey(name) {
@@ -32,6 +34,8 @@ function setFlowKey(name) {
 }
 
 const MainPage = () => {
+  const [showExclamtion, setShowExclamation] = useState(false);
+  const exclamtionRef = useRef();
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -42,6 +46,9 @@ const MainPage = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const handleConfigChange = () => {
+    exclamtionRef.current.style.visibilty = true;
+  }
   useEffect(() => {
     console.log("open configs set", openConfigs);
   }, [openConfigs]);
@@ -100,6 +107,7 @@ const MainPage = () => {
   };
 
   return (
+    
     <Layout>
       <Sider
         collapsible
@@ -113,7 +121,9 @@ const MainPage = () => {
           restore={onRestore}
           insert={onInsert}
           addToOpen={openNewConfig}
-        ></CustomMenu>
+        >
+
+        </CustomMenu>
       </Sider>
       <Layout className="site-layout">
         <Content>
@@ -138,7 +148,11 @@ const MainPage = () => {
                           float: "left",
                         }}
                       />
+                      
                     </button>
+                    {
+                    showExclamtion?<ExclamationOutlined/>:null
+                    }
                   </div>
                 ),
                 key: config.id,
@@ -147,6 +161,7 @@ const MainPage = () => {
                     configId={config.id}
                     save={save}
                     setSave={setSave}
+                    setShowExclamation={setShowExclamation}
                     selectedConfig={selectedConfig}
                     background={<Background color="#00284f" variant="dots" />}
                   />
