@@ -151,7 +151,9 @@ const MainPage = () => {
                       
                     </button>
                     {
-                    showExclamtion?<ExclamationOutlined/>:null
+                    showExclamtion?<ExclamationOutlined
+                    twoToneColor="#eb2f96"
+                    />:null
                     }
                   </div>
                 ),

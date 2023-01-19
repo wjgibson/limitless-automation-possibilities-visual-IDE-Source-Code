@@ -37,7 +37,11 @@ const FlowEditor = (props) => {
       setShowExclamationOnChange(false)
     }
   }, [props.save]);
-  
+
+  useEffect(()=>{
+    setShowExclamationOnChange(true)
+    },[edges,nodes])
+
   useEffect(() =>{
     if (showExclamtionOnChange == true){
       props.setShowExclamation(true)
