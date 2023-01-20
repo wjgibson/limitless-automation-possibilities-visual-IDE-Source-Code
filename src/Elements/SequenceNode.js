@@ -1,13 +1,9 @@
 import { Handle, Position, useReactFlow } from "reactflow";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import { Card, message } from "antd";
 import "../Elements/elements.css";
 import DownDownMenu from "./dropDownMenu.js";
 import Validator from "../resources/Validator";
-
-const text = `
-This is a user defined description for this node
-`;
 
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
@@ -15,14 +11,16 @@ function SequenceNode({ data }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.seqType);
+  const [invalidFlag, setInvalidFlag] = useState(false);
 
-  const info = () => {
-    messageApi.info("This connection is invalid!");
-  };
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  const invalidConnectionMessage = useCallback(() => {
+    if (invalidFlag) {
+      messageApi.open({
+        type: "error",
+        content: "This connection is invalid!",
+      });
+    }
+  }, [invalidFlag]);
 
   useEffect(() => {
     data.seqType = seqType;
@@ -32,21 +30,22 @@ function SequenceNode({ data }) {
     data.color = color;
   }, [color]);
 
+  useEffect(() => {
+    console.log("this has been an invalid fglaf", invalidFlag);
+    if (invalidFlag) {
+      invalidConnectionMessage();
+      setInvalidFlag((flag) => !flag);
+    }
+  }, [invalidFlag]);
+
   function isValidConnection(connection) {
-    const connectionValidity = Validator(reactFlowInstance, connection);
-    notifyInvalidConnection(connectionValidity);
+    let connectionValidity = Validator(reactFlowInstance, connection);
+
+    if (!connectionValidity && !invalidFlag) {
+      setInvalidFlag(true);
+    }
     return connectionValidity;
   }
-
-  function notifyInvalidConnection(connectionValidity) {
-    if (connectionValidity == false) {
-      {
-        info();
-      }
-    }
-  }
-
-  data.opcid = 45;
 
   return (
     <>
@@ -86,6 +85,7 @@ function SequenceNode({ data }) {
             type="target"
             position={Position.Top}
             isValidConnection={isValidConnection}
+            onConnect={(params) => console.log("handle onConnect", params)}
           />
           <Handle
             type="source"

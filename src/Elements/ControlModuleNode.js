@@ -23,7 +23,6 @@ function ControlModuleNode({ data }) {
   function isValidConnection(connection) {
     return Validator(reactFlowInstance, connection);
   }
-  data.opcid = 45;
 
   return (
     <Card
