@@ -1,0 +1,48 @@
+{
+  "edges": [
+    {
+      "id": "reactflow__edge-sequence_51d712ae-42fd-4243-ad88-fac20b10a4fb-sequence_6f5630fe-ea8f-477e-b508-c25af01d3d98",
+      "type": "step",
+      "source": "sequence_51d712ae-42fd-4243-ad88-fac20b10a4fb",
+      "target": "sequence_6f5630fe-ea8f-477e-b508-c25af01d3d98",
+      "animated": true,
+      "sourceHandle": null,
+      "targetHandle": null
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sequence_51d712ae-42fd-4243-ad88-fac20b10a4fb",
+      "data": {
+        "color": "#c90d0d",
+        "label": "sequence node",
+        "opcid": 45,
+        "seqType": "5"
+      },
+      "type": "sequence",
+      "width": 300,
+      "height": 181,
+      "dragging": false,
+      "position": { "x": -160, "y": -104 },
+      "selected": false,
+      "positionAbsolute": { "x": -160, "y": -104 }
+    },
+    {
+      "id": "sequence_6f5630fe-ea8f-477e-b508-c25af01d3d98",
+      "data": {
+        "color": "#160e0e",
+        "label": "controlModule node",
+        "opcid": 45,
+        "seqType": 1
+      },
+      "type": "controlModule",
+      "width": 300,
+      "height": 181,
+      "dragging": false,
+      "position": { "x": 153.25, "y": 123.75 },
+      "selected": true,
+      "positionAbsolute": { "x": 153.25, "y": 123.75 }
+    }
+  ],
+  "viewport": { "x": 533.75, "y": 283.75, "zoom": 2 }
+}
