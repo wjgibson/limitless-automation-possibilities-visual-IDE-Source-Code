@@ -42,7 +42,7 @@ const CustomMenu = (props) => {
 
   useEffect(() => {
     let configs = configList.map((config) =>
-      getItem(config.name, config.cid, <DeleteOutlined />)
+      getItem(config.name, config.configuuid, <DeleteOutlined />)
     );
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
@@ -71,7 +71,9 @@ const CustomMenu = (props) => {
       console.log(configList);
       setOpenConfig({
         id: selected.key,
-        name: configList.filter((config) => config.cid == selected.key)[0].name,
+        name: configList.filter(
+          (config) => config.configuuid == selected.key
+        )[0].name,
       });
     }
   }
