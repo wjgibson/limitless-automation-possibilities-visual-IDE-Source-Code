@@ -93,6 +93,7 @@ const MainPage = () => {
       };
       let body = JSON.stringify(json);
       await APIHelper.makePost("insertNewConfig", body);
+      await APIHelper.makePost("createNewConfig", body);
     };
     insertNewConfig().then(() => {
       reload();
@@ -105,6 +106,14 @@ const MainPage = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
       >
         <div className="logo" />
         <CustomMenu
