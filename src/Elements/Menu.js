@@ -46,9 +46,13 @@ const CustomMenu = (props) => {
     );
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
+              //added code below
+      getItem("Delete Configuration", <DeleteOutlined />),
+      //added code above
       getItem("Configurations", "sub1", <BuildOutlined />, [
         ...configs,
         getItem("New", "5", <PlusOutlined />),
+        
       ]),
     ]);
   }, [configList]);
