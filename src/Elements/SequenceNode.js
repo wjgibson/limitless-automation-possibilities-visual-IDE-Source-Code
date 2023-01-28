@@ -16,10 +16,6 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.seqType);
 
   useEffect(() => {
-    console.log(data);
-  }, []);
-
-  useEffect(() => {
     data.seqType = seqType;
   }, [seqType]);
 

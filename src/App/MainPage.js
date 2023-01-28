@@ -42,9 +42,7 @@ const MainPage = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  useEffect(() => {
-    console.log("open configs set", openConfigs);
-  }, [openConfigs]);
+  useEffect(() => {}, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
     let newConfigs = openConfigs;
@@ -52,12 +50,10 @@ const MainPage = () => {
     if (index > -1) {
       newConfigs.splice(index, 1);
     }
-    console.log(newConfigs);
     setOpenConfigs([...newConfigs]);
   };
 
   const openNewConfig = (config) => {
-    console.log();
     if (
       config !== undefined &&
       config !== "" &&
@@ -92,7 +88,7 @@ const MainPage = () => {
         name: name,
       };
       let body = JSON.stringify(json);
-      await APIHelper.makePost("insertNewConfig", body);
+      // await APIHelper.makePost("insertNewConfig", body);
       await APIHelper.makePost("createNewConfig", body);
     };
     insertNewConfig().then(() => {
