@@ -26,6 +26,7 @@ const FlowEditor = (props) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
+
   useEffect(() => {
     onRestore(props.configId);
   }, []);
@@ -35,13 +36,16 @@ const FlowEditor = (props) => {
       for(var i = 0; i<nodes.length; i++){
       if(nodes[i].data.invalidConnection == true){
         let nodeTarget = nodes[i].data.connection
-        for(var j = 0; i < edges.length; i++){
+        for(var j = 0; j < edges.length; j++){
           if(nodeTarget.source == edges[j].source){        
             edges[j].style = {stroke:'red'}
           }
         }
+
       }
+
     }
+
     }
   },[nodes])
 
