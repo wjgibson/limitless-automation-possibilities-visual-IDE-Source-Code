@@ -32,8 +32,10 @@ const FlowEditor = (props) => {
   }, []);
 
   useEffect(()=>{
+    console.log("nodes",nodes)
     if(nodes !=nodes.length!= 0){
       for(var i = 0; i<nodes.length; i++){
+
       if(nodes[i].data.invalidConnection == true){
         let nodeTarget = nodes[i].data.connection
         for(var j = 0; j < edges.length; j++){
@@ -41,13 +43,23 @@ const FlowEditor = (props) => {
             edges[j].style = {stroke:'red'}
           }
         }
-
       }
-
-    }
-
+      if(nodes[i].data.invalidConnection == false){
+        let nodeTarget = nodes[i].data.connection
+        console.log("node Traget",nodeTarget)
+        if(nodeTarget != undefined){
+        for(var j = 0; j < edges.length; j++){
+          if(nodeTarget.target == edges[j].target){        
+            edges[j].style = {stroke:'black'}
+            console.log("edges", edges[j])
+          }
+        }
+      }
+      }
+      }
     }
   },[nodes])
+
 
   useEffect(() => {
     if (props.save) {

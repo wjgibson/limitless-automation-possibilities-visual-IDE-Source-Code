@@ -38,7 +38,6 @@ function SequenceNode({ data }) {
     data.invalidConnection = invalidConnection;
   },[invalidConnection])
   useEffect(()=>{
-    console.log("yes1")
     if(connection != null){
     if(Validator(reactFlowInstance, connection)){
       setInvalidConnection(false);
@@ -46,7 +45,6 @@ function SequenceNode({ data }) {
     }
     else{
       setInvalidConnection(true)
-      console.log("EYESSSSSSS")
     }
   }},[checkIfValidConnection])
 
