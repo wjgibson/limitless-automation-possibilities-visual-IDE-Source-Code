@@ -30,6 +30,21 @@ const FlowEditor = (props) => {
     onRestore(props.configId);
   }, []);
 
+  useEffect(()=>{
+    if(nodes !=nodes.length!= 0){
+      for(var i = 0; i<nodes.length; i++){
+      if(nodes[i].data.invalidConnection == true){
+        let nodeTarget = nodes[i].data.connection
+        for(var j = 0; i < edges.length; i++){
+          if(nodeTarget.source == edges[j].source){        
+            edges[j].style = {stroke:'red'}
+          }
+        }
+      }
+    }
+    }
+  },[nodes])
+
   useEffect(() => {
     if (props.save) {
       onSave();
@@ -39,10 +54,13 @@ const FlowEditor = (props) => {
   const onConnect = useCallback(
     (params) =>
       setEdges((eds) =>
-        addEdge({ ...params, type: "step", animated: true }, eds)
-      ),
+        addEdge({ ...params, type: "step", animated: true, style:{stroke:'black'} }, eds)
+    ),
     []
   );
+  useEffect(()=>{
+    console.log(reactFlowInstance)
+  }, [reactFlowInstance])
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {

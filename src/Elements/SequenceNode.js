@@ -11,23 +11,50 @@ This is a user defined description for this node
 
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
-
+  const [connection, setConnection] = useState();
+  const [checkIfValidConnection, setCheckIfValidConnection] = useState(false);
+  const [invalidConnection, setInvalidConnection] = useState(false);
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.seqType);
 
   useEffect(() => {
-    console.log(data);
+    console.log("Hello",data);
   }, []);
 
   useEffect(() => {
     data.seqType = seqType;
+    setCheckIfValidConnection(!checkIfValidConnection)
+    console.log("Change Seq")
   }, [seqType]);
 
   useEffect(() => {
     data.color = color;
   }, [color]);
 
+  useEffect(() =>{
+    data.connection = connection;
+  }, [connection])
+  useEffect(() =>{
+    data.invalidConnection = invalidConnection;
+  },[invalidConnection])
+  useEffect(()=>{
+    console.log("yes1")
+    if(connection != null){
+    if(Validator(reactFlowInstance, connection)){
+      setInvalidConnection(false);
+      
+    }
+    else{
+      setInvalidConnection(true)
+      console.log("EYESSSSSSS")
+    }
+  }},[checkIfValidConnection])
+
+
+
+
   function isValidConnection(connection) {
+    setConnection(connection)
     return Validator(reactFlowInstance, connection);
   }
 
