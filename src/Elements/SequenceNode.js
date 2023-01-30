@@ -18,13 +18,10 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.seqType);
 
   useEffect(() => {
-    console.log("Hello",data);
-  }, []);
-
-  useEffect(() => {
     data.seqType = seqType;
     setCheckIfValidConnection(!checkIfValidConnection)
     console.log("Change Seq")
+    data.edgeCheck()
   }, [seqType]);
 
   useEffect(() => {

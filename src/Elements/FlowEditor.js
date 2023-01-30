@@ -31,35 +31,38 @@ const FlowEditor = (props) => {
     onRestore(props.configId);
   }, []);
 
-  useEffect(()=>{
-    console.log("nodes",nodes)
-    if(nodes !=nodes.length!= 0){
-      for(var i = 0; i<nodes.length; i++){
+  const trackEdgeConnection =() => {
+    let edges2 = edges
+    let nodes2 = nodes
+    if(nodes2 !=nodes2.length!= 0){
+      for(var i = 0; i<nodes2.length; i++){
 
-      if(nodes[i].data.invalidConnection == true){
-        let nodeTarget = nodes[i].data.connection
-        for(var j = 0; j < edges.length; j++){
-          if(nodeTarget.source == edges[j].source){        
-            edges[j].style = {stroke:'red'}
+      if(nodes2[i].data.invalidConnection == true){
+        let nodeTarget = nodes2[i].data.connection
+        for(var j = 0; j < edges2.length; j++){
+          if(nodeTarget.source == edges2[j].source){        
+            edges2[j].style = {stroke:'red'}
           }
         }
       }
-      if(nodes[i].data.invalidConnection == false){
-        let nodeTarget = nodes[i].data.connection
-        console.log("node Traget",nodeTarget)
+      if(nodes2[i].data.invalidConnection == false){
+        let nodeTarget = nodes2[i].data.connection
         if(nodeTarget != undefined){
-        for(var j = 0; j < edges.length; j++){
-          if(nodeTarget.target == edges[j].target){        
-            edges[j].style = {stroke:'black'}
-            console.log("edges", edges[j])
-          }
+        for(var j = 0; j < edges2.length; j++){
+          if(nodeTarget.target == edges2[j].target){        
+            edges2[j].style = {stroke:'black'}
+            }
         }
       }
       }
       }
+        setEdges([...edges2]) 
+        setNodes([...nodes2])
     }
+  }
+  useEffect(()=>{
+    trackEdgeConnection()
   },[nodes])
-
 
   useEffect(() => {
     if (props.save) {
@@ -132,7 +135,7 @@ const FlowEditor = (props) => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type} node`, edgeCheck: trackEdgeConnection },
       };
 
       setNodes((nds) => nds.concat(newNode));
