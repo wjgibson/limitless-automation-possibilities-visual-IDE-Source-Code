@@ -47,7 +47,7 @@ const CustomMenu = (props) => {
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
               //added code below
-      getItem("Delete Configuration", <DeleteOutlined />),
+      getItem("Delete Configuration", "2", <DeleteOutlined />),
       //added code above
       getItem("Configurations", "sub1", <BuildOutlined />, [
         ...configs,
@@ -70,6 +70,10 @@ const CustomMenu = (props) => {
       saveConfiguration(reactFlowInstance, props.selectedConfig);
     } else if (selected.key === "5") {
       insertNewConfiguration(reactFlowInstance);
+    } 
+    //added else if statement
+    else if (selected.key === "2"){
+      deleteConfiguration(props.selectedConfig)
     } else {
       console.log(`selected key: ${selected.key}`);
       console.log(configList);
@@ -83,7 +87,11 @@ const CustomMenu = (props) => {
   async function saveConfiguration() {
     props.save();
   }
-
+//added code below
+  async function deleteConfiguration(){
+    props.delete();
+  }
+//added code above
   async function insertNewConfiguration() {
     props.insert(getConfigurations);
   }

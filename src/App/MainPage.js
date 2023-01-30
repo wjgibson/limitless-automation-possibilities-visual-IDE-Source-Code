@@ -99,6 +99,13 @@ const MainPage = () => {
     });
   };
 
+  const onDelete = (cid) => {
+    const deleteConfig = async () => {
+      const deleteConfig = await APIHelper.doGet(`deleteConfig${cid}`);
+    }
+    deleteConfig();
+  }
+
   return (
     <Layout>
       <Sider
@@ -112,6 +119,7 @@ const MainPage = () => {
           save={onSave}
           restore={onRestore}
           insert={onInsert}
+          delete={onDelete}
           addToOpen={openNewConfig}
         ></CustomMenu>
       </Sider>
