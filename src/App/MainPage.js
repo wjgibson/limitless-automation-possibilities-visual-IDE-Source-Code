@@ -19,7 +19,7 @@ import "./index.css";
 
 import APIHelper from "../resources/APIHelper";
 
-import { Layout, Tabs, Flex } from "antd";
+import { Layout, Tabs, Popconfirm } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 
@@ -100,6 +100,8 @@ const MainPage = () => {
   };
 
   const onDelete = (cid, reload) => {
+    let confirmation = window.confirm("Are you sure you want to delete this configuration?")
+    if(confirmation){
     const deleteConfig = async () => {
       let json = {
         cid: cid,
@@ -110,6 +112,7 @@ const MainPage = () => {
     deleteConfig().then(() => {
       reload();
     })
+  }
   }
 
   return (
