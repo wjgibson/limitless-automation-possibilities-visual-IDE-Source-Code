@@ -85,7 +85,7 @@ const CustomMenu = (props) => {
     props.save();
   }
   async function deleteConfiguration(){
-    props.delete(props.selectedConfig);
+    props.delete(props.selectedConfig, getConfigurations);
   }
   async function insertNewConfiguration() {
     props.insert(getConfigurations);

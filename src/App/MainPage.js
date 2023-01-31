@@ -99,12 +99,17 @@ const MainPage = () => {
     });
   };
 
-  const onDelete = (cid) => {
+  const onDelete = (cid, reload) => {
+    const deleteConfig = async () => {
       let json = {
         cid: cid,
       };
       let body = JSON.stringify(json)
       APIHelper.makePost(`deleteConfig`, body);
+    };
+    deleteConfig().then(() => {
+      reload();
+    })
   }
 
   return (
