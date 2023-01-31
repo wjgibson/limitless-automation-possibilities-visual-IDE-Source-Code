@@ -100,10 +100,11 @@ const MainPage = () => {
   };
 
   const onDelete = (cid) => {
-    const deleteConfig = async () => {
-      const deleteConfig = await APIHelper.doGet(`deleteConfig${cid}`);
-    }
-    deleteConfig();
+      let json = {
+        cid: cid,
+      };
+      let body = JSON.stringify(json)
+      APIHelper.makePost(`deleteConfig`, body);
   }
 
   return (
