@@ -10,14 +10,9 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import { CloseOutlined } from "@ant-design/icons";
 
-import Sidebar from "../Elements/Sidebar";
-import nodeTypes from "../resources/nodeTypes";
-
-import { v4 as uuidv4 } from "uuid";
-
 import "./index.css";
 
-import APIHelper from "../resources/APIHelper";
+import APIHelper from "../utilities/APIHelper";
 
 import { Layout, Tabs, Flex } from "antd";
 import CustomMenu from "../Elements/Menu";

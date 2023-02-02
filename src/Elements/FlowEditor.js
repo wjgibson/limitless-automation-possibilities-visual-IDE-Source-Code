@@ -5,18 +5,19 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Controls,
-  Background,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
 import Sidebar from "./Sidebar";
-import nodeTypes from "../resources/nodeTypes";
+import nodeTypes from "../utilities/nodeTypes";
 
 import "../App/index.css";
 
 import { v4 as uuidv4 } from "uuid";
 
-import APIHelper from "../resources/APIHelper";
+import APIHelper from "../utilities/APIHelper";
+
+import nodeInserter from "../utilities/nodeInserter";
 
 const getId = () => `sequence_${uuidv4()}`;
 
@@ -53,8 +54,9 @@ const FlowEditor = (props) => {
           cid: props.configId,
         };
         let body = JSON.stringify(json);
-        console.log(`updateConfig json data: ${JSON.stringify(json)}`);
-        APIHelper.makePost("updateConfig", body);
+        // console.log(`updateConfig json data: ${JSON.stringify(json)}`);
+        nodeInserter.insert(json);
+        // APIHelper.makePost("updateConfig", body);
       }
     }
     props.setSave(false);

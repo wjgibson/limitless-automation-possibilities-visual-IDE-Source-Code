@@ -3,7 +3,7 @@ import { React, useState, useEffect } from "react";
 import { Card } from "antd";
 import "../Elements/elements.css";
 import DownDownMenu from "./dropDownMenu.js";
-import Validator from "../resources/Validator";
+import Validator from "../utilities/Validator";
 
 const text = `
 This is a user defined description for this node

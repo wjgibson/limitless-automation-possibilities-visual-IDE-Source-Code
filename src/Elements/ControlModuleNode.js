@@ -3,7 +3,7 @@ import { React, useState, useEffect } from "react";
 import { Card } from "antd";
 import DownDownMenu from "./dropDownMenu.js";
 import "../Elements/elements.css";
-import Validator from "../resources/Validator";
+import Validator from "../utilities/Validator";
 
 function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();

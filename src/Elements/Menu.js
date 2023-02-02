@@ -8,7 +8,7 @@ import {
 
 import React, { useEffect, useState } from "react";
 
-import APIHelper from "../resources/APIHelper";
+import APIHelper from "../utilities/APIHelper";
 
 import { Menu } from "antd";
 
