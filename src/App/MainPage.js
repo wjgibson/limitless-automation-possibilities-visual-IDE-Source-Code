@@ -1,12 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  useNodesState,
-  useEdgesState,
-  Controls,
-  Background,
-} from "reactflow";
+import React, { useState, useRef, useEffect } from "react";
+import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
 import { CloseOutlined } from "@ant-design/icons";
 
@@ -14,17 +7,11 @@ import "./index.css";
 
 import APIHelper from "../utilities/APIHelper";
 
-import { Layout, Tabs, Flex } from "antd";
+import { Layout, Tabs } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 
-const { Header, Content, Footer, Sider } = Layout;
-
-let flowKey = "";
-
-function setFlowKey(name) {
-  flowKey = name;
-}
+const { Content, Sider } = Layout;
 
 const MainPage = () => {
   const reactFlowWrapper = useRef(null);
