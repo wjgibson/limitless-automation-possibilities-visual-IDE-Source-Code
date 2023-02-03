@@ -28,6 +28,7 @@ const FlowEditor = (props) => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   useEffect(() => {
+    console.log(props.configId);
     onRestore(props.configId);
   }, []);
 
@@ -100,7 +101,7 @@ const FlowEditor = (props) => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type} node`, configId: props.configId },
       };
 
       setNodes((nds) => nds.concat(newNode));

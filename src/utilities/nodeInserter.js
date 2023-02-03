@@ -3,6 +3,7 @@ let edgesArray;
 let cid;
 
 function insert(reactflowData) {
+  console.log(reactflowData);
   parseReactFlowData(reactflowData);
   sendNodeData(nodesArray);
   sendEdgeData(edgesArray);
