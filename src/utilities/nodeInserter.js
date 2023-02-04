@@ -1,3 +1,5 @@
+import APIHelper from "./APIHelper";
+
 let nodesArray;
 let edgesArray;
 let cid;
@@ -16,14 +18,20 @@ function parseReactFlowData(reactflowData) {
 
 function sendNodeData(nodes) {
   nodes.forEach((node) => {
-    let json = {
-      configId: node.data.configId,
-      name: node.data.label,
-      typeuuid: node.data.seqType,
-      description: "to be implemented in the future",
-    };
-    let body = JSON.stringify(json);
+    let body = formatNodeData(node);
+    APIHelper.makePost("insertSequences", body);
   });
+}
+
+function formatNodeData(node) {
+  let json = {
+    configId: node.data.configId,
+    name: node.data.label,
+    typeuuid: node.data.seqType,
+    description: "to be implemented in the future",
+  };
+  let formattedData = JSON.stringify(json);
+  return formattedData;
 }
 
 function sendEdgeData(edges) {

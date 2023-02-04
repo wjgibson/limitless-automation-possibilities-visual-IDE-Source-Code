@@ -54,10 +54,7 @@ const FlowEditor = (props) => {
           jsonData: flow,
           cid: props.configId,
         };
-        let body = JSON.stringify(json);
-        // console.log(`updateConfig json data: ${JSON.stringify(json)}`);
         nodeInserter.insert(json);
-        // APIHelper.makePost("updateConfig", body);
       }
     }
     props.setSave(false);
