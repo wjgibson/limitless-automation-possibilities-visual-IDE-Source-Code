@@ -75,7 +75,7 @@ const MainPage = () => {
           cid: cid,
         };
         let body = JSON.stringify(json);
-        APIHelper.makePost(`deleteConfig`, body);
+        await APIHelper.makePost(`deleteConfig`, body);
       };
       deleteConfig().then(() => {
         reload();
