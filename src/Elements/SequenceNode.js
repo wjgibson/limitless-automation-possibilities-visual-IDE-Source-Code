@@ -5,6 +5,7 @@ import "../Elements/elements.css";
 import DownDownMenu from "./dropDownMenu.js";
 import Validator from "../utilities/Validator";
 import DropDownMenu from "./dropDownMenu.js";
+import ColorPicker from "./ColorPicker";
 
 const text = `
 This is a user defined description for this node
@@ -19,6 +20,7 @@ function SequenceNode({ data }) {
 
   useEffect(() => {
     data.seqType = seqType;
+    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
@@ -46,11 +48,6 @@ function SequenceNode({ data }) {
           >
             Sequence
           </h3>
-          {/* <DownDownMenu
-            setSeqLayer={setSeqType}
-            setColor={setColor}
-            style={{ display: "inline", float: "right" }}
-          ></DownDownMenu> */}
         </div>
       }
       bordered={false}
@@ -60,10 +57,13 @@ function SequenceNode({ data }) {
         mixBlendMode: "difference",
       }}
     >
-      <div className="dynamicTextColor">
+      <div>
         <div>
           <div>
-            Type: <DropDownMenu configId={configId}></DropDownMenu>
+            <DropDownMenu
+              configId={configId}
+              setSeqLayer={setSeqType}
+            ></DropDownMenu>
           </div>
         </div>
         <p>Sequence</p>
