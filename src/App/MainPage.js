@@ -49,19 +49,6 @@ const MainPage = () => {
     setSave(true);
   };
 
-  const onRestore = (cid) => {
-    const restoreFlow = async () => {
-      const response = await APIHelper.doGet(`getConfigJSON${cid}`);
-      const flow = response[0].json;
-
-      if (flow) {
-        setNodes(flow.nodes || []);
-        setEdges(flow.edges || []);
-      }
-    };
-    restoreFlow();
-  };
-
   const onInsert = (reload) => {
     const insertNewConfig = async () => {
       let name = prompt("Enter the new configuration name");
@@ -111,7 +98,6 @@ const MainPage = () => {
         <CustomMenu
           selectedConfig={selectedConfig}
           save={onSave}
-          restore={onRestore}
           insert={onInsert}
           delete={onDelete}
           addToOpen={openNewConfig}

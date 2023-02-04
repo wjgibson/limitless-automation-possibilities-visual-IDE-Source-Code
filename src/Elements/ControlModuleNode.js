@@ -8,22 +8,15 @@ import Validator from "../utilities/Validator";
 function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
-  const [color, setColor] = useState(data.color);
-  const [seqType, setSeqType] = useState(1);
-
+  const [configId, setConfigId] = useState(data.configId);
+  const [isNewFlag, setIsNewFlag] = useState(data.isNew);
   useEffect(() => {
-    data.seqType = seqType;
-  }, [seqType]);
-
-  useEffect(() => {
-    data.color = color;
-    console.log(color);
-  }, [color]);
+    data.configId = configId;
+  }, [configId]);
 
   function isValidConnection(connection) {
     return Validator(reactFlowInstance, connection);
   }
-  data.opcid = 45;
 
   return (
     <Card
@@ -38,30 +31,20 @@ function ControlModuleNode({ data }) {
           >
             Control Module
           </h3>
-          <DownDownMenu
-            setSeqLayer={setSeqType}
-            setColor={setColor}
-            style={{ display: "inline", float: "right" }}
-          ></DownDownMenu>
         </div>
       }
       bordered={false}
       style={{
         width: 300,
-        backgroundColor: color,
         mixBlendMode: "difference",
       }}
     >
       <div className="dynamicTextColor">
-        <div>
-          <div>Type: {seqType}</div>
-        </div>
         <p>Control Module</p>
         <Handle
           type="target"
           position={Position.Top}
           isValidConnection={isValidConnection}
-          level={data.sType}
         />
       </div>
     </Card>

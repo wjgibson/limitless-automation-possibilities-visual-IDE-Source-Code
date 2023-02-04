@@ -19,7 +19,7 @@ import APIHelper from "../utilities/APIHelper";
 
 import nodeInserter from "../utilities/nodeInserter";
 
-const getId = () => `sequence_${uuidv4()}`;
+const getId = () => `${uuidv4()}`;
 
 const FlowEditor = (props) => {
   const reactFlowWrapper = useRef(null);
@@ -98,7 +98,7 @@ const FlowEditor = (props) => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node`, configId: props.configId },
+        data: { label: `${type} node`, configId: props.configId, isNew: true },
       };
 
       setNodes((nds) => nds.concat(newNode));

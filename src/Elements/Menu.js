@@ -59,6 +59,7 @@ const CustomMenu = (props) => {
   }, [props.instance]);
 
   async function getConfigurations() {
+    console.log("configurations got");
     setConfigList(await APIHelper.doGet("getAllConfigs"));
   }
 
