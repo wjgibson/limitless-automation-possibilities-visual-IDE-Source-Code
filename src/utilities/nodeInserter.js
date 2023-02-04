@@ -17,10 +17,10 @@ function parseReactFlowData(reactflowData) {
 function sendNodeData(nodes) {
   nodes.forEach((node) => {
     let json = {
-      id: node.id,
+      configId: node.data.configId,
       name: node.data.label,
-      type: node.type,
-      level: node.data.seqType,
+      typeuuid: node.data.seqType,
+      description: "to be implemented in the future",
     };
     let body = JSON.stringify(json);
   });

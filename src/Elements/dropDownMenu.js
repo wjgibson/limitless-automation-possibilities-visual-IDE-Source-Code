@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 export default function DropDownMenu(props) {
   const [seqTypes, setSeqTypes] = useState([]);
   const [nodeColorPreview, setNodeColorPreview] = useState();
-  const [nodeLayer, setNodeLayerPreview] = useState();
 
   useEffect(() => {
     getAllSeqTypes();
@@ -16,13 +15,13 @@ export default function DropDownMenu(props) {
     props.setColor(nodeColorPreview);
   };
 
-  const setNodeLayer = () => {
-    props.setSeqLayer(nodeLayer);
+  const setNodeType = (type) => {
+    props.setSeqType(type);
   };
 
   const onChange = (value) => {
     console.log(`selected ${value}`);
-    setNodeLayer();
+    setNodeType(value);
   };
   const onSearch = (value) => {
     console.log("search:", value);

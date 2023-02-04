@@ -20,7 +20,6 @@ function SequenceNode({ data }) {
 
   useEffect(() => {
     data.seqType = seqType;
-    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
@@ -62,7 +61,7 @@ function SequenceNode({ data }) {
           <div>
             <DropDownMenu
               configId={configId}
-              setSeqLayer={setSeqType}
+              setSeqType={setSeqType}
             ></DropDownMenu>
           </div>
         </div>
