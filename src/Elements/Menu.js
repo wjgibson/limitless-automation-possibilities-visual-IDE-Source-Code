@@ -42,7 +42,7 @@ const CustomMenu = (props) => {
 
   useEffect(() => {
     let configs = configList.map((config) =>
-      getItem(config.name, config.configuuid, <DeleteOutlined />)
+      getItem(config.name, config.configuuid)
     );
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
