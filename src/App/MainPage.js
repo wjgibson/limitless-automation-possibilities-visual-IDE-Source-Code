@@ -1,35 +1,17 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  useNodesState,
-  useEdgesState,
-  Controls,
-  Background,
-} from "reactflow";
+import React, { useState, useRef, useEffect } from "react";
+import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
 import { CloseOutlined } from "@ant-design/icons";
 
-import Sidebar from "../Elements/Sidebar";
-import nodeTypes from "../resources/nodeTypes";
-
-import { v4 as uuidv4 } from "uuid";
-
 import "./index.css";
 
-import APIHelper from "../resources/APIHelper";
+import APIHelper from "../utilities/APIHelper";
 
-import { Layout, Tabs, Popconfirm } from "antd";
+import { Layout, Tabs } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 
-const { Header, Content, Footer, Sider } = Layout;
-
-let flowKey = "";
-
-function setFlowKey(name) {
-  flowKey = name;
-}
+const { Content, Sider } = Layout;
 
 const MainPage = () => {
   const reactFlowWrapper = useRef(null);
@@ -42,9 +24,7 @@ const MainPage = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  useEffect(() => {
-    console.log("open configs set", openConfigs);
-  }, [openConfigs]);
+  useEffect(() => {}, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
     let newConfigs = openConfigs;
@@ -52,12 +32,10 @@ const MainPage = () => {
     if (index > -1) {
       newConfigs.splice(index, 1);
     }
-    console.log(newConfigs);
     setOpenConfigs([...newConfigs]);
   };
 
   const openNewConfig = (config) => {
-    console.log();
     if (
       config !== undefined &&
       config !== "" &&
@@ -92,7 +70,8 @@ const MainPage = () => {
         name: name,
       };
       let body = JSON.stringify(json);
-      await APIHelper.makePost("insertNewConfig", body);
+      // await APIHelper.makePost("insertNewConfig", body);
+      await APIHelper.makePost("createNewConfig", body);
     };
     insertNewConfig().then(() => {
       reload();
@@ -100,20 +79,22 @@ const MainPage = () => {
   };
 
   const onDelete = (cid, reload) => {
-    let confirmation = window.confirm("Are you sure you want to delete this configuration?")
-    if(confirmation){
-    const deleteConfig = async () => {
-      let json = {
-        cid: cid,
+    let confirmation = window.confirm(
+      "Are you sure you want to delete this configuration?"
+    );
+    if (confirmation) {
+      const deleteConfig = async () => {
+        let json = {
+          cid: cid,
+        };
+        let body = JSON.stringify(json);
+        APIHelper.makePost(`deleteConfig`, body);
       };
-      let body = JSON.stringify(json)
-      APIHelper.makePost(`deleteConfig`, body);
-    };
-    deleteConfig().then(() => {
-      reload();
-    })
-  }
-  }
+      deleteConfig().then(() => {
+        reload();
+      });
+    }
+  };
 
   return (
     <Layout>
@@ -121,6 +102,10 @@ const MainPage = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        style={{
+          overflow: "auto",
+          height: "100vh",
+        }}
       >
         <div className="logo" />
         <CustomMenu

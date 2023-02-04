@@ -3,7 +3,9 @@ import { React, useState, useEffect } from "react";
 import { Card } from "antd";
 import "../Elements/elements.css";
 import DownDownMenu from "./dropDownMenu.js";
-import Validator from "../resources/Validator";
+import Validator from "../utilities/Validator";
+import DropDownMenu from "./dropDownMenu.js";
+import ColorPicker from "./ColorPicker";
 
 const text = `
 This is a user defined description for this node
@@ -14,24 +16,24 @@ function SequenceNode({ data }) {
 
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.seqType);
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  const [configId, setConfigId] = useState(data.configId);
 
   useEffect(() => {
     data.seqType = seqType;
+    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
     data.color = color;
   }, [color]);
 
+  useEffect(() => {
+    data.configId = configId;
+  }, [configId]);
+
   function isValidConnection(connection) {
     return Validator(reactFlowInstance, connection);
   }
-
-  data.opcid = 45;
 
   return (
     <Card
@@ -46,11 +48,6 @@ function SequenceNode({ data }) {
           >
             Sequence
           </h3>
-          <DownDownMenu
-            setSeqLayer={setSeqType}
-            setColor={setColor}
-            style={{ display: "inline", float: "right" }}
-          ></DownDownMenu>
         </div>
       }
       bordered={false}
@@ -60,9 +57,14 @@ function SequenceNode({ data }) {
         mixBlendMode: "difference",
       }}
     >
-      <div className="dynamicTextColor">
+      <div>
         <div>
-          <div>Type: {seqType}</div>
+          <div>
+            <DropDownMenu
+              configId={configId}
+              setSeqLayer={setSeqType}
+            ></DropDownMenu>
+          </div>
         </div>
         <p>Sequence</p>
         <Handle

@@ -8,7 +8,7 @@ import {
 
 import React, { useEffect, useState } from "react";
 
-import APIHelper from "../resources/APIHelper";
+import APIHelper from "../utilities/APIHelper";
 
 import { Menu } from "antd";
 
@@ -36,14 +36,12 @@ const CustomMenu = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(`loaded:`, openConfig);
+    console.log(`loaded config:`, openConfig);
     props.addToOpen(openConfig);
   }, [openConfig]);
 
   useEffect(() => {
-    let configs = configList.map((config) =>
-      getItem(config.name, config.cid)
-    );
+    let configs = configList.map((config) => getItem(config.name, config.cid));
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
       getItem("Delete Configuration", "2", <DeleteOutlined />),
@@ -64,18 +62,17 @@ const CustomMenu = (props) => {
 
   async function checkForConfigSelection(selected) {
     if (selected.key === "1") {
+      console.log(`selected config id:${props.selectedConfig}`);
       saveConfiguration(reactFlowInstance, props.selectedConfig);
     } else if (selected.key === "5") {
       insertNewConfiguration(reactFlowInstance);
-    } else if (selected.key === "2"){
-      deleteConfiguration(props.selectedConfig)
+    } else if (selected.key === "2") {
+      deleteConfiguration(props.selectedConfig);
     } else {
-      console.log(`selected key: ${selected.key}`);
-      console.log(configList);
       setOpenConfig({
         id: selected.key,
         name: configList.filter(
-          (config) => config.cid == selected.key
+          (config) => config.configuuid == selected.key
         )[0].name,
       });
     }
@@ -84,7 +81,7 @@ const CustomMenu = (props) => {
   async function saveConfiguration() {
     props.save();
   }
-  async function deleteConfiguration(){
+  async function deleteConfiguration() {
     props.delete(props.selectedConfig, getConfigurations);
   }
   async function insertNewConfiguration() {
