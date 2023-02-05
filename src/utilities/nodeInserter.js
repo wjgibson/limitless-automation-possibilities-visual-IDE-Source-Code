@@ -6,16 +6,15 @@ let cid;
 
 function insert(reactflowData) {
   parseReactFlowData(reactflowData);
+  sendReactflowData(reactflowData);
   sendNodeData(nodesArray);
   sendEdgeData(edgesArray);
 }
 
 function parseReactFlowData(reactflowData) {
-  console.log(reactflowData);
   nodesArray = reactflowData.jsonData.nodes;
   edgesArray = reactflowData.jsonData.edges;
   cid = reactflowData.cid;
-  console.log(nodesArray);
 }
 
 function formatSequenceData(node) {
@@ -26,7 +25,6 @@ function formatSequenceData(node) {
     typeuuid: node.data.type,
     description: "to be implemented in the future",
   };
-  console.log(json);
   return json;
 }
 
@@ -48,29 +46,46 @@ function checkForType(node) {
   }
 }
 
-function sendNodeData(nodes) {
-  prepareTableForInsert("Sequence");
-  prepareTableForInsert("ControlModule");
-  nodes.forEach((node) => {
-    let body = formatSequenceData(node);
-    let endpointToCall = checkForType(body);
-    APIHelper.makePost(endpointToCall, JSON.stringify(body));
+async function sendReactflowData(reactflowData) {
+  let body = {
+    jsonData: reactflowData.jsonData,
+    cid: cid,
+  };
+  let json = JSON.stringify(body);
+  await APIHelper.makePost("updateConfig", json);
+}
+
+async function prepareNodeTables() {
+  await prepareTableForInsert("Sequence");
+  await prepareTableForInsert("ControlModule");
+}
+
+async function sendNodeData(nodes) {
+  await prepareNodeTables().then(() => {
+    nodes.forEach((node) => {
+      let body = formatSequenceData(node);
+      let endpointToCall = checkForType(body);
+      APIHelper.makePost(endpointToCall, JSON.stringify(body));
+    });
   });
 }
 
-function sendEdgeData(edges) {
-  prepareTableForInsert("SubSeq");
-  edges.forEach((edge) => {
-    let body = formatEdgeData(edge);
-    APIHelper.makePost("insertSubSequence", JSON.stringify(body));
+async function sendEdgeData(edges) {
+  let response = "";
+  await prepareTableForInsert("SubSeq").then(() => {
+    edges.forEach((edge) => {
+      let body = formatEdgeData(edge);
+      response = APIHelper.makePost("insertSubSequence", JSON.stringify(body));
+    });
   });
+  console.log(response);
 }
 
-function prepareTableForInsert(table) {
+async function prepareTableForInsert(table) {
   let body = {
     configuuid: cid,
   };
-  APIHelper.makePost(`prepare${table}Table`, JSON.stringify(body));
+  await APIHelper.makePost(`prepare${table}Table`, JSON.stringify(body));
 }
 
 export default {
