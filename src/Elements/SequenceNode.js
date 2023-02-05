@@ -2,9 +2,8 @@ import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect } from "react";
 import { Card } from "antd";
 import "../Elements/elements.css";
-import DownDownMenu from "./dropDownMenu.js";
 import Validator from "../utilities/Validator";
-import DropDownMenu from "./dropDownMenu.js";
+import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
 
 const text = `
@@ -15,11 +14,11 @@ function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
   const [color, setColor] = useState(data.color);
-  const [seqType, setSeqType] = useState(data.seqType);
+  const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
 
   useEffect(() => {
-    data.seqType = seqType;
+    data.type = seqType;
   }, [seqType]);
 
   useEffect(() => {
@@ -59,10 +58,10 @@ function SequenceNode({ data }) {
       <div>
         <div>
           <div>
-            <DropDownMenu
+            <SeqTypeSelectMenu
               configId={configId}
               setSeqType={setSeqType}
-            ></DropDownMenu>
+            ></SeqTypeSelectMenu>
           </div>
         </div>
         <p>Sequence</p>

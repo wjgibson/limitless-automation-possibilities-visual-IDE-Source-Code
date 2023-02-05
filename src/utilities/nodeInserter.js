@@ -2,58 +2,75 @@ import APIHelper from "./APIHelper";
 
 let nodesArray;
 let edgesArray;
+let cid;
 
 function insert(reactflowData) {
-  console.log(reactflowData);
   parseReactFlowData(reactflowData);
   sendNodeData(nodesArray);
   sendEdgeData(edgesArray);
 }
 
 function parseReactFlowData(reactflowData) {
+  console.log(reactflowData);
   nodesArray = reactflowData.jsonData.nodes;
   edgesArray = reactflowData.jsonData.edges;
+  cid = reactflowData.cid;
+  console.log(nodesArray);
 }
 
-function formatNodeData(node) {
+function formatSequenceData(node) {
   let json = {
-    sequenceId: node.id,
+    Id: node.id,
     configId: node.data.configId,
     name: node.data.label,
-    typeuuid: node.data.seqType,
+    typeuuid: node.data.type,
     description: "to be implemented in the future",
   };
-  let formattedData = JSON.stringify(json);
-  return formattedData;
+  console.log(json);
+  return json;
+}
+
+function formatEdgeData(edge) {
+  let json = {
+    parentNodeId: edge.source,
+    childNodeId: edge.target,
+    configuuid: cid,
+  };
+  return json;
 }
 
 function checkForType(node) {
-  let endpoint = "";
-  console.log(node.name);
-  if (node.name == "ControlModule") {
-    endpoint = "insertControlModule";
+  if (node.name == "controlModule node") {
+    return "insertControlModule";
   }
-  if (node.name == "Sequence") {
-    endpoint = "insertSequence";
+  if (node.name == "sequence node") {
+    return "insertSequence";
   }
-  return endpoint;
 }
 
 function sendNodeData(nodes) {
+  prepareTableForInsert("Sequence");
+  prepareTableForInsert("ControlModule");
   nodes.forEach((node) => {
-    let body = formatNodeData(node);
-    let endpointToCall = checkForType(node);
-    APIHelper.makePost("insertSequence", body);
+    let body = formatSequenceData(node);
+    let endpointToCall = checkForType(body);
+    APIHelper.makePost(endpointToCall, JSON.stringify(body));
   });
 }
 
 function sendEdgeData(edges) {
-  console.log(edges);
-  // edges.forEach((edge) => {
-  //   let json = {
-  //     sourceID:
-  //   }
-  // })
+  prepareTableForInsert("SubSeq");
+  edges.forEach((edge) => {
+    let body = formatEdgeData(edge);
+    APIHelper.makePost("insertSubSequence", JSON.stringify(body));
+  });
+}
+
+function prepareTableForInsert(table) {
+  let body = {
+    configuuid: cid,
+  };
+  APIHelper.makePost(`prepare${table}Table`, JSON.stringify(body));
 }
 
 export default {

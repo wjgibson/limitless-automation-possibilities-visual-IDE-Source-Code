@@ -1,14 +1,14 @@
-import { Select, Input, Button } from "antd";
+import { Select } from "antd";
 import APIHelper from "../utilities/APIHelper";
 import React, { useState, useEffect } from "react";
 
-export default function DropDownMenu(props) {
-  const [seqTypes, setSeqTypes] = useState([]);
+export default function SeqTypeSelectMenu(props) {
+  const [controlModuleTypes, setControlModuleTypes] = useState([]);
   const [nodeColorPreview, setNodeColorPreview] = useState();
 
   useEffect(() => {
-    getAllSeqTypes();
-    console.log(seqTypes);
+    getAllControlModuleTypes();
+    console.log(controlModuleTypes);
   }, []);
 
   const setNodeColor = () => {
@@ -16,7 +16,7 @@ export default function DropDownMenu(props) {
   };
 
   const setNodeType = (type) => {
-    props.setSeqType(type);
+    props.setControlModuleType(type);
   };
 
   const onChange = (value) => {
@@ -27,29 +27,29 @@ export default function DropDownMenu(props) {
     console.log("search:", value);
   };
 
-  const getAllSeqTypes = () => {
-    const retrieveSeqTypes = async () => {
+  const getAllControlModuleTypes = () => {
+    const retrieveControlModuleTypes = async () => {
       const response = await APIHelper.doGet(
-        `getAllSequenceTypes${props.configId}`
+        `getAllControlModuleTypes${props.configId}`
       );
-      setSeqTypes(response);
+      setControlModuleTypes(response);
     };
-    retrieveSeqTypes();
+    retrieveControlModuleTypes();
   };
   return (
     <>
       <Select
         showSearch
-        placeholder="Select a sequence type"
+        placeholder="Select a control module type"
         optionFilterProp="children"
         onChange={onChange}
         onSearch={onSearch}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
-        options={seqTypes.map((seqType) => ({
-          value: seqType.typeuuid,
-          label: seqType.name,
+        options={controlModuleTypes.map((cmType) => ({
+          value: cmType.typeuuid,
+          label: cmType.name,
         }))}
       />
     </>

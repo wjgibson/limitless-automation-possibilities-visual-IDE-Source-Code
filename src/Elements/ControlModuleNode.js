@@ -1,7 +1,7 @@
 import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect } from "react";
 import { Card } from "antd";
-import DownDownMenu from "./dropDownMenu.js";
+import ControlModuleSelectMenu from "./ControlModuleSelectMenu.js";
 import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 
@@ -9,10 +9,15 @@ function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
   const [configId, setConfigId] = useState(data.configId);
-  const [isNewFlag, setIsNewFlag] = useState(data.isNew);
+  const [controlModuleType, setControlModuleType] = useState(data.type);
+
   useEffect(() => {
     data.configId = configId;
   }, [configId]);
+
+  useEffect(() => {
+    data.type = controlModuleType;
+  }, [controlModuleType]);
 
   function isValidConnection(connection) {
     return Validator(reactFlowInstance, connection);
@@ -39,7 +44,11 @@ function ControlModuleNode({ data }) {
         mixBlendMode: "difference",
       }}
     >
-      <div className="dynamicTextColor">
+      <div>
+        <ControlModuleSelectMenu
+          configId={configId}
+          setControlModuleType={setControlModuleType}
+        ></ControlModuleSelectMenu>
         <p>Control Module</p>
         <Handle
           type="target"
