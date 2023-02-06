@@ -10,6 +10,7 @@ import APIHelper from "../utilities/APIHelper";
 import { Layout, Tabs } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
+import DeleteConfirmation from "../Elements/DeleteConfirmation";
 
 const { Content, Sider } = Layout;
 
@@ -21,10 +22,7 @@ const MainPage = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedConfig, setSelectedConfig] = useState("");
   const [save, setSave] = useState(false);
-
   const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {}, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
     let newConfigs = openConfigs;
@@ -57,7 +55,6 @@ const MainPage = () => {
         name: name,
       };
       let body = JSON.stringify(json);
-      // await APIHelper.makePost("insertNewConfig", body);
       await APIHelper.makePost("createNewConfig", body);
     };
     insertNewConfig().then(() => {
@@ -67,7 +64,7 @@ const MainPage = () => {
 
   const onDelete = (cid, reload) => {
     let confirmation = window.confirm(
-      "Are you sure you want to delete this configuration?"
+      "Are you sure you want to delete this configuration? Unsaved work will be lost"
     );
     if (confirmation) {
       const deleteConfig = async () => {
@@ -78,10 +75,21 @@ const MainPage = () => {
         await APIHelper.makePost(`deleteConfig`, body);
       };
       deleteConfig().then(() => {
+        removeConfigFromTabArray();
         reload();
       });
     }
   };
+
+  function removeConfigFromTabArray() {
+    let tabs = openConfigs;
+    tabs.forEach((openConfig, index) => {
+      if (openConfig.id == selectedConfig) {
+        tabs.splice(index, 1);
+      }
+    });
+    setOpenConfigs([...tabs]);
+  }
 
   return (
     <Layout>
@@ -97,6 +105,7 @@ const MainPage = () => {
         <div className="logo" />
         <CustomMenu
           selectedConfig={selectedConfig}
+          setSelectedConfig={setSelectedConfig}
           save={onSave}
           insert={onInsert}
           delete={onDelete}
@@ -109,6 +118,7 @@ const MainPage = () => {
             onTabClick={(e) => setSelectedConfig(e)}
             style={{ height: "100vh" }}
             type="card"
+            activeKey={selectedConfig}
             tabBarStyle={{ backgroundColor: "#001529" }}
             items={openConfigs?.map((config) => {
               return {

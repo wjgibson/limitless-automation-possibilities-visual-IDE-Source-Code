@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import APIHelper from "../utilities/APIHelper";
 
 import { Menu } from "antd";
+import DeleteConfirmation from "../Elements/DeleteConfirmation";
 
 function getItem(label, key, icon, children) {
   return {
@@ -59,7 +60,6 @@ const CustomMenu = (props) => {
   }, [props.instance]);
 
   async function getConfigurations() {
-    console.log("configurations got");
     setConfigList(await APIHelper.doGet("getAllConfigs"));
   }
 
@@ -70,7 +70,9 @@ const CustomMenu = (props) => {
     } else if (selected.key === "5") {
       insertNewConfiguration(reactFlowInstance);
     } else if (selected.key === "2") {
-      deleteConfiguration(props.selectedConfig);
+      if (DeleteConfirmation()) {
+        deleteConfiguration(props.selectedConfig);
+      }
     } else {
       setOpenConfig({
         id: selected.key,
@@ -78,6 +80,7 @@ const CustomMenu = (props) => {
           (config) => config.configuuid == selected.key
         )[0].name,
       });
+      props.setSelectedConfig(selected.key);
     }
   }
 
@@ -102,6 +105,7 @@ const CustomMenu = (props) => {
       mode="inline"
       items={items}
       onClick={onClick}
+      selectedKeys={[props.selectedConfig]}
     />
   );
 };
