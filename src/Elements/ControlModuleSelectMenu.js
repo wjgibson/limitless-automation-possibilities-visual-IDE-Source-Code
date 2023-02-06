@@ -8,7 +8,6 @@ export default function SeqTypeSelectMenu(props) {
 
   useEffect(() => {
     getAllControlModuleTypes();
-    console.log(controlModuleTypes);
   }, []);
 
   const setNodeColor = () => {
@@ -46,7 +45,7 @@ export default function SeqTypeSelectMenu(props) {
         value={props.controlModuleType}
         style={{ width: "100%" }}
         options={controlModuleTypes.map((cmType) => ({
-          value: cmType.typeuuid,
+          value: cmType.typeuuid + "|1",
           label: cmType.name,
         }))}
       />
