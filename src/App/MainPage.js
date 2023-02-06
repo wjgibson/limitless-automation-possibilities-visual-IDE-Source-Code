@@ -10,7 +10,6 @@ import APIHelper from "../utilities/APIHelper";
 import { Layout, Tabs } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
-import DeleteConfirmation from "../Elements/DeleteConfirmation";
 
 const { Content, Sider } = Layout;
 

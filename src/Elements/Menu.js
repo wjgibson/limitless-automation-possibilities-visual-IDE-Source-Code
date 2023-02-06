@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import APIHelper from "../utilities/APIHelper";
 
 import { Menu } from "antd";
-import DeleteConfirmation from "../Elements/DeleteConfirmation";
 
 function getItem(label, key, icon, children) {
   return {
@@ -70,9 +69,7 @@ const CustomMenu = (props) => {
     } else if (selected.key === "5") {
       insertNewConfiguration(reactFlowInstance);
     } else if (selected.key === "2") {
-      if (DeleteConfirmation()) {
-        deleteConfiguration(props.selectedConfig);
-      }
+      deleteConfiguration(props.selectedConfig);
     } else {
       setOpenConfig({
         id: selected.key,
