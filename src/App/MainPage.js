@@ -8,9 +8,11 @@ import ReactFlow, {
   useEdgesState,
   Controls,
   Background,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
-import { CloseOutlined } from '@ant-design/icons';
+
+} from "reactflow";
+import "reactflow/dist/style.css";
+import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
+
 
 import { v4 as uuidv4 } from 'uuid';
 import Sidebar from '../Elements/Sidebar';
@@ -31,13 +33,19 @@ import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 
 
-let flowKey = '';
+
+
+let flowKey = "";
+
 
 function setFlowKey(name) {
   flowKey = name;
 }
 
-function MainPage() {
+const MainPage = () => {
+  const [showExclamtion, setShowExclamation] = useState(false);
+  const exclamtionRef = useRef();
+
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -48,6 +56,9 @@ function MainPage() {
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const handleConfigChange = () => {
+    exclamtionRef.current.style.visibilty = true;
+  }
   useEffect(() => {
     console.log('open configs set', openConfigs);
   }, [openConfigs]);
@@ -122,6 +133,7 @@ function MainPage() {
   }
 
   return (
+    
     <Layout>
       <Sider
         collapsible
@@ -136,7 +148,10 @@ function MainPage() {
           insert={onInsert}
           delete={onDelete}
           addToOpen={openNewConfig}
-        />
+        >
+
+        </CustomMenu>
+
       </Sider>
       <Layout className="site-layout">
         <Content>
@@ -144,36 +159,45 @@ function MainPage() {
             onTabClick={(e) => setSelectedConfig(e)}
             style={{ height: '100vh' }}
             type="card"
-            tabBarStyle={{ backgroundColor: '#001529' }}
-            items={openConfigs?.map((config) => ({
-              label: (
-                <div style={{ color: 'white', mixBlendMode: 'difference' }}>
-                  <span>{`${config.name}`}</span>
-                  <button
-                    style={{ border: '0px', backgroundColor: 'transparent' }}
-                    onClick={() => removeOpenConfigs(config)}
-                  >
-                    <CloseOutlined
-                      style={{
-                        color: 'white',
-                        mixBlendMode: 'difference',
-                        float: 'left',
-                      }}
-                    />
-                  </button>
-                </div>
-              ),
-              key: config.id,
-              children: (
-                <FlowEditor
-                  configId={config.id}
-                  save={save}
-                  setSave={setSave}
-                  selectedConfig={selectedConfig}
-                  background={<Background color="#00284f" variant="dots" />}
-                />
-              ),
-            }))}
+            tabBarStyle={{ backgroundColor: "#001529" }}
+            items={openConfigs?.map((config) => {
+              return {
+                label: (
+                  <div style={{ color: "white", mixBlendMode: "difference" }}>
+                    <span>{`${config.name}`}</span>
+                    <button
+                      style={{ border: "0px", backgroundColor: "transparent" }}
+                      onClick={() => removeOpenConfigs(config)}
+                    >
+                      <CloseOutlined
+                        style={{
+                          color: "white",
+                          mixBlendMode: "difference",
+                          float: "left",
+                        }}
+                      />
+                      
+                    </button>
+                    {
+                    showExclamtion?<ExclamationOutlined
+                    />:null
+                    }
+                  </div>
+                ),
+                key: config.id,
+                children: (
+                  <FlowEditor
+                    configId={config.id}
+                    save={save}
+                    setSave={setSave}
+                    setShowExclamation={setShowExclamation}
+                    selectedConfig={selectedConfig}
+                    background={<Background color="#00284f" variant="dots" />}
+                  />
+                ),
+              };
+            })}
+
           />
         </Content>
       </Layout>

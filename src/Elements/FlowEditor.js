@@ -27,6 +27,7 @@ function FlowEditor(props) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
 
 
   useEffect(() => {
@@ -69,8 +70,25 @@ function FlowEditor(props) {
   useEffect(() => {
     if (props.save) {
       onSave();
+      setShowExclamationOnChange(false)
     }
   }, [props.save]);
+
+  useEffect(()=>{
+    if (nodes.length != 0){
+      setShowExclamationOnChange(true)
+    }
+    },[edges,nodes])
+
+  useEffect(() =>{
+    if (showExclamtionOnChange == true){
+      props.setShowExclamation(true)
+      
+    }
+    else{
+      props.setShowExclamation(false)
+    }
+  },[showExclamtionOnChange]);
 
   const onConnect = useCallback(
 
@@ -122,6 +140,8 @@ function FlowEditor(props) {
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
+      setShowExclamationOnChange(true)
+
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const type = event.dataTransfer.getData('application/reactflow');
