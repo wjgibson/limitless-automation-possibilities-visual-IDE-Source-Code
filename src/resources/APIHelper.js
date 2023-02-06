@@ -1,33 +1,33 @@
-const uri = `http://localhost:3001`;
+const uri = 'http://localhost:3001';
 
 const makePost = async (endpoint, body) => {
-  var header = new Headers();
+  const header = new Headers();
 
-  header.append("Content-Type", "application/json");
+  header.append('Content-Type', 'application/json');
 
-  var requestOptions = {
-    method: "POST",
+  const requestOptions = {
+    method: 'POST',
 
     headers: header,
 
-    body: body,
+    body,
 
-    redirect: "follow",
+    redirect: 'follow',
   };
 
-  let res = await fetch(`${uri}/${endpoint}`, requestOptions)
+  const res = await fetch(`${uri}/${endpoint}`, requestOptions)
     .then((response) => response.text())
 
     .then((result) => result)
 
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log('error', error));
 
   return res;
 };
 
-const doGet = (endpoint, params = "") => {
-  var requestOptions = {
-    method: "GET",
+const doGet = (endpoint, params = '') => {
+  const requestOptions = {
+    method: 'GET',
   };
 
   return fetch(`${uri}/${endpoint}/${params}`, requestOptions)
@@ -35,22 +35,22 @@ const doGet = (endpoint, params = "") => {
 
     .then((result) => result)
 
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log('error', error));
 };
 
 const returnPost = (endpoint, body) => {
-  var header = new Headers();
+  const header = new Headers();
 
-  header.append("Content-Type", "application/json");
+  header.append('Content-Type', 'application/json');
 
-  var requestOptions = {
-    method: "POST",
+  const requestOptions = {
+    method: 'POST',
 
     headers: header,
 
-    body: body,
+    body,
 
-    redirect: "follow",
+    redirect: 'follow',
   };
 
   return fetch(`${uri}/${endpoint}`, requestOptions)
@@ -58,7 +58,7 @@ const returnPost = (endpoint, body) => {
 
     .then((result) => result)
 
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log('error', error));
 };
 
 export default {
