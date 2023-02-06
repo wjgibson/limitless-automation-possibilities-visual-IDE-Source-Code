@@ -1,7 +1,7 @@
-import DropDownMenu from "../../src/Elements/dropDownMenu";
+import DropDownMenu from '../../src/Elements/dropDownMenu';
 
-describe("dropDownMenu.cy.js", () => {
-  it("dropDownMenu mounts correctly", () => {
-    cy.mount(<DropDownMenu></DropDownMenu>);
+describe('dropDownMenu.cy.js', () => {
+  it('dropDownMenu mounts correctly', () => {
+    cy.mount(<DropDownMenu />);
   });
 });

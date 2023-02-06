@@ -1,7 +1,7 @@
-import ControlModuleNode from "../Elements/ControlModuleNode";
-import SequenceNode from "../Elements/SequenceNode";
+import ControlModuleNode from '../Elements/ControlModuleNode';
+import SequenceNode from '../Elements/SequenceNode';
 
-var nodeTypes = {
+const nodeTypes = {
   controlModule: ControlModuleNode,
   sequence: SequenceNode,
 };

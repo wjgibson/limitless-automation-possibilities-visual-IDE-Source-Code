@@ -4,13 +4,12 @@ import {
   PlusOutlined,
   SaveOutlined,
   DeleteOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import APIHelper from "../resources/APIHelper";
-
-import { Menu } from "antd";
+import { Menu } from 'antd';
+import APIHelper from '../resources/APIHelper';
 
 function getItem(label, key, icon, children) {
   return {
@@ -21,10 +20,10 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const CustomMenu = (props) => {
+function CustomMenu(props) {
   const [configList, setConfigList] = useState([]);
   const [items, setItems] = useState([]);
-  const [openConfig, setOpenConfig] = useState("");
+  const [openConfig, setOpenConfig] = useState('');
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   useEffect(() => {
@@ -36,19 +35,22 @@ const CustomMenu = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(`loaded:`, openConfig);
+    console.log('loaded:', openConfig);
     props.addToOpen(openConfig);
   }, [openConfig]);
 
   useEffect(() => {
+
     let configs = configList.map((config) =>
-      getItem(config.name, config.cid, <DeleteOutlined />)
+      getItem(config.name, config.cid)
     );
     setItems([
       getItem("Save Configuration", "1", <SaveOutlined />),
+      getItem("Delete Configuration", "2", <DeleteOutlined />),
       getItem("Configurations", "sub1", <BuildOutlined />, [
+
         ...configs,
-        getItem("New", "5", <PlusOutlined />),
+        getItem('New', '5', <PlusOutlined />),
       ]),
     ]);
   }, [configList]);
@@ -58,20 +60,24 @@ const CustomMenu = (props) => {
   }, [props.instance]);
 
   async function getConfigurations() {
-    setConfigList(await APIHelper.doGet("getAllConfigs"));
+    setConfigList(await APIHelper.doGet('getAllConfigs'));
   }
 
   async function checkForConfigSelection(selected) {
-    if (selected.key === "1") {
+    if (selected.key === '1') {
       saveConfiguration(reactFlowInstance, props.selectedConfig);
-    } else if (selected.key === "5") {
+    } else if (selected.key === '5') {
       insertNewConfiguration(reactFlowInstance);
+    } else if (selected.key === "2"){
+      deleteConfiguration(props.selectedConfig)
     } else {
       console.log(`selected key: ${selected.key}`);
       console.log(configList);
       setOpenConfig({
         id: selected.key,
-        name: configList.filter((config) => config.cid == selected.key)[0].name,
+        name: configList.filter(
+          (config) => config.cid == selected.key
+        )[0].name,
       });
     }
   }
@@ -79,7 +85,9 @@ const CustomMenu = (props) => {
   async function saveConfiguration() {
     props.save();
   }
-
+  async function deleteConfiguration(){
+    props.delete(props.selectedConfig, getConfigurations);
+  }
   async function insertNewConfiguration() {
     props.insert(getConfigurations);
   }
@@ -91,12 +99,12 @@ const CustomMenu = (props) => {
   return (
     <Menu
       theme="dark"
-      defaultSelectedKeys={["1"]}
+      defaultSelectedKeys={['1']}
       mode="inline"
       items={items}
       onClick={onClick}
     />
   );
-};
+}
 
 export default CustomMenu;
