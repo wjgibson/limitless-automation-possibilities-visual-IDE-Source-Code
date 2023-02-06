@@ -24,9 +24,12 @@ import { Layout, Tabs, Flex } from 'antd';
 import CustomMenu from '../Elements/Menu';
 import FlowEditor from '../Elements/FlowEditor';
 
-const {
-  Header, Content, Footer, Sider,
-} = Layout;
+
+
+import { Layout, Tabs, Popconfirm } from "antd";
+import CustomMenu from "../Elements/Menu";
+import FlowEditor from "../Elements/FlowEditor";
+
 
 let flowKey = '';
 
@@ -102,6 +105,22 @@ function MainPage() {
     });
   };
 
+  const onDelete = (cid, reload) => {
+    let confirmation = window.confirm("Are you sure you want to delete this configuration?")
+    if(confirmation){
+    const deleteConfig = async () => {
+      let json = {
+        cid: cid,
+      };
+      let body = JSON.stringify(json)
+      APIHelper.makePost(`deleteConfig`, body);
+    };
+    deleteConfig().then(() => {
+      reload();
+    })
+  }
+  }
+
   return (
     <Layout>
       <Sider
@@ -115,6 +134,7 @@ function MainPage() {
           save={onSave}
           restore={onRestore}
           insert={onInsert}
+          delete={onDelete}
           addToOpen={openNewConfig}
         />
       </Sider>

@@ -40,10 +40,15 @@ function CustomMenu(props) {
   }, [openConfig]);
 
   useEffect(() => {
-    const configs = configList.map((config) => getItem(config.name, config.cid, <DeleteOutlined />));
+
+    let configs = configList.map((config) =>
+      getItem(config.name, config.cid)
+    );
     setItems([
-      getItem('Save Configuration', '1', <SaveOutlined />),
-      getItem('Configurations', 'sub1', <BuildOutlined />, [
+      getItem("Save Configuration", "1", <SaveOutlined />),
+      getItem("Delete Configuration", "2", <DeleteOutlined />),
+      getItem("Configurations", "sub1", <BuildOutlined />, [
+
         ...configs,
         getItem('New', '5', <PlusOutlined />),
       ]),
@@ -63,12 +68,16 @@ function CustomMenu(props) {
       saveConfiguration(reactFlowInstance, props.selectedConfig);
     } else if (selected.key === '5') {
       insertNewConfiguration(reactFlowInstance);
+    } else if (selected.key === "2"){
+      deleteConfiguration(props.selectedConfig)
     } else {
       console.log(`selected key: ${selected.key}`);
       console.log(configList);
       setOpenConfig({
         id: selected.key,
-        name: configList.filter((config) => config.cid == selected.key)[0].name,
+        name: configList.filter(
+          (config) => config.cid == selected.key
+        )[0].name,
       });
     }
   }
@@ -76,7 +85,9 @@ function CustomMenu(props) {
   async function saveConfiguration() {
     props.save();
   }
-
+  async function deleteConfiguration(){
+    props.delete(props.selectedConfig, getConfigurations);
+  }
   async function insertNewConfiguration() {
     props.insert(getConfigurations);
   }
