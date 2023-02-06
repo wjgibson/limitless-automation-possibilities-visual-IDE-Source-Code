@@ -64,6 +64,7 @@ const FlowEditor = (props) => {
     const restoreFlow = async () => {
       const response = await APIHelper.doGet(`getConfigJSON${cid}`);
       const flow = response[0].json;
+      console.log(flow);
 
       if (flow) {
         setNodes(flow.nodes || []);
@@ -98,7 +99,8 @@ const FlowEditor = (props) => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node`, configId: props.configId, isNew: true },
+        data: { label: `${type} node`, configId: props.configId },
+        dragHandle: ".drag-handle",
       };
 
       setNodes((nds) => nds.concat(newNode));

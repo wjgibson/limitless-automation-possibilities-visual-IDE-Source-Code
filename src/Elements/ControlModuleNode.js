@@ -12,11 +12,16 @@ function ControlModuleNode({ data }) {
   const [controlModuleType, setControlModuleType] = useState(data.type);
 
   useEffect(() => {
+    data.seqType = "c|1";
+  }, []);
+
+  useEffect(() => {
     data.configId = configId;
+    data.seqType = "c|1";
   }, [configId]);
 
   useEffect(() => {
-    data.type = controlModuleType;
+    data.type = controlModuleType + "|1";
   }, [controlModuleType]);
 
   function isValidConnection(connection) {
@@ -26,7 +31,7 @@ function ControlModuleNode({ data }) {
   return (
     <Card
       title={
-        <div>
+        <div className="drag-handle">
           <h3
             style={{
               display: "inline",
@@ -48,6 +53,7 @@ function ControlModuleNode({ data }) {
         <ControlModuleSelectMenu
           configId={configId}
           setControlModuleType={setControlModuleType}
+          controlModuleType={controlModuleType}
         ></ControlModuleSelectMenu>
         <p>Control Module</p>
         <Handle

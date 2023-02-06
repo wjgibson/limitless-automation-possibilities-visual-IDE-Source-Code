@@ -8,8 +8,11 @@ export default function SeqTypeSelectMenu(props) {
 
   useEffect(() => {
     getAllSeqTypes();
-    console.log(seqTypes);
   }, []);
+
+  useEffect(() => {
+    console.log(seqTypes);
+  }, [seqTypes]);
 
   const setNodeColor = () => {
     props.setColor(nodeColorPreview);
@@ -23,9 +26,6 @@ export default function SeqTypeSelectMenu(props) {
     console.log(`selected ${value}`);
     setNodeType(value);
   };
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
 
   const getAllSeqTypes = () => {
     const retrieveSeqTypes = async () => {
@@ -38,17 +38,18 @@ export default function SeqTypeSelectMenu(props) {
   };
   return (
     <>
+      <p style={{ margin: 0, fontSize: "10px" }}>Sequence Type</p>
       <Select
-        showSearch
         placeholder="Select a sequence type"
         optionFilterProp="children"
         onChange={onChange}
-        onSearch={onSearch}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
+        value={props.seqType}
+        style={{ width: "100%" }}
         options={seqTypes.map((seqType) => ({
-          value: seqType.typeuuid,
+          value: seqType.typeuuid + "|" + seqType.plcid,
           label: seqType.name,
         }))}
       />

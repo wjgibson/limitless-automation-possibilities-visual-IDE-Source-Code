@@ -1,8 +1,19 @@
 function Validator(instance, connection) {
-  const sourceNodeLevel = instance.getNode(connection.source).data.seqType;
-  const targetNodeLevel = instance.getNode(connection.target).data.seqType;
+  const sourceNodeLevel = instance
+    .getNode(connection.source)
+    .data.type.split("|")[1];
+  const targetNodeLevel = instance
+    .getNode(connection.target)
+    .data.type.split("|")[1];
 
-  if (targetNodeLevel >= sourceNodeLevel) {
+  console.log(targetNodeLevel);
+  if (targetNodeLevel == 1) {
+    if (sourceNodeLevel == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if (targetNodeLevel >= sourceNodeLevel) {
     return false;
   }
   return true;

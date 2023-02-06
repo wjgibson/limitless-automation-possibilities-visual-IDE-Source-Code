@@ -19,6 +19,7 @@ function SequenceNode({ data }) {
 
   useEffect(() => {
     data.type = seqType;
+    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ function SequenceNode({ data }) {
   return (
     <Card
       title={
-        <div>
+        <div className="drag-handle">
           <h3
             style={{
               display: "inline",
@@ -61,6 +62,7 @@ function SequenceNode({ data }) {
             <SeqTypeSelectMenu
               configId={configId}
               setSeqType={setSeqType}
+              seqType={seqType}
             ></SeqTypeSelectMenu>
           </div>
         </div>

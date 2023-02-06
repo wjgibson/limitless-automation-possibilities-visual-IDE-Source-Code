@@ -23,9 +23,6 @@ export default function SeqTypeSelectMenu(props) {
     console.log(`selected ${value}`);
     setNodeType(value);
   };
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
 
   const getAllControlModuleTypes = () => {
     const retrieveControlModuleTypes = async () => {
@@ -38,15 +35,16 @@ export default function SeqTypeSelectMenu(props) {
   };
   return (
     <>
+      <p style={{ margin: 0, fontSize: "10px" }}>Control Module Type</p>
       <Select
-        showSearch
         placeholder="Select a control module type"
         optionFilterProp="children"
         onChange={onChange}
-        onSearch={onSearch}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
+        value={props.controlModuleType}
+        style={{ width: "100%" }}
         options={controlModuleTypes.map((cmType) => ({
           value: cmType.typeuuid,
           label: cmType.name,

@@ -4,11 +4,12 @@ let nodesArray;
 let edgesArray;
 let cid;
 
-function insert(reactflowData) {
+async function insert(reactflowData) {
   parseReactFlowData(reactflowData);
   sendReactflowData(reactflowData);
-  sendNodeData(nodesArray);
-  sendEdgeData(edgesArray);
+  await sendNodeData(nodesArray).then(() => {
+    sendEdgeData(edgesArray);
+  });
 }
 
 function parseReactFlowData(reactflowData) {
@@ -22,7 +23,7 @@ function formatSequenceData(node) {
     Id: node.id,
     configId: node.data.configId,
     name: node.data.label,
-    typeuuid: node.data.type,
+    typeuuid: node.data.type.split("|")[0],
     description: "to be implemented in the future",
   };
   return json;
