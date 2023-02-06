@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
 
 import "./index.css";
 
@@ -15,6 +15,8 @@ import DeleteConfirmation from "../Elements/DeleteConfirmation";
 const { Content, Sider } = Layout;
 
 const MainPage = () => {
+  const [showExclamtion, setShowExclamation] = useState(false);
+  const exclamtionRef = useRef();
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -23,6 +25,13 @@ const MainPage = () => {
   const [selectedConfig, setSelectedConfig] = useState("");
   const [save, setSave] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleConfigChange = () => {
+    exclamtionRef.current.style.visibilty = true;
+  };
+  useEffect(() => {
+    console.log("open configs set", openConfigs);
+  }, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
     let newConfigs = openConfigs;
@@ -137,6 +146,7 @@ const MainPage = () => {
                         }}
                       />
                     </button>
+                    {showExclamtion ? <ExclamationOutlined /> : null}
                   </div>
                 ),
                 key: config.id,
@@ -145,6 +155,7 @@ const MainPage = () => {
                     configId={config.id}
                     save={save}
                     setSave={setSave}
+                    setShowExclamation={setShowExclamation}
                     selectedConfig={selectedConfig}
                     background={<Background color="#00284f" variant="dots" />}
                   />
