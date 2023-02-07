@@ -33,12 +33,17 @@ const MainPage = () => {
   }, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
+    let confirmation = window.confirm(
+      "Closing this tab without saving will lose unsaved progress. Are you sure?"
+    );
     let newConfigs = openConfigs;
     let index = newConfigs.indexOf(config);
     if (index > -1) {
       newConfigs.splice(index, 1);
     }
-    setOpenConfigs([...newConfigs]);
+    if (confirmation) {
+      setOpenConfigs([...newConfigs]);
+    }
   };
 
   const openNewConfig = (config) => {
