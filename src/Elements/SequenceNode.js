@@ -12,7 +12,9 @@ This is a user defined description for this node
 
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
-
+  const [connection, setConnection] = useState();
+  const [checkIfValidConnection, setCheckIfValidConnection] = useState(false);
+  const [invalidConnection, setInvalidConnection] = useState(false);
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
@@ -30,6 +32,7 @@ function SequenceNode({ data }) {
   }, [configId]);
 
   function isValidConnection(connection) {
+    setConnection(connection);
     return Validator(reactFlowInstance, connection);
   }
 

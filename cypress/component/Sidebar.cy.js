@@ -1,24 +1,24 @@
-import Sidebar from "../../src/Elements/Sidebar";
+import Sidebar from '../../src/Elements/Sidebar';
 
-describe("Sidebar.cy.js", () => {
-  const description = "[aria-label=description]";
-  const sequence = "[aria-label=sequence]";
-  const controlModule = "[aria-label=controlModule]";
+describe('Sidebar.cy.js', () => {
+  const description = '[aria-label=description]';
+  const sequence = '[aria-label=sequence]';
+  const controlModule = '[aria-label=controlModule]';
 
-  //Mounting test//
-  it("Sidebar mounts correctly", () => {
-    cy.mount(<Sidebar></Sidebar>);
+  // Mounting test//
+  it('Sidebar mounts correctly', () => {
+    cy.mount(<Sidebar />);
   });
 
-  //Testing for onDragStart Event//
+  // Testing for onDragStart Event//
 
-  it("sequence node draggable", () => {
-    cy.mount(<Sidebar></Sidebar>);
+  it('sequence node draggable', () => {
+    cy.mount(<Sidebar />);
 
     cy.get(sequence)
-      .trigger("mousedown", { button: 0 })
+      .trigger('mousedown', { button: 0 })
       .wait(1500)
-      .trigger("mousemove", {
+      .trigger('mousemove', {
         clientX: 357.75,
         clientY: 682.25,
         screenX: 1811.75,
@@ -26,16 +26,16 @@ describe("Sidebar.cy.js", () => {
         pageX: 682.25,
         pageY: 105.8125,
       })
-      .trigger("mouseup", { force: true });
+      .trigger('mouseup', { force: true });
   });
 
-  it("control module node draggable", () => {
-    cy.mount(<Sidebar></Sidebar>);
+  it('control module node draggable', () => {
+    cy.mount(<Sidebar />);
 
     cy.get(controlModule)
-      .trigger("mousedown", { button: 0 })
+      .trigger('mousedown', { button: 0 })
       .wait(1500)
-      .trigger("mousemove", {
+      .trigger('mousemove', {
         clientX: 357.75,
         clientY: 682.25,
         screenX: 1811.75,
@@ -43,6 +43,6 @@ describe("Sidebar.cy.js", () => {
         pageX: 682.25,
         pageY: 105.8125,
       })
-      .trigger("mouseup", { force: true });
+      .trigger('mouseup', { force: true });
   });
 });

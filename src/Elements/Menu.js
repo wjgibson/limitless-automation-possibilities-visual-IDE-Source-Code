@@ -21,7 +21,7 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const CustomMenu = (props) => {
+function CustomMenu(props) {
   const [configList, setConfigList] = useState([]);
   const [items, setItems] = useState([]);
   const [openConfig, setOpenConfig] = useState("");
@@ -104,6 +104,6 @@ const CustomMenu = (props) => {
       onClick={onClick}
     />
   );
-};
+}
 
 export default CustomMenu;

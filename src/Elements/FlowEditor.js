@@ -21,36 +21,95 @@ import nodeInserter from "../utilities/nodeInserter";
 
 const getId = () => `${uuidv4()}`;
 
-const FlowEditor = (props) => {
+function FlowEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
 
   useEffect(() => {
     console.log(props.configId);
     onRestore(props.configId);
   }, []);
 
+  const trackEdgeConnection = () => {
+    let edges2 = edges;
+    let nodes2 = nodes;
+    if ((nodes2 != nodes2.length) != 0) {
+      for (var i = 0; i < nodes2.length; i++) {
+        if (nodes2[i].data.invalidConnection == true) {
+          let nodeTarget = nodes2[i].data.connection;
+          for (var j = 0; j < edges2.length; j++) {
+            if (nodeTarget.source == edges2[j].source) {
+              edges2[j].style = { stroke: "red" };
+            }
+          }
+        }
+        if (nodes2[i].data.invalidConnection == false) {
+          let nodeTarget = nodes2[i].data.connection;
+          if (nodeTarget != undefined) {
+            for (var j = 0; j < edges2.length; j++) {
+              if (nodeTarget.target == edges2[j].target) {
+                edges2[j].style = { stroke: "black" };
+              }
+            }
+          }
+        }
+      }
+      setEdges([...edges2]);
+      setNodes([...nodes2]);
+    }
+  };
+  useEffect(() => {
+    trackEdgeConnection();
+  }, [nodes]);
+
   useEffect(() => {
     if (props.save) {
       onSave();
+      setShowExclamationOnChange(false);
     }
   }, [props.save]);
+
+  useEffect(() => {
+    if (nodes.length != 0) {
+      setShowExclamationOnChange(true);
+    }
+  }, [edges, nodes]);
+
+  useEffect(() => {
+    if (showExclamtionOnChange == true) {
+      props.setShowExclamation(true);
+    } else {
+      props.setShowExclamation(false);
+    }
+  }, [showExclamtionOnChange]);
 
   const onConnect = useCallback(
     (params) =>
       setEdges((eds) =>
-        addEdge({ ...params, type: "step", animated: true }, eds)
+        addEdge(
+          {
+            ...params,
+            type: "step",
+            animated: true,
+            style: { stroke: "black" },
+          },
+          eds
+        )
       ),
     []
   );
+  useEffect(() => {
+    console.log(reactFlowInstance);
+  }, [reactFlowInstance]);
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
       if (reactFlowInstance) {
         const flow = reactFlowInstance.toObject();
-        let json = {
+        const json = {
           jsonData: flow,
           cid: props.configId,
         };
@@ -81,6 +140,7 @@ const FlowEditor = (props) => {
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
+      setShowExclamationOnChange(true);
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const type = event.dataTransfer.getData("application/reactflow");
@@ -132,6 +192,6 @@ const FlowEditor = (props) => {
       </div>
     </div>
   );
-};
+}
 
 export default FlowEditor;

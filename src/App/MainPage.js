@@ -1,19 +1,47 @@
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import ReactFlow, {
+  ReactFlowProvider,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  Controls,
+  Background,
+} from "reactflow";
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
+
+import { v4 as uuidv4 } from "uuid";
+import Sidebar from "../Elements/Sidebar";
+import nodeTypes from "../resources/nodeTypes";
 
 import "./index.css";
 
+import APIHelper from "../resources/APIHelper";
+
+import { Layout, Tabs, Flex } from "antd";
+import CustomMenu from "../Elements/Menu";
+import FlowEditor from "../Elements/FlowEditor";
+import { CloseOutlined } from "@ant-design/icons";
+
 import APIHelper from "../utilities/APIHelper";
 
-import { Layout, Tabs } from "antd";
+import { Layout, Tabs, Popconfirm } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 
+let flowKey = "";
+
+function setFlowKey(name) {
+  flowKey = name;
+}
 const { Content, Sider } = Layout;
 
 const MainPage = () => {
+  const [showExclamtion, setShowExclamation] = useState(false);
+  const exclamtionRef = useRef();
+
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -24,18 +52,26 @@ const MainPage = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const handleConfigChange = () => {
+    exclamtionRef.current.style.visibilty = true;
+  };
+  useEffect(() => {
+    console.log("open configs set", openConfigs);
+  }, [openConfigs]);
   useEffect(() => {}, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
-    let newConfigs = openConfigs;
-    let index = newConfigs.indexOf(config);
+    const newConfigs = openConfigs;
+    const index = newConfigs.indexOf(config);
     if (index > -1) {
       newConfigs.splice(index, 1);
     }
+    console.log(newConfigs);
     setOpenConfigs([...newConfigs]);
   };
 
   const openNewConfig = (config) => {
+    console.log();
     if (
       config !== undefined &&
       config !== "" &&
@@ -49,13 +85,28 @@ const MainPage = () => {
     setSave(true);
   };
 
+  const onRestore = (cid) => {
+    const restoreFlow = async () => {
+      const response = await APIHelper.doGet(`getConfigJSON${cid}`);
+      const flow = response[0].json;
+
+      if (flow) {
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      }
+    };
+    restoreFlow();
+  };
+
   const onInsert = (reload) => {
     const insertNewConfig = async () => {
-      let name = prompt("Enter the new configuration name");
-      let json = {
+      const name = prompt("Enter the new configuration name");
+      const json = {
         jsonData: reactFlowInstance,
-        name: name,
+        name,
       };
+      const body = JSON.stringify(json);
+      await APIHelper.makePost("insertNewConfig", body);
       let body = JSON.stringify(json);
       // await APIHelper.makePost("insertNewConfig", body);
       await APIHelper.makePost("createNewConfig", body);
@@ -75,7 +126,7 @@ const MainPage = () => {
           cid: cid,
         };
         let body = JSON.stringify(json);
-        await APIHelper.makePost(`deleteConfig`, body);
+        APIHelper.makePost(`deleteConfig`, body);
       };
       deleteConfig().then(() => {
         reload();
@@ -89,15 +140,12 @@ const MainPage = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        style={{
-          overflow: "auto",
-          height: "100vh",
-        }}
       >
         <div className="logo" />
         <CustomMenu
           selectedConfig={selectedConfig}
           save={onSave}
+          restore={onRestore}
           insert={onInsert}
           delete={onDelete}
           addToOpen={openNewConfig}
@@ -127,6 +175,7 @@ const MainPage = () => {
                         }}
                       />
                     </button>
+                    {showExclamtion ? <ExclamationOutlined /> : null}
                   </div>
                 ),
                 key: config.id,
@@ -135,6 +184,7 @@ const MainPage = () => {
                     configId={config.id}
                     save={save}
                     setSave={setSave}
+                    setShowExclamation={setShowExclamation}
                     selectedConfig={selectedConfig}
                     background={<Background color="#00284f" variant="dots" />}
                   />
