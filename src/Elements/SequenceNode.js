@@ -1,9 +1,10 @@
-import { Handle, Position, useReactFlow } from 'reactflow';
-import { React, useState, useEffect } from 'react';
-import { Card } from 'antd';
-import './elements.css';
-import DownDownMenu from './dropDownMenu.js';
-import Validator from '../resources/Validator';
+import { Handle, Position, useReactFlow } from "reactflow";
+import { React, useState, useEffect, useCallback } from "react";
+import { Card, message } from "antd";
+import "../Elements/elements.css";
+import Validator from "../utilities/Validator";
+import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
+import ColorPicker from "./ColorPicker";
 
 const text = `
 This is a user defined description for this node
@@ -11,97 +12,99 @@ This is a user defined description for this node
 
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
-  const [connection, setConnection] = useState();
-  const [checkIfValidConnection, setCheckIfValidConnection] = useState(false);
-  const [invalidConnection, setInvalidConnection] = useState(false);
+
+  const [messageApi, contextHolder] = message.useMessage();
   const [color, setColor] = useState(data.color);
-  const [seqType, setSeqType] = useState(data.seqType);
+  const [seqType, setSeqType] = useState(data.type);
+  const [configId, setConfigId] = useState(data.configId);
+  const [invalidFlag, setInvalidFlag] = useState(false);
 
   useEffect(() => {
-    data.seqType = seqType;
-    setCheckIfValidConnection(!checkIfValidConnection)
-    console.log("Change Seq")
-    data.edgeCheck()
+    data.type = seqType;
+    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
     data.color = color;
   }, [color]);
 
-  useEffect(() =>{
-    data.connection = connection;
-  }, [connection])
-  useEffect(() =>{
-    data.invalidConnection = invalidConnection;
-  },[invalidConnection])
-  useEffect(()=>{
-    if(connection != null){
-    if(Validator(reactFlowInstance, connection)){
-      setInvalidConnection(false);
-      
+  useEffect(() => {
+    data.configId = configId;
+  }, [configId]);
+
+  useEffect(() => {
+    if (invalidFlag) {
+      invalidConnectionMessage();
+      setInvalidFlag((flag) => !flag);
     }
-    else{
-      setInvalidConnection(true)
+  }, [invalidFlag]);
+
+  const invalidConnectionMessage = useCallback(() => {
+    if (invalidFlag) {
+      messageApi.open({
+        type: "error",
+        content: "This connection is invalid!",
+      });
     }
-  }},[checkIfValidConnection])
-
-
-
+  }, [invalidFlag]);
 
   function isValidConnection(connection) {
-    setConnection(connection)
-    return Validator(reactFlowInstance, connection);
+    let connectionValidity = Validator(reactFlowInstance, connection);
+
+    if (!connectionValidity && !invalidFlag) {
+      setInvalidFlag(true);
+    }
+    return connectionValidity;
   }
 
-  data.opcid = 45;
-
   return (
-    <Card
-      title={(
-        <div>
-          <h3
-            style={{
-              display: 'inline',
-              color: 'white',
-              mixBlendMode: 'difference',
-            }}
-          >
-            Sequence
-          </h3>
-          <DownDownMenu
-            setSeqLayer={setSeqType}
-            setColor={setColor}
-            style={{ display: 'inline', float: 'right' }}
-          />
-        </div>
-      )}
-      bordered={false}
-      style={{
-        width: 300,
-        backgroundColor: color,
-        mixBlendMode: 'difference',
-      }}
-    >
-      <div className="dynamicTextColor">
+    <>
+      {contextHolder}
+      <Card
+        title={
+          <div className="drag-handle">
+            <h3
+              style={{
+                display: "inline",
+                color: "white",
+                mixBlendMode: "difference",
+              }}
+            >
+              Sequence
+            </h3>
+          </div>
+        }
+        bordered={false}
+        style={{
+          width: 300,
+          backgroundColor: color,
+          mixBlendMode: "difference",
+        }}
+      >
         <div>
           <div>
-            Type:
-            {seqType}
+            <div>
+              <SeqTypeSelectMenu
+                configId={configId}
+                setSeqType={setSeqType}
+                seqType={seqType}
+              ></SeqTypeSelectMenu>
+            </div>
           </div>
+          <p>Sequence</p>
+          <Handle
+            type="target"
+            position={Position.Top}
+            isValidConnection={isValidConnection}
+          />
+          <Handle
+            type="source"
+            position={Position.Bottom}
+            isValidConnection={isValidConnection}
+          />
         </div>
-        <p>Sequence</p>
-        <Handle
-          type="target"
-          position={Position.Top}
-          isValidConnection={isValidConnection}
-        />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          isValidConnection={isValidConnection}
-        />
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 }
 
