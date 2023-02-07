@@ -105,8 +105,6 @@ const MainPage = () => {
         jsonData: reactFlowInstance,
         name,
       };
-      const body = JSON.stringify(json);
-      await APIHelper.makePost("insertNewConfig", body);
       let body = JSON.stringify(json);
       // await APIHelper.makePost("insertNewConfig", body);
       await APIHelper.makePost("createNewConfig", body);
