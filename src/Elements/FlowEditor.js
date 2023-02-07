@@ -1,119 +1,60 @@
-import React, {
-  useState, useRef, useCallback, useEffect,
-} from 'react';
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
   useNodesState,
   useEdgesState,
   Controls,
-  Background,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+} from "reactflow";
+import "reactflow/dist/style.css";
 
-import Sidebar from './Sidebar';
-import nodeTypes from '../resources/nodeTypes';
+import Sidebar from "./Sidebar";
+import nodeTypes from "../utilities/nodeTypes";
 
-import '../App/index.css';
+import "../App/index.css";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-import APIHelper from '../resources/APIHelper';
+import APIHelper from "../utilities/APIHelper";
 
-const getId = () => `sequence_${uuidv4()}`;
+import nodeInserter from "../utilities/nodeInserter";
 
-function FlowEditor(props) {
+const getId = () => `${uuidv4()}`;
+
+const FlowEditor = (props) => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
-
 
   useEffect(() => {
+    console.log(props.configId);
     onRestore(props.configId);
   }, []);
-
-  const trackEdgeConnection =() => {
-    let edges2 = edges
-    let nodes2 = nodes
-    if(nodes2 !=nodes2.length!= 0){
-      for(var i = 0; i<nodes2.length; i++){
-
-      if(nodes2[i].data.invalidConnection == true){
-        let nodeTarget = nodes2[i].data.connection
-        for(var j = 0; j < edges2.length; j++){
-          if(nodeTarget.source == edges2[j].source){        
-            edges2[j].style = {stroke:'red'}
-          }
-        }
-      }
-      if(nodes2[i].data.invalidConnection == false){
-        let nodeTarget = nodes2[i].data.connection
-        if(nodeTarget != undefined){
-        for(var j = 0; j < edges2.length; j++){
-          if(nodeTarget.target == edges2[j].target){        
-            edges2[j].style = {stroke:'black'}
-            }
-        }
-      }
-      }
-      }
-        setEdges([...edges2]) 
-        setNodes([...nodes2])
-    }
-  }
-  useEffect(()=>{
-    trackEdgeConnection()
-  },[nodes])
 
   useEffect(() => {
     if (props.save) {
       onSave();
-      setShowExclamationOnChange(false)
     }
   }, [props.save]);
 
-  useEffect(()=>{
-    if (nodes.length != 0){
-      setShowExclamationOnChange(true)
-    }
-    },[edges,nodes])
-
-  useEffect(() =>{
-    if (showExclamtionOnChange == true){
-      props.setShowExclamation(true)
-      
-    }
-    else{
-      props.setShowExclamation(false)
-    }
-  },[showExclamtionOnChange]);
-
   const onConnect = useCallback(
-
     (params) =>
       setEdges((eds) =>
-        addEdge({ ...params, type: "step", animated: true, style:{stroke:'black'} }, eds)
-    ),
+        addEdge({ ...params, type: "step", animated: true }, eds)
+      ),
     []
-
   );
-  useEffect(()=>{
-    console.log(reactFlowInstance)
-  }, [reactFlowInstance])
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
       if (reactFlowInstance) {
         const flow = reactFlowInstance.toObject();
-        const json = {
+        let json = {
           jsonData: flow,
           cid: props.configId,
         };
-        const body = JSON.stringify(json);
-        console.log(`updateConfig json data: ${JSON.stringify(json)}`);
-        APIHelper.makePost('updateConfig', body);
+        nodeInserter.insert(json);
       }
     }
     props.setSave(false);
@@ -134,20 +75,18 @@ function FlowEditor(props) {
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
-      setShowExclamationOnChange(true)
-
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const type = event.dataTransfer.getData('application/reactflow');
+      const type = event.dataTransfer.getData("application/reactflow");
 
       // check if the dropped element is valid
-      if (typeof type === 'undefined' || !type) {
+      if (typeof type === "undefined" || !type) {
         return;
       }
 
@@ -159,12 +98,12 @@ function FlowEditor(props) {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node`, edgeCheck: trackEdgeConnection },
+        data: { label: `${type} node`, configId: props.configId, isNew: true },
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance],
+    [reactFlowInstance]
   );
 
   return (
@@ -182,7 +121,7 @@ function FlowEditor(props) {
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
-              deleteKeyCode={['Delete', 'Backspace']}
+              deleteKeyCode={["Delete", "Backspace"]}
               fitView
             >
               <Controls />
@@ -193,6 +132,6 @@ function FlowEditor(props) {
       </div>
     </div>
   );
-}
+};
 
 export default FlowEditor;

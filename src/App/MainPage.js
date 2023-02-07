@@ -1,6 +1,4 @@
-import React, {
-  useState, useRef, useCallback, useEffect,
-} from 'react';
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -8,39 +6,37 @@ import ReactFlow, {
   useEdgesState,
   Controls,
   Background,
-
 } from "reactflow";
+import React, { useState, useRef, useEffect } from "react";
+import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
 import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
 
+import { v4 as uuidv4 } from "uuid";
+import Sidebar from "../Elements/Sidebar";
+import nodeTypes from "../resources/nodeTypes";
 
-import { v4 as uuidv4 } from 'uuid';
-import Sidebar from '../Elements/Sidebar';
-import nodeTypes from '../resources/nodeTypes';
+import "./index.css";
 
-import './index.css';
+import APIHelper from "../resources/APIHelper";
 
-import APIHelper from '../resources/APIHelper';
+import { Layout, Tabs, Flex } from "antd";
+import CustomMenu from "../Elements/Menu";
+import FlowEditor from "../Elements/FlowEditor";
+import { CloseOutlined } from "@ant-design/icons";
 
-import { Layout, Tabs, Flex } from 'antd';
-import CustomMenu from '../Elements/Menu';
-import FlowEditor from '../Elements/FlowEditor';
-
-
+import APIHelper from "../utilities/APIHelper";
 
 import { Layout, Tabs, Popconfirm } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 
-
-
-
 let flowKey = "";
-
 
 function setFlowKey(name) {
   flowKey = name;
 }
+const { Content, Sider } = Layout;
 
 const MainPage = () => {
   const [showExclamtion, setShowExclamation] = useState(false);
@@ -51,17 +47,18 @@ const MainPage = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [openConfigs, setOpenConfigs] = useState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [selectedConfig, setSelectedConfig] = useState('');
+  const [selectedConfig, setSelectedConfig] = useState("");
   const [save, setSave] = useState(false);
 
   const [collapsed, setCollapsed] = useState(false);
 
   const handleConfigChange = () => {
     exclamtionRef.current.style.visibilty = true;
-  }
+  };
   useEffect(() => {
-    console.log('open configs set', openConfigs);
+    console.log("open configs set", openConfigs);
   }, [openConfigs]);
+  useEffect(() => {}, [openConfigs]);
 
   const removeOpenConfigs = (config) => {
     const newConfigs = openConfigs;
@@ -76,9 +73,9 @@ const MainPage = () => {
   const openNewConfig = (config) => {
     console.log();
     if (
-      config !== undefined
-      && config !== ''
-      && openConfigs.filter((openConfig) => openConfig.id == config.id).length == 0
+      config !== undefined &&
+      config !== "" &&
+      openConfigs.filter((openConfig) => openConfig.id == config.id).length == 0
     ) {
       setOpenConfigs((cl) => [...cl, config]);
     }
@@ -103,13 +100,14 @@ const MainPage = () => {
 
   const onInsert = (reload) => {
     const insertNewConfig = async () => {
-      const name = prompt('Enter the new configuration name');
+      const name = prompt("Enter the new configuration name");
       const json = {
         jsonData: reactFlowInstance,
         name,
       };
-      const body = JSON.stringify(json);
-      await APIHelper.makePost('insertNewConfig', body);
+      let body = JSON.stringify(json);
+      // await APIHelper.makePost("insertNewConfig", body);
+      await APIHelper.makePost("createNewConfig", body);
     };
     insertNewConfig().then(() => {
       reload();
@@ -117,23 +115,24 @@ const MainPage = () => {
   };
 
   const onDelete = (cid, reload) => {
-    let confirmation = window.confirm("Are you sure you want to delete this configuration?")
-    if(confirmation){
-    const deleteConfig = async () => {
-      let json = {
-        cid: cid,
+    let confirmation = window.confirm(
+      "Are you sure you want to delete this configuration?"
+    );
+    if (confirmation) {
+      const deleteConfig = async () => {
+        let json = {
+          cid: cid,
+        };
+        let body = JSON.stringify(json);
+        APIHelper.makePost(`deleteConfig`, body);
       };
-      let body = JSON.stringify(json)
-      APIHelper.makePost(`deleteConfig`, body);
-    };
-    deleteConfig().then(() => {
-      reload();
-    })
-  }
-  }
+      deleteConfig().then(() => {
+        reload();
+      });
+    }
+  };
 
   return (
-    
     <Layout>
       <Sider
         collapsible
@@ -148,16 +147,13 @@ const MainPage = () => {
           insert={onInsert}
           delete={onDelete}
           addToOpen={openNewConfig}
-        >
-
-        </CustomMenu>
-
+        ></CustomMenu>
       </Sider>
       <Layout className="site-layout">
         <Content>
           <Tabs
             onTabClick={(e) => setSelectedConfig(e)}
-            style={{ height: '100vh' }}
+            style={{ height: "100vh" }}
             type="card"
             tabBarStyle={{ backgroundColor: "#001529" }}
             items={openConfigs?.map((config) => {
@@ -176,12 +172,8 @@ const MainPage = () => {
                           float: "left",
                         }}
                       />
-                      
                     </button>
-                    {
-                    showExclamtion?<ExclamationOutlined
-                    />:null
-                    }
+                    {showExclamtion ? <ExclamationOutlined /> : null}
                   </div>
                 ),
                 key: config.id,
@@ -197,12 +189,11 @@ const MainPage = () => {
                 ),
               };
             })}
-
           />
         </Content>
       </Layout>
     </Layout>
   );
-}
+};
 
 export default MainPage;
