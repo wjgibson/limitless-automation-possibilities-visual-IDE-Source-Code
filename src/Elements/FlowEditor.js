@@ -21,7 +21,7 @@ import nodeInserter from "../utilities/nodeInserter";
 
 const getId = () => `${uuidv4()}`;
 
-function FlowEditor(props) {
+const FlowEditor = (props) => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -66,7 +66,7 @@ function FlowEditor(props) {
     if (props.selectedConfig == props.configId) {
       if (reactFlowInstance) {
         const flow = reactFlowInstance.toObject();
-        const json = {
+        let json = {
           jsonData: flow,
           cid: props.configId,
         };
@@ -151,6 +151,6 @@ function FlowEditor(props) {
       </div>
     </div>
   );
-}
+};
 
 export default FlowEditor;

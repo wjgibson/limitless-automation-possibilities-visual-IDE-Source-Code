@@ -21,7 +21,7 @@ function getItem(label, key, icon, children) {
   };
 }
 
-function CustomMenu(props) {
+const CustomMenu = (props) => {
   const [configList, setConfigList] = useState([]);
   const [items, setItems] = useState([]);
   const [openConfig, setOpenConfig] = useState("");
@@ -105,6 +105,6 @@ function CustomMenu(props) {
       selectedKeys={[props.selectedConfig]}
     />
   );
-}
+};
 
 export default CustomMenu;

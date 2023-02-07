@@ -1,5 +1,4 @@
 module.exports = {
-  lintOnSave: false,
   env: {
     browser: true,
     es2021: true,

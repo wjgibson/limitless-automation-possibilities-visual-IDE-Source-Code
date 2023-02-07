@@ -3,6 +3,8 @@ import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
 import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
 
+import "./index.css";
+
 import APIHelper from "../utilities/APIHelper";
 
 import { Layout, Tabs } from "antd";
@@ -14,7 +16,6 @@ const { Content, Sider } = Layout;
 const MainPage = () => {
   const [showExclamtion, setShowExclamation] = useState(false);
   const exclamtionRef = useRef();
-
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -61,10 +62,10 @@ const MainPage = () => {
 
   const onInsert = (reload) => {
     const insertNewConfig = async () => {
-      const name = prompt("Enter the new configuration name");
-      const json = {
+      let name = prompt("Enter the new configuration name");
+      let json = {
         jsonData: reactFlowInstance,
-        name,
+        name: name,
       };
       let body = JSON.stringify(json);
       await APIHelper.makePost("createNewConfig", body);
