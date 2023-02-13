@@ -110,11 +110,8 @@ const MainPage = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        style={{
-          overflow: "auto",
-          height: "100vh",
-        }}
       >
+        <div style={{ overflow: 'scroll', height: '100vh'}}>
         <div className="logo" />
         <CustomMenu
           selectedConfig={selectedConfig}
@@ -124,6 +121,7 @@ const MainPage = () => {
           delete={onDelete}
           addToOpen={openNewConfig}
         ></CustomMenu>
+      </div>
       </Sider>
       <Layout className="site-layout">
         <Content>
