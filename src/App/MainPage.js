@@ -111,7 +111,7 @@ const MainPage = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div style={{ overflow: collapsed ? 'hidden' : 'scroll', height: '100vh'}}>
+        <div style={{ overflow: collapsed ? 'hidden' : 'scroll', height: '97vh'}}>
         <div className="logo" />
         <CustomMenu
           selectedConfig={selectedConfig}
