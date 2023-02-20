@@ -25,18 +25,7 @@ const MainPage = () => {
   const [selectedConfig, setSelectedConfig] = useState("");
   const [save, setSave] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  function openSteps(){
-    setIsModalOpen(true);
-  }
 
   const handleConfigChange = () => {
     exclamtionRef.current.style.visibilty = true;
@@ -119,11 +108,6 @@ const MainPage = () => {
 
   return (
     <Layout>
-        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
       <Sider
         collapsible
         collapsed={collapsed}

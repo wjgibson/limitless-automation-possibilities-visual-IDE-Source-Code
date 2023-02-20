@@ -5,7 +5,7 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
-import Modal from "antd";
+import {Modal} from "antd";
 
 const text = `
 This is a user defined description for this node
@@ -72,6 +72,11 @@ function SequenceNode({ data }) {
 
   return (
     <>
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
       {contextHolder}
       <Card
       onDoubleClick={openSteps}
