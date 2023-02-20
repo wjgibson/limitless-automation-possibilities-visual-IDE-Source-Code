@@ -8,11 +8,10 @@ function setTestingFlag(bool) {
 function Validator(instance, connection) {
   let sourceNodeLevel;
   let targetNodeLevel;
-  console.log(
-    `instance: ${JSON.stringify(instance.getNode(connection.source))}`
-  );
-  console.log(`connection: ${JSON.stringify(connection)}`);
-  if (!testingFlag) {
+  if (testingFlag) {
+    sourceNodeLevel = instance.sourceNodeLevel;
+    targetNodeLevel = instance.targetNodeLevel;
+  } else {
     sourceNodeLevel = instance
       .getNode(connection.source)
       .data.type.split("|")[1];
