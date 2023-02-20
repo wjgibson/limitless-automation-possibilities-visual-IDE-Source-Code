@@ -88,6 +88,7 @@ function SequenceNode({ data }) {
                 configId={configId}
                 setSeqType={setSeqType}
                 seqType={seqType}
+                aria-label="seqTypeSelectMenu"
               ></SeqTypeSelectMenu>
             </div>
           </div>
