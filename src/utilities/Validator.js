@@ -31,4 +31,7 @@ function Validator(instance, connection) {
   }
   return true;
 }
-export default Validator;
+module.exports = {
+  Validator,
+  setTestingFlag,
+};

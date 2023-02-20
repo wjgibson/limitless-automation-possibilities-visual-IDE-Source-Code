@@ -3,7 +3,7 @@ import { React, useState, useEffect } from "react";
 import { Card } from "antd";
 import ControlModuleSelectMenu from "./ControlModuleSelectMenu.js";
 import "../Elements/elements.css";
-import Validator from "../utilities/Validator";
+import { Validator } from "../utilities/Validator";
 
 function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();

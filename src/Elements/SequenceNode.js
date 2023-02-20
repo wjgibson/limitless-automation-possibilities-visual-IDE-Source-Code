@@ -2,7 +2,7 @@ import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect, useCallback } from "react";
 import { Card, message } from "antd";
 import "../Elements/elements.css";
-import Validator from "../utilities/Validator";
+import { Validator } from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
 
