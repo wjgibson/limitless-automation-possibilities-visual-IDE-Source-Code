@@ -8,10 +8,14 @@ function setTestingFlag(bool) {
 function Validator(instance, connection) {
   let sourceNodeLevel;
   let targetNodeLevel;
+
+  //if test: bypass reactflow specific code
   if (testingFlag) {
     sourceNodeLevel = instance.sourceNodeLevel;
     targetNodeLevel = instance.targetNodeLevel;
-  } else {
+  }
+  //if not test: execute code in production form
+  else {
     sourceNodeLevel = instance
       .getNode(connection.source)
       .data.type.split("|")[1];
@@ -19,6 +23,7 @@ function Validator(instance, connection) {
       .getNode(connection.target)
       .data.type.split("|")[1];
   }
+
   if (targetNodeLevel == 1) {
     if (sourceNodeLevel == 2) {
       return true;
