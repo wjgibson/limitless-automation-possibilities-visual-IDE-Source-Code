@@ -54,7 +54,7 @@ describe("Validator returns the validity of connections", () => {
     expect(validity).to.equal(true);
   });
 
-  it("returns false for specific phase to control module connection", () => {
+  it("returns false for specific operation to control module connection", () => {
     setTestingFlag(true);
 
     instance = {
