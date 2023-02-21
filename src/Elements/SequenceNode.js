@@ -1,6 +1,6 @@
 import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect, useCallback } from "react";
-import { Card, message } from "antd";
+import { Card, message, Input } from "antd";
 import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
@@ -10,6 +10,7 @@ const text = `
 This is a user defined description for this node
 `;
 
+
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
@@ -18,6 +19,9 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
+  const [cardTitle, setCardTitle] = useState('Sequence');
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
 
   useEffect(() => {
     data.type = seqType;
@@ -57,12 +61,39 @@ function SequenceNode({ data }) {
     return connectionValidity;
   }
 
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+    setNewTitle(cardTitle);
+  };
+
+  const handleTitleChange = (event) => {
+    setNewTitle(event.target.value);
+  };
+
+  const handleTitleSave = () => {
+    setCardTitle(newTitle);
+    setIsEditing(false);
+  };
+
+  const handleTitleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <>
       {contextHolder}
       <Card
         title={
-          <div className="drag-handle">
+          <div className="drag-handle" onDoubleClick={handleDoubleClick}>
+            {isEditing ? (
+                <Input
+                    value={newTitle}
+                    onChange={handleTitleChange}
+                    onPressEnter={handleTitleSave}
+                    onBlur={handleTitleCancel}
+                    autoFocus
+                />
+            ) : (
             <h3
               style={{
                 display: "inline",
@@ -70,8 +101,9 @@ function SequenceNode({ data }) {
                 mixBlendMode: "difference",
               }}
             >
-              Sequence
+              {cardTitle}
             </h3>
+                )}
           </div>
         }
         bordered={false}
