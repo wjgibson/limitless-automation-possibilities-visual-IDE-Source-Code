@@ -5,6 +5,7 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
+import {Modal} from "antd";
 
 const text = `
 This is a user defined description for this node
@@ -18,6 +19,18 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  function openSteps(){
+    setIsModalOpen(true);
+  }
 
   useEffect(() => {
     data.type = seqType;
@@ -59,8 +72,14 @@ function SequenceNode({ data }) {
 
   return (
     <>
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
       {contextHolder}
       <Card
+      onDoubleClick={openSteps}
         title={
           <div className="drag-handle">
             <h3
@@ -82,6 +101,7 @@ function SequenceNode({ data }) {
         }}
       >
         <div>
+
           <div>
             <div>
               <SeqTypeSelectMenu
@@ -89,6 +109,7 @@ function SequenceNode({ data }) {
                 setSeqType={setSeqType}
                 seqType={seqType}
               ></SeqTypeSelectMenu>
+
             </div>
           </div>
           <p>Sequence</p>
