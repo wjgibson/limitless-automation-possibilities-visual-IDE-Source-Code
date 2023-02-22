@@ -10,7 +10,7 @@ function ControlModuleNode({ data }) {
 
   const [configId, setConfigId] = useState(data.configId);
   const [controlModuleType, setControlModuleType] = useState(data.type);
-  const [cardTitle, setCardTitle] = useState('Control Module');
+  const [cardTitle, setCardTitle] = useState(data.name ?? "Control Module");
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
@@ -22,6 +22,10 @@ function ControlModuleNode({ data }) {
     data.configId = configId;
     data.seqType = "c|1";
   }, [configId]);
+
+  useEffect( () => {
+    data.name = newTitle;
+  }, [newTitle]);
 
   useEffect(() => {
     data.type = controlModuleType + "|1";
