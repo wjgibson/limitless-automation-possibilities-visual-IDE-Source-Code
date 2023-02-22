@@ -19,7 +19,7 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
-  const [cardTitle, setCardTitle] = useState('Sequence');
+  const [cardTitle, setCardTitle] = useState(data.name ?? "Sequence");
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
@@ -35,6 +35,10 @@ function SequenceNode({ data }) {
   useEffect(() => {
     data.configId = configId;
   }, [configId]);
+
+  useEffect( () => {
+    data.name = newTitle;
+  }, [newTitle]);
 
   useEffect(() => {
     if (invalidFlag) {
