@@ -5,7 +5,8 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
-import {Modal} from "antd";
+import {Modal, Tooltip} from "antd";
+import {BuildOutlined} from '@ant-design/icons';
 
 const text = `
 This is a user defined description for this node
@@ -90,6 +91,7 @@ function SequenceNode({ data }) {
               }}
             >
               Sequence
+              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"relative",left:"125px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
             </h3>
           </div>
         }
