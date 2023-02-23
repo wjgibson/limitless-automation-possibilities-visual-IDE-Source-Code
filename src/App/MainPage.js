@@ -47,7 +47,6 @@ const MainPage = () => {
       setOpenConfigs([...newConfigs]);
     }
   };
-
   const openNewConfig = (config) => {
     if (
       config !== undefined &&
@@ -110,10 +109,11 @@ const MainPage = () => {
     <Layout>
       <Sider
         collapsible
+        coll
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div style={{ overflow: collapsed ? 'hidden' : 'scroll', height: '97vh'}}>
+        <div style={{ overflowY: collapsed ? 'hidden' : 'auto', height:'96vh' }}>
         <div className="logo" />
         <CustomMenu
           selectedConfig={selectedConfig}
