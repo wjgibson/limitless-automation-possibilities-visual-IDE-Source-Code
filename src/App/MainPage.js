@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
-import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
+import {BuildOutlined, CloseOutlined, ExclamationOutlined} from "@ant-design/icons";
 
 import "./index.css";
 
 import APIHelper from "../utilities/APIHelper";
 
-import { Layout, Tabs } from "antd";
+import {Button, Layout, Tabs} from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 import {Modal} from "antd";
@@ -108,10 +108,9 @@ const MainPage = () => {
   return (
     <Layout>
       <Sider
+          trigger={null}
         collapsible
-        coll
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
       >
         <div style={{ overflowY: collapsed ? 'hidden' : 'auto', height:'96vh' }}>
         <div className="logo" />
@@ -122,8 +121,11 @@ const MainPage = () => {
           insert={onInsert}
           delete={onDelete}
           addToOpen={openNewConfig}
-        ></CustomMenu>
+        />
       </div>
+        <Button  onClick={() => setCollapsed(!collapsed)} style={{ height: '4vh', width: '100%', backgroundColor: '#001529', color: 'white' , borderRadius:0 }}>
+          {collapsed ? <BuildOutlined /> : <BuildOutlined />}
+        </Button>
       </Sider>
       <Layout className="site-layout">
         <Content>
