@@ -5,8 +5,9 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
-import {Modal, Tooltip} from "antd";
+import {Tooltip} from "antd";
 import {BuildOutlined} from '@ant-design/icons';
+import StepsModal from "./stepsModal";
 
 const text = `
 This is a user defined description for this node
@@ -22,17 +23,10 @@ function SequenceNode({ data }) {
   const [invalidFlag, setInvalidFlag] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   function openSteps(){
     setIsModalOpen(true);
+    console.log(isModalOpen)
   }
-
   useEffect(() => {
     data.type = seqType;
     console.log(seqType);
@@ -73,12 +67,8 @@ function SequenceNode({ data }) {
 
   return (
     <>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
       {contextHolder}
+      <StepsModal ismodalopen={isModalOpen} setmodalopen={setIsModalOpen}/> 
       <Card
         title={
           <div className="drag-handle">
@@ -90,7 +80,7 @@ function SequenceNode({ data }) {
               }}
             >
               Sequence
-              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"relative",left:"125px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
+              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"relative",left:"125px", color:"white"}} onClick={openSteps} ><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
             </h3>
           </div>
         }
