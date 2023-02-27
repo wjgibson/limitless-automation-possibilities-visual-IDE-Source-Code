@@ -5,6 +5,8 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
+import {Modal, Tooltip} from "antd";
+import {BuildOutlined} from '@ant-design/icons';
 
 const text = `
 This is a user defined description for this node
@@ -19,9 +21,23 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
+
   const [cardTitle, setCardTitle] = useState(data.name ?? "Sequence");
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  function openSteps(){
+    setIsModalOpen(true);
+  }
 
   useEffect(() => {
     data.type = seqType;
@@ -85,6 +101,11 @@ function SequenceNode({ data }) {
 
   return (
     <>
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
       {contextHolder}
       <Card
         title={
@@ -106,6 +127,7 @@ function SequenceNode({ data }) {
               }}
             >
               {cardTitle}
+              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"relative",left:"125px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
             </h3>
                 )}
           </div>
@@ -118,6 +140,7 @@ function SequenceNode({ data }) {
         }}
       >
         <div>
+
           <div>
             <div>
               <SeqTypeSelectMenu
@@ -125,6 +148,7 @@ function SequenceNode({ data }) {
                 setSeqType={setSeqType}
                 seqType={seqType}
               ></SeqTypeSelectMenu>
+
             </div>
           </div>
           <p>Sequence</p>
