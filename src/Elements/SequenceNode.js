@@ -80,7 +80,6 @@ function SequenceNode({ data }) {
       </Modal>
       {contextHolder}
       <Card
-      onDoubleClick={openSteps}
         title={
           <div className="drag-handle">
             <h3
