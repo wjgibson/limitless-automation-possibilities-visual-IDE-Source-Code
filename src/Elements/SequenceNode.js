@@ -22,7 +22,7 @@ function SequenceNode({ data }) {
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
 
-  const [cardTitle, setCardTitle] = useState(data.name ?? "Sequence");
+  const [cardTitle, setCardTitle] = useState(data.name ? data.name : "Sequence");
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   
@@ -117,6 +117,7 @@ function SequenceNode({ data }) {
                     onPressEnter={handleTitleSave}
                     onBlur={handleTitleCancel}
                     autoFocus
+                    autoSize = {true}
                 />
             ) : (
             <h3
@@ -124,19 +125,21 @@ function SequenceNode({ data }) {
                 display: "inline",
                 color: "white",
                 mixBlendMode: "difference",
+
               }}
             >
               {cardTitle}
-              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"relative",left:"125px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
+              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"absolute",right:"10px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
             </h3>
                 )}
           </div>
         }
         bordered={false}
         style={{
-          width: 300,
           backgroundColor: color,
           mixBlendMode: "difference",
+          paddingRight: 20
+          //Maybe percentage later
         }}
       >
         <div>

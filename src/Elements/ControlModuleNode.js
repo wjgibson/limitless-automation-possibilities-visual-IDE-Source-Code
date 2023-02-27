@@ -10,7 +10,7 @@ function ControlModuleNode({ data }) {
 
   const [configId, setConfigId] = useState(data.configId);
   const [controlModuleType, setControlModuleType] = useState(data.type);
-  const [cardTitle, setCardTitle] = useState(data.name ?? "Control Module");
+  const [cardTitle, setCardTitle] = useState(data.name ? data.name : "Control Module");
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
