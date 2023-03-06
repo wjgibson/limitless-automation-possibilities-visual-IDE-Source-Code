@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
-import {BuildOutlined, CloseOutlined, ExclamationOutlined} from "@ant-design/icons";
+import {BuildOutlined, CloseOutlined, ExclamationOutlined, CaretLeftOutlined, LeftOutlined} from "@ant-design/icons";
 
 import "./index.css";
 
@@ -123,8 +123,8 @@ const MainPage = () => {
           addToOpen={openNewConfig}
         />
       </div>
-        <Button  onClick={() => setCollapsed(!collapsed)} style={{ height: '4vh', width: '100%', backgroundColor: '#001529', color: 'white' , borderRadius:0 }}>
-          {collapsed ? <BuildOutlined /> : <BuildOutlined />}
+        <Button  onClick={() => setCollapsed(!collapsed)} style={{ height: '4vh', width: '100%', backgroundColor: '#001529', color: 'white' , borderRadius:0, borderColor: "#001529" }}>
+          {collapsed ? <LeftOutlined /> : <LeftOutlined />}
         </Button>
       </Sider>
       <Layout className="site-layout">
