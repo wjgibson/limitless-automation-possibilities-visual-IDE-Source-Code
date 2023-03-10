@@ -111,6 +111,7 @@ const MainPage = () => {
           trigger={null}
         collapsible
         collapsed={collapsed}
+          width={'8vw'}
       >
         <div style={{ overflowY: collapsed ? 'hidden' : 'auto', height:'96vh' }}>
         <div className="logo" />
@@ -129,6 +130,7 @@ const MainPage = () => {
       </Sider>
       <Layout className="site-layout">
         <Content>
+          {openConfigs.length > 0 ? (
           <Tabs
             onTabClick={(e) => setSelectedConfig(e)}
             style={{ height: "100vh" }}
@@ -169,6 +171,13 @@ const MainPage = () => {
               };
             })}
           />
+              ):(
+                  <div style={{ backgroundColor: '#001529', height:'100vh'}}>
+                  <div style={{display: "flex",justifyContent:"center", alignItems:"center", height:'100%'}}>
+                      <p style={{color:"white", fontWeight:"bold",  fontSize: '5vw',}}>No Open Configs</p>
+                  </div>
+            </div>
+              )}
         </Content>
       </Layout>
     </Layout>
