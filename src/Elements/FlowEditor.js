@@ -128,9 +128,9 @@ const FlowEditor = (props) => {
   return (
     <div className="site-layout-background">
       <div aria-label="rfProvider" className="dndflow">
-        <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-            <ReactFlow
+        <ReactFlowProvider >
+          <div className="reactflow-wrapper" ref={reactFlowWrapper} style={{height:'100%', maxHeight:'90vh'}}>
+            <ReactFlow overlaystyle={{height:'100%'}}
               nodes={nodes}
               nodeTypes={nodeTypes}
               edges={edges}
