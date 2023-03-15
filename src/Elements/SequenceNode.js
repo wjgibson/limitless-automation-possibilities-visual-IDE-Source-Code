@@ -85,6 +85,7 @@ function SequenceNode({ data }) {
           <div>
             <div>
               <SeqTypeSelectMenu
+                data-cy="SeqTypeSelect"
                 configId={configId}
                 setSeqType={setSeqType}
                 seqType={seqType}

@@ -1,20 +1,17 @@
 import MainPage from "../../src/App/MainPage";
+import React from "react";
+import { mount } from "cypress/react18";
 
-describe("MainPage.cy.js", () => {
+describe("MainPage", () => {
   it("Main Page shows correctly", () => {
     cy.mount(<MainPage></MainPage>);
   });
-});
 
-import React from "react";
-import { mount } from "cypress/react";
-
-describe("MainPage", () => {
   it("should remove a config from openConfigs array if confirmed", () => {
     const config = { name: "Test Config", id: 1 };
     const openConfigs = [config];
     const setOpenConfigs = cy.stub().as("setOpenConfigs");
-    const wrapper = mount(
+    mount(
       <MainPage openConfigs={openConfigs} setOpenConfigs={setOpenConfigs} />
     );
 
@@ -24,7 +21,7 @@ describe("MainPage", () => {
     });
 
     // Access the removeOpenConfigs function through the component instance
-    wrapper.invoke("removeOpenConfigs")(config);
+    cy.get(MainPage).invoke("removeOpenConfigs", config);
 
     // Verify that the setOpenConfigs function was called with the new array
     cy.get("@setOpenConfigs").should("have.been.calledWith", []);
@@ -34,7 +31,7 @@ describe("MainPage", () => {
     const config = { name: "Test Config", id: 1 };
     const openConfigs = [config];
     const setOpenConfigs = cy.stub().as("setOpenConfigs");
-    const wrapper = mount(
+    mount(
       <MainPage openConfigs={openConfigs} setOpenConfigs={setOpenConfigs} />
     );
 
@@ -44,7 +41,7 @@ describe("MainPage", () => {
     });
 
     // Access the removeOpenConfigs function through the component instance
-    wrapper.invoke("removeOpenConfigs")(config);
+    cy.get(MainPage).invoke("removeOpenConfigs", config);
 
     // Verify that the setOpenConfigs function was not called
     cy.get("@setOpenConfigs").should("not.have.been.called");

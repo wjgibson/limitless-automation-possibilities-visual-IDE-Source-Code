@@ -97,6 +97,7 @@ const CustomMenu = (props) => {
 
   return (
     <Menu
+      data-cy="CustomMenu"
       theme="dark"
       defaultSelectedKeys={["1"]}
       mode="inline"
