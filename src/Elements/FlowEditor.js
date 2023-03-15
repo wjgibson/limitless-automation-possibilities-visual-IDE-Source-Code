@@ -129,8 +129,8 @@ const FlowEditor = (props) => {
     <div className="site-layout-background">
       <div aria-label="rfProvider" className="dndflow">
         <ReactFlowProvider >
-          <div className="reactflow-wrapper" ref={reactFlowWrapper} style={{height:'100%', maxHeight:'90vh'}}>
-            <ReactFlow overlaystyle={{height:'100%'}}
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            <ReactFlow
               nodes={nodes}
               nodeTypes={nodeTypes}
               edges={edges}
@@ -143,7 +143,8 @@ const FlowEditor = (props) => {
               deleteKeyCode={["Delete", "Backspace"]}
               fitView
             >
-              <Controls />
+              <Controls
+                  position = 'top-left'/>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
