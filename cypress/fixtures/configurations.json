@@ -1,0 +1,9 @@
+[
+  {
+    "topicuuid": "a8a21ee2-4d31-4b07-a35c-9f0b4f38c0d7",
+    "configuuid": "b047d023-fa6c-4bf4-9d0b-1e2c1f8a675a",
+    "name": "Configuration 1",
+    "description": "This is an example configuration object",
+    "plcid": "1"
+  }
+]

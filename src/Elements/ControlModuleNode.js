@@ -51,6 +51,7 @@ function ControlModuleNode({ data }) {
     >
       <div>
         <ControlModuleSelectMenu
+          data-cy="CMTypeSelect"
           configId={configId}
           setControlModuleType={setControlModuleType}
           controlModuleType={controlModuleType}

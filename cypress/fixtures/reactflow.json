@@ -1,0 +1,75 @@
+[
+  {
+    "jsonData": {
+      "edges": [
+        {
+          "id": "reactflow__edge-80100499-bbac-4e74-8ea3-79488007c8dc-95e80786-d6c3-4f63-9921-38a3632319ab",
+          "type": "step",
+          "source": "80100499-bbac-4e74-8ea3-79488007c8dc",
+          "target": "95e80786-d6c3-4f63-9921-38a3632319ab",
+          "animated": true,
+          "sourceHandle": null,
+          "targetHandle": null
+        }
+      ],
+      "nodes": [
+        {
+          "id": "80100499-bbac-4e74-8ea3-79488007c8dc",
+          "data": {
+            "type": "abbd1cfc-f523-43a6-bee7-b7e0a1930516",
+            "isNew": true,
+            "label": "sequence node",
+            "configId": "4bc3f138-e5dc-4325-953c-ce6a2792fc1b"
+          },
+          "type": "sequence",
+          "width": 300,
+          "height": 191,
+          "dragging": false,
+          "position": {
+            "x": 286,
+            "y": -49
+          },
+          "selected": true,
+          "positionAbsolute": {
+            "x": 286,
+            "y": -49
+          }
+        },
+        {
+          "id": "95e80786-d6c3-4f63-9921-38a3632319ab",
+          "data": {
+            "type": "e172f2e8-53ef-46be-8a20-9c614e5c6f6a",
+            "isNew": true,
+            "label": "controlModule node",
+            "configId": "4bc3f138-e5dc-4325-953c-ce6a2792fc1b"
+          },
+          "type": "controlModule",
+          "width": 300,
+          "height": 191,
+          "dragging": false,
+          "position": {
+            "x": 352.75,
+            "y": 188.75
+          },
+          "selected": false,
+          "positionAbsolute": {
+            "x": 352.75,
+            "y": 188.75
+          }
+        }
+      ],
+      "viewport": {
+        "x": -510.2124620437503,
+        "y": 137.26575571667598,
+        "zoom": 1.9061783478961392
+      }
+    },
+    "name": "",
+    "cid": ""
+  },
+  {
+    "jsonData": null,
+    "name": "test 2",
+    "cid": "4bc3f138-e5dc-4325-953c-ce6a2792fc1b"
+  }
+]

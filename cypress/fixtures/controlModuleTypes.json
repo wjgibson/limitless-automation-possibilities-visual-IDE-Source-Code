@@ -1,0 +1,22 @@
+[
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "8efa10e3-82aa-407a-b0a8-7d858e70ca3b",
+    "name": "Type 1"
+  },
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "3b275ec1-d74e-486d-bd2d-b77168a01308",
+    "name": "Type 2"
+  },
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "cf009f9d-626b-4bc8-afd3-e5de930dfeff",
+    "name": "Type 3"
+  },
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "55d3616b-a63d-4760-926d-11da7e5e3a5f",
+    "name": "Type 4"
+  }
+]

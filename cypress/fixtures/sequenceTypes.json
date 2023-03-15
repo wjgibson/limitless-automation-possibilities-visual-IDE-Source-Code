@@ -1,0 +1,26 @@
+[
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "8efa10e3-82aa-407a-b0a8-7d858e70ca3b",
+    "name": "TControl Module",
+    "plcid": 1
+  },
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "3b275ec1-d74e-486d-bd2d-b77168a01308",
+    "name": "Phase",
+    "plcid": 2
+  },
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "cf009f9d-626b-4bc8-afd3-e5de930dfeff",
+    "name": "Operation",
+    "plcid": 3
+  },
+  {
+    "configuuid": "3ab20e59-2ae9-496a-8f20-86895eb7e882",
+    "typeuuid": "55d3616b-a63d-4760-926d-11da7e5e3a5f",
+    "name": "Procedure",
+    "plcid": 4
+  }
+]
