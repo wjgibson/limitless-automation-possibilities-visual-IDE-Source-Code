@@ -4,6 +4,7 @@ import {Card, Input} from "antd";
 import ControlModuleSelectMenu from "./ControlModuleSelectMenu.js";
 import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
+import ColorPicker from "./ColorPicker";
 
 function ControlModuleNode({ data }) {
   const reactFlowInstance = useReactFlow();
@@ -13,6 +14,9 @@ function ControlModuleNode({ data }) {
   const [cardTitle, setCardTitle] = useState(data.name ? data.name : "Control Module");
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
+
+  const [selectedColor, setSelectedColor] = useState("white");
+
 
   useEffect(() => {
     data.seqType = "c|1";
@@ -54,9 +58,11 @@ function ControlModuleNode({ data }) {
   };
 
   return (
+      <div>
+      <ColorPicker setColor = {setSelectedColor} />
     <Card
       title={
-        <div className="drag-handle" onDoubleClick={handleDoubleClick}>
+        <div className="drag-handle " onDoubleClick={handleDoubleClick}>
           {isEditing ? (
               <Input
                   value={newTitle}
@@ -82,6 +88,7 @@ function ControlModuleNode({ data }) {
       style={{
         width: 300,
         mixBlendMode: "difference",
+        backgroundColor: selectedColor
       }}
     >
       <div>
@@ -90,7 +97,9 @@ function ControlModuleNode({ data }) {
           setControlModuleType={setControlModuleType}
           controlModuleType={controlModuleType}
         ></ControlModuleSelectMenu>
-        <p>Control Module</p>
+        <p style={{
+          color: "white",
+          mixBlendMode: "difference"}}>Control Module</p>
         <Handle
           type="target"
           position={Position.Top}
@@ -98,6 +107,7 @@ function ControlModuleNode({ data }) {
         />
       </div>
     </Card>
+      </div>
   );
 }
 export default ControlModuleNode;
