@@ -68,7 +68,7 @@ function SequenceNode({ data }) {
   return (
     <>
       {contextHolder}
-      <StepsModal ismodalopen={isModalOpen} setmodalopen={setIsModalOpen}/> 
+      <StepsModal ismodalopen={isModalOpen} setmodalopen={setIsModalOpen} nodeName={configId}/> 
       <Card
         title={
           <div className="drag-handle">
