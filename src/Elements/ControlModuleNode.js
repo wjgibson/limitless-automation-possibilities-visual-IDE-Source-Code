@@ -15,8 +15,11 @@ function ControlModuleNode({ data }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
-  const [selectedColor, setSelectedColor] = useState("white");
+  const [color, setColor] = useState(data.color ? data.color : 'white');
 
+  useEffect( () => {
+    data.color = color;
+  }, [color]);
 
   useEffect(() => {
     data.seqType = "c|1";
@@ -58,11 +61,9 @@ function ControlModuleNode({ data }) {
   };
 
   return (
-      <div>
-      <ColorPicker setColor = {setSelectedColor} />
     <Card
       title={
-        <div className="drag-handle " onDoubleClick={handleDoubleClick}>
+        <div className="drag-handle" onDoubleClick={handleDoubleClick}>
           {isEditing ? (
               <Input
                   value={newTitle}
@@ -88,7 +89,7 @@ function ControlModuleNode({ data }) {
       style={{
         width: 300,
         mixBlendMode: "difference",
-        backgroundColor: selectedColor
+        backgroundColor: color
       }}
     >
       <div>
@@ -106,8 +107,8 @@ function ControlModuleNode({ data }) {
           isValidConnection={isValidConnection}
         />
       </div>
+      <ColorPicker setColor={setColor} default={color}/>
     </Card>
-      </div>
   );
 }
 export default ControlModuleNode;

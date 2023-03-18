@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Input } from "antd";
 
 export default function ColorPicker(props) {
-  const [nodeColorPreview, setNodeColorPreview] = useState("white");
+  const [nodeColorPreview, setNodeColorPreview] = useState();
 
   const setNodeColor = () => {
     props.setColor(nodeColorPreview);
@@ -13,7 +13,6 @@ export default function ColorPicker(props) {
     <Input
       type="color"
       id="dropDownMenuInputSetColor"
-      defaultValue={nodeColorPreview}
       onChange={(e) => {
         setNodeColorPreview(e.target.value);
         setNodeColor();
