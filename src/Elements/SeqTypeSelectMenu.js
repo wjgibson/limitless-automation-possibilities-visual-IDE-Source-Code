@@ -35,8 +35,6 @@ export default function SeqTypeSelectMenu(props) {
     <>
       <p style={{ margin: 0, fontSize: "10px", color: "white",
         mixBlendMode: "difference"  }}>Sequence Type</p>
-      <div style={{color: "white",
-        mixBlendMode: "difference" }}>
       <Select
         placeholder="Select a sequence type"
         optionFilterProp="children"
@@ -45,14 +43,12 @@ export default function SeqTypeSelectMenu(props) {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         value={props.seqType}
-        style={{ width: "100%" , color: "white",
-          mixBlendMode: "difference" }}
+        style={{ width: "100%", }}
         options={seqTypes.map((seqType) => ({
           value: seqType.typeuuid + "|" + seqType.plcid,
           label: seqType.name,
         }))}
       />
-      </div>
     </>
   );
 }

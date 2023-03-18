@@ -10,6 +10,13 @@ export default function ColorPicker(props) {
 
 
   return (
+      <div style={{
+        width:'20%',
+        minWidth:'50px',
+        position:'absolute',
+        right:0,
+        bottom:0,
+      }}>
     <Input
       type="color"
       id="dropDownMenuInputSetColor"
@@ -18,5 +25,6 @@ export default function ColorPicker(props) {
         setNodeColor();
       }}
     ></Input>
+      </div>
   );
 }

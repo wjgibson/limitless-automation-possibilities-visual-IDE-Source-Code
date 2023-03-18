@@ -31,8 +31,6 @@ export default function SeqTypeSelectMenu(props) {
     <>
       <p style={{ margin: 0, fontSize: "10px", color: "white",
         mixBlendMode: "difference" }}>Control Module Type</p>
-      <div style={{color: "white",
-        mixBlendMode: "difference" }}>
       <Select
         placeholder="Select a control module type"
         optionFilterProp="children"
@@ -41,14 +39,12 @@ export default function SeqTypeSelectMenu(props) {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         value={props.controlModuleType}
-        style={{ width: "100%",color: "white",
-          mixBlendMode: "difference"   }}
+        style={{ width: "100%", }}
         options={controlModuleTypes.map((cmType) => ({
           value: cmType.typeuuid + "|1",
           label: cmType.name,
         }))}
       />
-      </div>
     </>
   );
 }

@@ -17,7 +17,7 @@ function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [color, setColor] = useState(data.color ? data.color : 'white');
+  const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
@@ -139,7 +139,6 @@ function SequenceNode({ data }) {
           backgroundColor: color,
           mixBlendMode: "difference",
           paddingRight: 20
-          //Maybe percentage later
         }}
       >
         <div>

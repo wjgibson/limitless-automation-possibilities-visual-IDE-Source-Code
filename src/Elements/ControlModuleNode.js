@@ -15,7 +15,7 @@ function ControlModuleNode({ data }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
-  const [color, setColor] = useState(data.color ? data.color : 'white');
+  const [color, setColor] = useState(data.color);
 
   useEffect( () => {
     data.color = color;
