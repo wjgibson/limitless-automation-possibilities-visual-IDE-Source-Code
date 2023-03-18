@@ -4,15 +4,10 @@ import React, { useState, useEffect } from "react";
 
 export default function SeqTypeSelectMenu(props) {
   const [controlModuleTypes, setControlModuleTypes] = useState([]);
-  const [nodeColorPreview, setNodeColorPreview] = useState();
 
   useEffect(() => {
     getAllControlModuleTypes();
   }, []);
-
-  const setNodeColor = () => {
-    props.setColor(nodeColorPreview);
-  };
 
   const setNodeType = (type) => {
     props.setControlModuleType(type);

@@ -107,7 +107,7 @@ function ControlModuleNode({ data }) {
           isValidConnection={isValidConnection}
         />
       </div>
-      <ColorPicker setColor={setColor} default={color}/>
+      <ColorPicker setColor={setColor}/>
     </Card>
   );
 }

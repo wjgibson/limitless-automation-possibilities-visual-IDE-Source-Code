@@ -17,7 +17,7 @@ function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [color, setColor] = useState(data.color);
+  const [color, setColor] = useState(data.color ? data.color : 'white');
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
@@ -154,7 +154,9 @@ function SequenceNode({ data }) {
 
             </div>
           </div>
-          <p>Sequence</p>
+          <p style={{
+            color: "white",
+            mixBlendMode: "difference"}}>Sequence</p>
           <Handle
             type="target"
             position={Position.Top}
@@ -166,6 +168,7 @@ function SequenceNode({ data }) {
             isValidConnection={isValidConnection}
           />
         </div>
+        <ColorPicker setColor={setColor} />
       </Card>
     </>
   );
