@@ -28,6 +28,7 @@ function SequenceNode({ data }) {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [messageDisplayed, setMessageDisplayed] = useState(false);
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -64,13 +65,17 @@ function SequenceNode({ data }) {
   }, [invalidFlag]);
 
   const invalidConnectionMessage = useCallback(() => {
-    if (invalidFlag) {
+    if (invalidFlag && !messageDisplayed) {
+      setMessageDisplayed(true);
       messageApi.open({
         type: "error",
         content: "This connection is invalid!",
       });
+      setTimeout(() => {
+        setMessageDisplayed(false);
+      }, 5000); // Pause of 5 seconds between messages
     }
-  }, [invalidFlag]);
+  }, [invalidFlag, messageDisplayed]);
 
   function isValidConnection(connection) {
     let connectionValidity = Validator(reactFlowInstance, connection);
