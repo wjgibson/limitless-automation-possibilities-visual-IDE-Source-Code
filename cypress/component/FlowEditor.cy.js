@@ -7,7 +7,10 @@ describe("Does the flow editor work, can you manipulate node", () => {
   beforeEach(() => {
     cy.intercept("http://localhost:3001/getConfig**", {
       fixture: "configurations.json",
-    }).as("apiCall");
+    }).as("configApiCall");
+    cy.intercept("http://localhost:3001/getAll**", {
+      fixture: "sequenceTypes.json",
+    }).as("seqTypesApiCall");
   });
   it("Checks to see if you can instantiate a node", () => {
     const mockSetShowExclamation = cy.stub();

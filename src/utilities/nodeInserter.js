@@ -89,6 +89,19 @@ async function prepareTableForInsert(table) {
   await APIHelper.makePost(`prepare${table}Table`, JSON.stringify(body));
 }
 
+//exports for testing
+export {
+  parseReactFlowData,
+  formatSequenceData,
+  formatEdgeData,
+  checkForType,
+  sendReactflowData,
+  prepareNodeTables,
+  sendNodeData,
+  sendEdgeData,
+  prepareTableForInsert,
+};
+//export for production code
 export default {
   insert,
 };

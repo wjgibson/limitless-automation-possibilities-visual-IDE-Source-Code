@@ -30,7 +30,7 @@ describe("ControlModuleNode component", () => {
     });
   });
 
-  it("updates the controlModuleType state", () => {
+  it("updates the sequenceType state", () => {
     cy.wait("@apiCall");
     cy.get(".ant-select-selector").should("be.visible").click();
     cy.get(".ant-select-selector").contains(/Type/).click();
