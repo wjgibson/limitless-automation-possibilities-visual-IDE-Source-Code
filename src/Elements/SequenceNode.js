@@ -5,13 +5,13 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
-import {Modal, Tooltip} from "antd";
-import {BuildOutlined} from '@ant-design/icons';
+import { Modal, Tooltip } from "antd";
+import { BuildOutlined } from "@ant-design/icons";
+import StepsModal from "./stepsModal";
 
 const text = `
 This is a user defined description for this node
 `;
-
 
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
@@ -22,13 +22,20 @@ function SequenceNode({ data }) {
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
 
-  const [cardTitle, setCardTitle] = useState(data.name ? data.name : "Sequence");
+  const [cardTitle, setCardTitle] = useState(
+    data.name ? data.name : "Sequence"
+  );
   const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
-  
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageDisplayed, setMessageDisplayed] = useState(false);
+
+  function openSteps() {
+    setIsModalOpen(true);
+    console.log(isModalOpen);
+  }
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -36,7 +43,7 @@ function SequenceNode({ data }) {
     setIsModalOpen(false);
   };
 
-  function openSteps(){
+  function openSteps() {
     setIsModalOpen(true);
   }
 
@@ -53,7 +60,7 @@ function SequenceNode({ data }) {
     data.configId = configId;
   }, [configId]);
 
-  useEffect( () => {
+  useEffect(() => {
     data.name = newTitle;
   }, [newTitle]);
 
@@ -106,48 +113,57 @@ function SequenceNode({ data }) {
 
   return (
     <>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
       {contextHolder}
+      <StepsModal
+        ismodalopen={isModalOpen}
+        setmodalopen={setIsModalOpen}
+        nodeName={configId}
+      />
       <Card
         title={
           <div className="drag-handle" onDoubleClick={handleDoubleClick}>
             {isEditing ? (
-                <Input
-                    value={newTitle}
-                    onChange={handleTitleChange}
-                    onPressEnter={handleTitleSave}
-                    onBlur={handleTitleCancel}
-                    autoFocus
-                    autoSize = {true}
-                />
+              <Input
+                value={newTitle}
+                onChange={handleTitleChange}
+                onPressEnter={handleTitleSave}
+                onBlur={handleTitleCancel}
+                autoFocus
+                autoSize={true}
+              />
             ) : (
-            <h3
-              style={{
-                display: "inline",
-                color: "white",
-                mixBlendMode: "difference",
-
-              }}
-            >
-              {cardTitle}
-              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"absolute",right:"10px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
-            </h3>
-                )}
+              <h3
+                style={{
+                  display: "inline",
+                  color: "white",
+                  mixBlendMode: "difference",
+                }}
+              >
+                {cardTitle}
+                <Tooltip placement="bottom" title={"Steps"}>
+                  <a
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      color: "white",
+                    }}
+                    onClick={openSteps}
+                  >
+                    <BuildOutlined style={{ fontSize: "24px" }} />
+                  </a>
+                </Tooltip>
+              </h3>
+            )}
           </div>
         }
         bordered={false}
         style={{
           backgroundColor: color,
           mixBlendMode: "difference",
-          paddingRight: 20
+          paddingRight: 20,
         }}
       >
         <div>
-
           <div>
             <div>
               <SeqTypeSelectMenu
@@ -155,12 +171,16 @@ function SequenceNode({ data }) {
                 setSeqType={setSeqType}
                 seqType={seqType}
               ></SeqTypeSelectMenu>
-
             </div>
           </div>
-          <p style={{
-            color: "white",
-            mixBlendMode: "difference"}}>Sequence</p>
+          <p
+            style={{
+              color: "white",
+              mixBlendMode: "difference",
+            }}
+          >
+            Sequence
+          </p>
           <Handle
             type="target"
             position={Position.Top}
