@@ -4,15 +4,10 @@ import React, { useState, useEffect } from "react";
 
 export default function SeqTypeSelectMenu(props) {
   const [controlModuleTypes, setControlModuleTypes] = useState([]);
-  const [nodeColorPreview, setNodeColorPreview] = useState();
 
   useEffect(() => {
     getAllControlModuleTypes();
   }, []);
-
-  const setNodeColor = () => {
-    props.setColor(nodeColorPreview);
-  };
 
   const setNodeType = (type) => {
     props.setControlModuleType(type);
@@ -34,7 +29,8 @@ export default function SeqTypeSelectMenu(props) {
   };
   return (
     <>
-      <p style={{ margin: 0, fontSize: "10px" }}>Control Module Type</p>
+      <p style={{ margin: 0, fontSize: "10px", color: "white",
+        mixBlendMode: "difference" }}>Control Module Type</p>
       <Select
         placeholder="Select a control module type"
         optionFilterProp="children"
@@ -43,9 +39,9 @@ export default function SeqTypeSelectMenu(props) {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         value={props.controlModuleType}
-        style={{ width: "100%" }}
+        style={{ width: "100%", }}
         options={controlModuleTypes.map((cmType) => ({
-          value: cmType.typeuuid + "|1",
+          value: cmType.name,
           label: cmType.name,
         }))}
       />

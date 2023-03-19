@@ -112,11 +112,13 @@ const FlowEditor = (props) => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+
+      let id;
       const newNode = {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node`, configId: props.configId },
+        data: { label: `${type} node`, configId: props.configId},
         dragHandle: ".drag-handle",
       };
 
@@ -128,7 +130,7 @@ const FlowEditor = (props) => {
   return (
     <div className="site-layout-background">
       <div aria-label="rfProvider" className="dndflow">
-        <ReactFlowProvider>
+        <ReactFlowProvider >
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               nodes={nodes}
@@ -140,10 +142,11 @@ const FlowEditor = (props) => {
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
-              deleteKeyCode={["Delete", "Backspace"]}
+              deleteKeyCode={["Backspace"]}
               fitView
             >
-              <Controls />
+              <Controls
+                  position = 'top-left'/>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
