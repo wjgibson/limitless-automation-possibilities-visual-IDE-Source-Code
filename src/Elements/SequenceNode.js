@@ -5,8 +5,9 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
-import {Modal, Tooltip} from "antd";
+import {Tooltip} from "antd";
 import {BuildOutlined} from '@ant-design/icons';
+import StepsModal from "./stepsModal";
 
 const text = `
 This is a user defined description for this node
@@ -28,18 +29,10 @@ function SequenceNode({ data }) {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [messageDisplayed, setMessageDisplayed] = useState(false);
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   function openSteps(){
     setIsModalOpen(true);
+    console.log(isModalOpen)
   }
-
   useEffect(() => {
     data.type = seqType;
     console.log(seqType);
@@ -106,12 +99,8 @@ function SequenceNode({ data }) {
 
   return (
     <>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
       {contextHolder}
+      <StepsModal ismodalopen={isModalOpen} setmodalopen={setIsModalOpen} nodeName={configId}/> 
       <Card
         title={
           <div className="drag-handle" onDoubleClick={handleDoubleClick}>
