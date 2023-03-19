@@ -2,7 +2,7 @@ import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect, useCallback } from "react";
 import { Card, message, Input } from "antd";
 import "../Elements/elements.css";
-import Validator from "../utilities/Validator";
+import { Validator } from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
 import { Tooltip } from "antd";
@@ -167,9 +167,11 @@ function SequenceNode({ data }) {
           <div>
             <div>
               <SeqTypeSelectMenu
+                data-cy="SeqTypeSelect"
                 configId={configId}
                 setSeqType={setSeqType}
                 seqType={seqType}
+                aria-label="seqTypeSelectMenu"
               ></SeqTypeSelectMenu>
             </div>
           </div>

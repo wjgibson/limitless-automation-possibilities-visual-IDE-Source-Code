@@ -1,12 +1,29 @@
-function Validator(instance, connection) {
-  const sourceNodeLevel = instance
-    .getNode(connection.source)
-    .data.type.split("|")[1];
-  const targetNodeLevel = instance
-    .getNode(connection.target)
-    .data.type.split("|")[1];
+let testingFlag = false;
 
-  console.log(targetNodeLevel);
+function setTestingFlag(bool) {
+  testingFlag = bool;
+  console.log(`new testing flag value is ${testingFlag}`);
+}
+
+function Validator(instance, connection) {
+  let sourceNodeLevel;
+  let targetNodeLevel;
+
+  //if test: bypass reactflow specific code
+  if (testingFlag) {
+    sourceNodeLevel = instance.sourceNodeLevel;
+    targetNodeLevel = instance.targetNodeLevel;
+  }
+  //if not test: execute code in production form
+  else {
+    sourceNodeLevel = instance
+      .getNode(connection.source)
+      .data.type.split("|")[1];
+    targetNodeLevel = instance
+      .getNode(connection.target)
+      .data.type.split("|")[1];
+  }
+
   if (targetNodeLevel == 1) {
     if (sourceNodeLevel == 2) {
       return true;
@@ -18,5 +35,7 @@ function Validator(instance, connection) {
   }
   return true;
 }
-
-export default Validator;
+module.exports = {
+  Validator,
+  setTestingFlag,
+};

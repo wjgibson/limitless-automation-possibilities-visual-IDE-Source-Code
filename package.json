@@ -15,6 +15,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "reactflow": "^11.1.2",
+    "rewire": "^6.0.0",
     "save-dev": "^0.0.1-security",
     "supertest": "^6.3.2",
     "uuid": "^9.0.0",
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^2.2.3",
+    "@cypress/code-coverage": "^3.10.0",
     "cypress": "^10.11.0",
     "cypress-drag-drop": "^1.1.1"
   }
