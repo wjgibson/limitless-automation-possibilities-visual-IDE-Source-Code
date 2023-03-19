@@ -5,7 +5,7 @@ import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
 import ColorPicker from "./ColorPicker";
-import { Modal, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import { BuildOutlined } from "@ant-design/icons";
 import StepsModal from "./stepsModal";
 
@@ -45,8 +45,8 @@ function SequenceNode({ data }) {
 
   function openSteps() {
     setIsModalOpen(true);
+    console.log(isModalOpen);
   }
-
   useEffect(() => {
     data.type = seqType;
     console.log(seqType);
