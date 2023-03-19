@@ -167,7 +167,7 @@ function SequenceNode({ data }) {
             isValidConnection={isValidConnection}
           />
         </div>
-        <ColorPicker setColor={setColor} />
+        <ColorPicker initialColor={color} setColor={setColor} />
       </Card>
     </>
   );
