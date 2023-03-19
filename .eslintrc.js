@@ -11,6 +11,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    "linebreak-style": 0,
+    "linebreak-style": "off",
+    quotes: "off",
   },
 };
