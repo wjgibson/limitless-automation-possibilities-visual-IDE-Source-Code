@@ -41,7 +41,7 @@ export default function SeqTypeSelectMenu(props) {
         value={props.controlModuleType}
         style={{ width: "100%", }}
         options={controlModuleTypes.map((cmType) => ({
-          value: cmType.typeuuid + "|1",
+          value: cmType.name,
           label: cmType.name,
         }))}
       />

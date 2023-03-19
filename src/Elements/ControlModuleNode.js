@@ -35,7 +35,7 @@ function ControlModuleNode({ data }) {
   }, [newTitle]);
 
   useEffect(() => {
-    data.type = controlModuleType + "|1";
+    data.type = controlModuleType;
   }, [controlModuleType]);
 
   function isValidConnection(connection) {
