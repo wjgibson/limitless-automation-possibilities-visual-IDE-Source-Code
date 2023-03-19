@@ -7,8 +7,9 @@ describe("formatting functions", () => {
       id: "node1",
       data: {
         configId: "config1",
-        label: "Node 1",
-        type: "uuid|Type A",
+        name: "Node 1",
+        type: "uuid|A",
+        color: "green",
       },
     };
 
@@ -22,6 +23,7 @@ describe("formatting functions", () => {
       name: "Node 1",
       typeuuid: "uuid",
       description: "to be implemented in the future",
+      color: "green",
     });
   });
 

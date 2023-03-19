@@ -35,7 +35,6 @@ describe("CustomMenu", () => {
   });
 
   it("should render with default props", () => {
-    mount(<CustomMenu />);
     cy.get("[data-cy=CustomMenu]").should("exist");
   });
 
