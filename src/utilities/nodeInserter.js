@@ -19,12 +19,14 @@ function parseReactFlowData(reactflowData) {
 }
 
 function formatSequenceData(node) {
+  console.log(node);
   let json = {
     Id: node.id,
     configId: node.data.configId,
-    name: node.data.label,
+    name: node.data.name,
     typeuuid: node.data.type.split("|")[0],
     description: "to be implemented in the future",
+    color: node.data.color,
   };
   return json;
 }

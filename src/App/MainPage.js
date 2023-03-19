@@ -1,16 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
-import { CloseOutlined, ExclamationOutlined } from "@ant-design/icons";
+import {
+  BuildOutlined,
+  CloseOutlined,
+  ExclamationOutlined,
+  CaretLeftOutlined,
+  LeftOutlined,
+} from "@ant-design/icons";
 
 import "./index.css";
 
 import APIHelper from "../utilities/APIHelper";
 
-import { Layout, Tabs } from "antd";
+import { Button, Layout, Tabs } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
-import {Modal} from "antd";
+import { Modal } from "antd";
 
 const { Content, Sider } = Layout;
 
@@ -25,7 +31,6 @@ const MainPage = () => {
   const [selectedConfig, setSelectedConfig] = useState("");
   const [save, setSave] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-
 
   const handleConfigChange = () => {
     exclamtionRef.current.style.visibilty = true;
@@ -47,7 +52,6 @@ const MainPage = () => {
       setOpenConfigs([...newConfigs]);
     }
   };
-
   const openNewConfig = (config) => {
     if (
       config !== undefined &&
@@ -108,65 +112,102 @@ const MainPage = () => {
 
   return (
     <Layout>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <div style={{ overflow: collapsed ? 'hidden' : 'scroll', height: '97vh'}}>
-        <div className="logo" />
-        <CustomMenu
-          selectedConfig={selectedConfig}
-          setSelectedConfig={setSelectedConfig}
-          save={onSave}
-          insert={onInsert}
-          delete={onDelete}
-          addToOpen={openNewConfig}
-        ></CustomMenu>
-      </div>
+      <Sider width={'12vw'} trigger={null} collapsible collapsed={collapsed}>
+        <div
+          style={{ overflowY: collapsed ? "hidden" : "auto", height: "96vh" }}
+        >
+          <div className="logo" />
+          <CustomMenu
+            selectedConfig={selectedConfig}
+            setSelectedConfig={setSelectedConfig}
+            save={onSave}
+            insert={onInsert}
+            delete={onDelete}
+            addToOpen={openNewConfig}
+          />
+        </div>
+        <Button
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            height: "4vh",
+            width: "100%",
+            backgroundColor: "#001529",
+            color: "white",
+            borderRadius: 0,
+            borderColor: "#001529",
+          }}
+        >
+          {collapsed ? <LeftOutlined /> : <LeftOutlined />}
+        </Button>
       </Sider>
       <Layout className="site-layout">
         <Content>
-          <Tabs
-            onTabClick={(e) => setSelectedConfig(e)}
-            style={{ height: "100vh" }}
-            type="card"
-            activeKey={selectedConfig}
-            tabBarStyle={{ backgroundColor: "#001529" }}
-            items={openConfigs?.map((config) => {
-              return {
-                label: (
-                  <div style={{ color: "white", mixBlendMode: "difference" }}>
-                    <span>{`${config.name}`}</span>
-                    <button
-                      style={{ border: "0px", backgroundColor: "transparent" }}
-                      onClick={() => removeOpenConfigs(config)}
-                    >
-                      <CloseOutlined
+          {openConfigs.length > 0 ? (
+            <Tabs
+              onTabClick={(e) => setSelectedConfig(e)}
+              style={{ height: "100vh" }}
+              type="card"
+              activeKey={selectedConfig}
+              tabBarStyle={{ backgroundColor: "#001529" }}
+              items={openConfigs?.map((config) => {
+                return {
+                  label: (
+                    <div style={{ color: "white", mixBlendMode: "difference" }}>
+                      <span>{`${config.name}`}</span>
+                      <button
                         style={{
-                          color: "white",
-                          mixBlendMode: "difference",
-                          float: "left",
+                          border: "0px",
+                          backgroundColor: "transparent",
                         }}
-                      />
-                    </button>
-                    {showExclamtion ? <ExclamationOutlined /> : null}
-                  </div>
-                ),
-                key: config.id,
-                children: (
-                  <FlowEditor
-                    configId={config.id}
-                    save={save}
-                    setSave={setSave}
-                    setShowExclamation={setShowExclamation}
-                    selectedConfig={selectedConfig}
-                    background={<Background color="#00284f" variant="dots" />}
-                  />
-                ),
-              };
-            })}
-          />
+                        onClick={() => removeOpenConfigs(config)}
+                      >
+                        <CloseOutlined
+                          style={{
+                            color: "white",
+                            mixBlendMode: "difference",
+                            float: "left",
+                          }}
+                        />
+                      </button>
+                      {showExclamtion ? <ExclamationOutlined /> : null}
+                    </div>
+                  ),
+                  key: config.id,
+                  children: (
+                    <FlowEditor
+                      configId={config.id}
+                      save={save}
+                      setSave={setSave}
+                      setShowExclamation={setShowExclamation}
+                      selectedConfig={selectedConfig}
+                      background={<Background color="#00284f" variant="dots" />}
+                    />
+                  ),
+                };
+              })}
+            />
+          ) : (
+            <div style={{ backgroundColor: "#2E475F", height: "100vh" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
+                <p
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "5vw",
+                  }}
+                >
+                  No Open Configs
+                </p>
+              </div>
+            </div>
+          )}
         </Content>
       </Layout>
     </Layout>

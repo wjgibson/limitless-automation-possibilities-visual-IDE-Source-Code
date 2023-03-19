@@ -1,6 +1,6 @@
 import { Handle, Position, useReactFlow } from "reactflow";
 import { React, useState, useEffect, useCallback } from "react";
-import { Card, message } from "antd";
+import { Card, message, Input } from "antd";
 import "../Elements/elements.css";
 import Validator from "../utilities/Validator";
 import SeqTypeSelectMenu from "./SeqTypeSelectMenu.js";
@@ -13,6 +13,7 @@ const text = `
 This is a user defined description for this node
 `;
 
+
 function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
@@ -21,6 +22,11 @@ function SequenceNode({ data }) {
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
   const [invalidFlag, setInvalidFlag] = useState(false);
+
+  const [cardTitle, setCardTitle] = useState(data.name ? data.name : "Sequence");
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function openSteps(){
@@ -40,6 +46,10 @@ function SequenceNode({ data }) {
     data.configId = configId;
   }, [configId]);
 
+  useEffect( () => {
+    data.name = newTitle;
+  }, [newTitle]);
+
   useEffect(() => {
     if (invalidFlag) {
       invalidConnectionMessage();
@@ -48,13 +58,17 @@ function SequenceNode({ data }) {
   }, [invalidFlag]);
 
   const invalidConnectionMessage = useCallback(() => {
-    if (invalidFlag) {
+    if (invalidFlag && !messageDisplayed) {
+      setMessageDisplayed(true);
       messageApi.open({
         type: "error",
         content: "This connection is invalid!",
       });
+      setTimeout(() => {
+        setMessageDisplayed(false);
+      }, 5000); // Pause of 5 seconds between messages
     }
-  }, [invalidFlag]);
+  }, [invalidFlag, messageDisplayed]);
 
   function isValidConnection(connection) {
     let connectionValidity = Validator(reactFlowInstance, connection);
@@ -65,30 +79,60 @@ function SequenceNode({ data }) {
     return connectionValidity;
   }
 
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+    setNewTitle(cardTitle);
+  };
+
+  const handleTitleChange = (event) => {
+    setNewTitle(event.target.value);
+  };
+
+  const handleTitleSave = () => {
+    setCardTitle(newTitle);
+    setIsEditing(false);
+  };
+
+  const handleTitleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <>
       {contextHolder}
       <StepsModal ismodalopen={isModalOpen} setmodalopen={setIsModalOpen} nodeName={configId}/> 
       <Card
         title={
-          <div className="drag-handle">
+          <div className="drag-handle" onDoubleClick={handleDoubleClick}>
+            {isEditing ? (
+                <Input
+                    value={newTitle}
+                    onChange={handleTitleChange}
+                    onPressEnter={handleTitleSave}
+                    onBlur={handleTitleCancel}
+                    autoFocus
+                    autoSize = {true}
+                />
+            ) : (
             <h3
               style={{
                 display: "inline",
                 color: "white",
                 mixBlendMode: "difference",
+
               }}
             >
-              Sequence
-              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"relative",left:"125px", color:"white"}} onClick={openSteps} ><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
+              {cardTitle}
+              <Tooltip placement="bottom" title={"Steps"}><a style={{position:"absolute",right:"10px", color:"white"}} onClick={openSteps}><BuildOutlined style={{fontSize: "24px"}}/></a></Tooltip>
             </h3>
+                )}
           </div>
         }
         bordered={false}
         style={{
-          width: 300,
           backgroundColor: color,
           mixBlendMode: "difference",
+          paddingRight: 20
         }}
       >
         <div>
@@ -103,7 +147,9 @@ function SequenceNode({ data }) {
 
             </div>
           </div>
-          <p>Sequence</p>
+          <p style={{
+            color: "white",
+            mixBlendMode: "difference"}}>Sequence</p>
           <Handle
             type="target"
             position={Position.Top}
@@ -115,6 +161,7 @@ function SequenceNode({ data }) {
             isValidConnection={isValidConnection}
           />
         </div>
+        <ColorPicker initialColor={color} setColor={setColor} />
       </Card>
     </>
   );

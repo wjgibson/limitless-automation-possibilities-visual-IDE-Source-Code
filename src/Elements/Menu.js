@@ -103,7 +103,6 @@ const CustomMenu = (props) => {
       items={items}
       onClick={onClick}
       selectedKeys={[props.selectedConfig]}
-      style={{ marginBottom: '3vh' }}
     />
   );
 };

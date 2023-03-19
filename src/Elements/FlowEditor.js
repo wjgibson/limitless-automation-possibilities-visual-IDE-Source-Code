@@ -130,7 +130,7 @@ const FlowEditor = (props) => {
   return (
     <div className="site-layout-background">
       <div aria-label="rfProvider" className="dndflow">
-        <ReactFlowProvider>
+        <ReactFlowProvider >
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               nodes={nodes}
@@ -145,7 +145,8 @@ const FlowEditor = (props) => {
               deleteKeyCode={["Backspace"]}
               fitView
             >
-              <Controls />
+              <Controls
+                  position = 'top-left'/>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
