@@ -144,7 +144,6 @@ function SequenceNode({ data }) {
           backgroundColor: color,
           mixBlendMode: "difference",
           paddingRight: 20
-          //Maybe percentage later
         }}
       >
         <div>
@@ -159,7 +158,9 @@ function SequenceNode({ data }) {
 
             </div>
           </div>
-          <p>Sequence</p>
+          <p style={{
+            color: "white",
+            mixBlendMode: "difference"}}>Sequence</p>
           <Handle
             type="target"
             position={Position.Top}
@@ -171,6 +172,7 @@ function SequenceNode({ data }) {
             isValidConnection={isValidConnection}
           />
         </div>
+        <ColorPicker initialColor={color} setColor={setColor} />
       </Card>
     </>
   );
