@@ -112,11 +112,13 @@ const FlowEditor = (props) => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+
+      let id;
       const newNode = {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node`, configId: props.configId },
+        data: { label: `${type} node`, configId: props.configId},
         dragHandle: ".drag-handle",
       };
 
@@ -140,7 +142,7 @@ const FlowEditor = (props) => {
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
-              deleteKeyCode={["Delete", "Backspace"]}
+              deleteKeyCode={["Backspace"]}
               fitView
             >
               <Controls />
