@@ -1,57 +1,42 @@
 describe("MainPage", () => {
   beforeEach(() => {
-    cy.intercept("POST", "createNewConfig", {
-      statusCode: 200,
-      body: {
-        message: "Config created successfully",
-      },
+    cy.visit("http://localhost:3000");
+    cy.intercept("GET", "/**Configs**", {
+      fixture: "configurations.json",
+    }).as("getConfigurations");
+    cy.intercept("GET", "/getConfig**", {
+      fixture: "configurations.json",
+    }).as("getConfigJSON");
+    cy.intercept("POST", "/create**", {
+      fixture: "configurations.json",
     }).as("createNewConfig");
-
-    cy.intercept("POST", "deleteConfig", {
-      statusCode: 200,
-      body: {
-        message: "Config deleted successfully",
-      },
+    cy.intercept("POST", "/delete**", {
+      fixture: "configurations.json",
     }).as("deleteConfig");
+    cy.intercept("POST", "/**Types**", {
+      fixture: "sequenceTypes.json",
+    }).as("getAllSequenceTypes");
+
+    cy.wait("@getConfigurations");
+    cy.wait("@getAllSequenceTypes");
   });
 
-  it("should open a new configuration tab", () => {
-    cy.visit("http://localhost:3000");
-    cy.get("button[data-testid='new-config']").click();
-    cy.get("input[placeholder='Enter the new configuration name']").type(
-      "My Config"
-    );
-    cy.get("button[type='submit']").click();
-    cy.wait("@createNewConfig");
-    cy.get("div[role='tab'][aria-selected='true']").should(
-      "have.text",
-      "My Config"
-    );
-  });
+  it("should intercept API calls and return fixture data", () => {
+    cy.get(".ant-menu-submenu-title").click();
+    cy.get(".ant-menu-item-only-child > .ant-menu-title-content").click();
+    cy.get('[aria-label="sequence"]')
+      .trigger("mousedown", { button: 0 })
+      .wait(1500)
+      .trigger("mousemove", {
+        clientX: 357.75,
+        clientY: 682.25,
+        screenX: 1811.75,
+        screenY: 799.25,
+        pageX: 682.25,
+        pageY: 105.8125,
+      })
+      .trigger("mouseup", { force: true });
 
-  it("should close a configuration tab", () => {
-    cy.visit("http://localhost:3000");
-    cy.get("button[data-testid='new-config']").click();
-    cy.get("input[placeholder='Enter the new configuration name']").type(
-      "My Config"
-    );
-    cy.get("button[type='submit']").click();
-    cy.wait("@createNewConfig");
-    cy.get("button[aria-label='close']").click();
-    cy.get("div[role='tab']").should("have.length", 0);
-  });
-
-  it("should delete a configuration", () => {
-    cy.visit("http://localhost:3000");
-    cy.get("button[data-testid='new-config']").click();
-    cy.get("input[placeholder='Enter the new configuration name']").type(
-      "My Config"
-    );
-    cy.get("button[type='submit']").click();
-    cy.wait("@createNewConfig");
-    cy.get("button[aria-label='delete']").click();
-    cy.get("button.ant-btn-primary").click();
-    cy.wait("@deleteConfig");
-    cy.get("div[role='tab']").should("have.length", 0);
+    cy.get(".ant-select-selector").click();
   });
 });

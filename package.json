@@ -48,6 +48,7 @@
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^2.2.3",
     "@cypress/code-coverage": "^3.10.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "cypress": "^10.11.0",
     "cypress-drag-drop": "^1.1.1"
   }
