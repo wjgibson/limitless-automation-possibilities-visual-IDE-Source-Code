@@ -2,11 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
 import "reactflow/dist/style.css";
 import {
-  BuildOutlined,
   CloseOutlined,
   ExclamationOutlined,
-  CaretLeftOutlined,
   LeftOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 
 import "./index.css";
@@ -112,107 +111,126 @@ const MainPage = () => {
   }
 
   return (
-    <Layout>
-      <Sider width={"12vw"} trigger={null} collapsible collapsed={collapsed}>
-        <div
-          style={{ overflowY: collapsed ? "hidden" : "auto", height: "96vh" }}
-        >
-          <div className="logo" />
-          <CustomMenu
-            selectedConfig={selectedConfig}
-            setSelectedConfig={setSelectedConfig}
-            save={onSave}
-            insert={onInsert}
-            delete={onDelete}
-            addToOpen={openNewConfig}
-          />
-        </div>
-        <Button
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            height: "4vh",
-            width: "100%",
-            backgroundColor: "#001529",
-            color: "white",
-            borderRadius: 0,
-            borderColor: "#001529",
-          }}
-        >
-          {collapsed ? <LeftOutlined /> : <LeftOutlined />}
-        </Button>
-      </Sider>
-      <Layout className="site-layout">
-        <Content>
-          {openConfigs.length > 0 ? (
-            <Tabs
-              onTabClick={(e) => setSelectedConfig(e)}
-              style={{ height: "100vh" }}
-              type="card"
-              activeKey={selectedConfig}
-              tabBarStyle={{ backgroundColor: "#001529" }}
-              items={openConfigs?.map((config) => {
-                return {
-                  label: (
-                    <div style={{ color: "white", mixBlendMode: "difference" }}>
-                      <span>{`${config.name}`}</span>
-                      <button
-                        style={{
-                          border: "0px",
-                          backgroundColor: "transparent",
-                        }}
-                        onClick={() => removeOpenConfigs(config)}
-                      >
-                        <CloseOutlined
-                          style={{
-                            color: "white",
-                            mixBlendMode: "difference",
-                            float: "left",
-                          }}
-                        />
-                      </button>
-                      {showExclamtion ? <ExclamationOutlined /> : null}
-                    </div>
-                  ),
-                  key: config.id,
-                  children: (
-                    <FlowEditor
-                      configId={config.id}
-                      save={save}
-                      setSave={setSave}
-                      setShowExclamation={setShowExclamation}
-                      selectedConfig={selectedConfig}
-                      background={<Background color="#00284f" variant="dots" />}
-                    />
-                  ),
-                };
-              })}
+    <div>
+      <SettingOutlined
+        style={{
+          position: "absolute",
+          top: "5px",
+          right: "5px",
+          color: "white",
+          fontSize: "30px",
+          cursor: "pointer",
+          zIndex: "99",
+        }}
+      />
+      <Layout>
+        <Sider width={"12vw"} trigger={null} collapsible collapsed={collapsed}>
+          <div
+            style={{ overflowY: collapsed ? "hidden" : "auto", height: "96vh" }}
+          >
+            <div className="logo" />
+            <CustomMenu
+              selectedConfig={selectedConfig}
+              setSelectedConfig={setSelectedConfig}
+              save={onSave}
+              insert={onInsert}
+              delete={onDelete}
+              addToOpen={openNewConfig}
             />
-          ) : (
-            <div style={{ backgroundColor: "#2E475F", height: "100vh" }}>
-              <Header style={{ height: "4.5vh" }}></Header>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <p
+          </div>
+          <Button
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              height: "4vh",
+              width: "100%",
+              backgroundColor: "#001529",
+              color: "white",
+              borderRadius: 0,
+              borderColor: "#001529",
+            }}
+          >
+            {collapsed ? <LeftOutlined /> : <LeftOutlined />}
+          </Button>
+        </Sider>
+        <Layout className="site-layout">
+          <Content>
+            {openConfigs.length > 0 ? (
+              <Tabs
+                onTabClick={(e) => setSelectedConfig(e)}
+                style={{ height: "100vh" }}
+                type="card"
+                activeKey={selectedConfig}
+                tabBarStyle={{ backgroundColor: "#001529" }}
+                items={openConfigs?.map((config) => {
+                  return {
+                    label: (
+                      <div
+                        style={{ color: "white", mixBlendMode: "difference" }}
+                      >
+                        <span>{`${config.name}`}</span>
+                        <button
+                          style={{
+                            border: "0px",
+                            backgroundColor: "transparent",
+                          }}
+                          onClick={() => removeOpenConfigs(config)}
+                        >
+                          <CloseOutlined
+                            style={{
+                              color: "white",
+                              mixBlendMode: "difference",
+                              float: "left",
+                            }}
+                          />
+                        </button>
+                        {showExclamtion ? <ExclamationOutlined /> : null}
+                      </div>
+                    ),
+                    key: config.id,
+                    children: (
+                      <FlowEditor
+                        configId={config.id}
+                        save={save}
+                        setSave={setSave}
+                        setShowExclamation={setShowExclamation}
+                        selectedConfig={selectedConfig}
+                        background={
+                          <Background color="#00284f" variant="dots" />
+                        }
+                      />
+                    ),
+                  };
+                })}
+              />
+            ) : (
+              <div style={{ backgroundColor: "#2E475F", height: "100vh" }}>
+                <Header
+                  style={{ height: "4.5vh", position: "relative" }}
+                ></Header>
+                <div
                   style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "5vw",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
                   }}
                 >
-                  No Open Configs
-                </p>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "5vw",
+                    }}
+                  >
+                    No Open Configs
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
-        </Content>
+            )}
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </div>
   );
 };
 
