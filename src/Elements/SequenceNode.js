@@ -13,7 +13,7 @@ const text = `
 This is a user defined description for this node
 `;
 
-function SequenceNode({ data }) {
+function SequenceNode({ data}) {
   const reactFlowInstance = useReactFlow();
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -31,6 +31,7 @@ function SequenceNode({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageDisplayed, setMessageDisplayed] = useState(false);
 
+  const value = "";
   function openSteps() {
     setIsModalOpen(true);
     console.log(isModalOpen);
@@ -53,10 +54,6 @@ function SequenceNode({ data }) {
   }, [seqType]);
 
   useEffect(() => {
-    data.color = color;
-  }, [color]);
-
-  useEffect(() => {
     data.configId = configId;
   }, [configId]);
 
@@ -70,6 +67,29 @@ function SequenceNode({ data }) {
       setInvalidFlag((flag) => !flag);
     }
   }, [invalidFlag]);
+
+  useEffect(() => {
+    switch (seqType)  {
+      case 'Control Module':
+        value = '#FF0000';
+        value = color;
+        break;
+      case 'Phase':
+        value = '#0000FF';
+        value = color;
+        break;
+      case 'Operation':
+        value = '#008000';
+        value = color;
+        break;
+      case 'Procedure':
+        value = '#FFA500';
+        value = color;
+        break;
+      default:
+        data.color = color;
+    }
+  }, [color]);
 
   const invalidConnectionMessage = useCallback(() => {
     if (invalidFlag && !messageDisplayed) {
