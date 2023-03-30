@@ -29,7 +29,6 @@ const FlowEditor = (props) => {
   const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
 
   useEffect(() => {
-    console.log(props.configId);
     onRestore(props.configId);
   }, []);
 
@@ -70,6 +69,7 @@ const FlowEditor = (props) => {
           jsonData: flow,
           cid: props.configId,
         };
+        console.log(json);
         nodeInserter.insert(json);
       }
     }
@@ -80,7 +80,6 @@ const FlowEditor = (props) => {
     const restoreFlow = async () => {
       const response = await APIHelper.doGet(`getConfigJSON${cid}`);
       const flow = response[0].json;
-      console.log(flow);
 
       if (flow) {
         setNodes(flow.nodes || []);
@@ -118,7 +117,7 @@ const FlowEditor = (props) => {
         id: `${getId()}`,
         type,
         position,
-        data: { label: `${type} node`, configId: props.configId},
+        data: { label: `${type} node`, configId: props.configId },
         dragHandle: ".drag-handle",
       };
 
@@ -130,7 +129,7 @@ const FlowEditor = (props) => {
   return (
     <div className="site-layout-background">
       <div aria-label="rfProvider" className="dndflow">
-        <ReactFlowProvider >
+        <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
               nodes={nodes}
@@ -145,8 +144,7 @@ const FlowEditor = (props) => {
               deleteKeyCode={["Backspace"]}
               fitView
             >
-              <Controls
-                  position = 'top-left'/>
+              <Controls position="top-left" />
             </ReactFlow>
           </div>
         </ReactFlowProvider>

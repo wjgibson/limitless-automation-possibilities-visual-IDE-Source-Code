@@ -33,7 +33,6 @@ function SequenceNode({ data }) {
 
   function openSteps() {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
 
   const handleOk = () => {
@@ -45,11 +44,9 @@ function SequenceNode({ data }) {
 
   function openSteps() {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
   useEffect(() => {
     data.type = seqType;
-    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
