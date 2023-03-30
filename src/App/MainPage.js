@@ -17,6 +17,7 @@ import { Button, Layout, Tabs } from "antd";
 import CustomMenu from "../Elements/Menu";
 import FlowEditor from "../Elements/FlowEditor";
 import { Modal } from "antd";
+import { Header } from "antd/es/layout/layout";
 
 const { Content, Sider } = Layout;
 
@@ -112,7 +113,7 @@ const MainPage = () => {
 
   return (
     <Layout>
-      <Sider width={'12vw'} trigger={null} collapsible collapsed={collapsed}>
+      <Sider width={"12vw"} trigger={null} collapsible collapsed={collapsed}>
         <div
           style={{ overflowY: collapsed ? "hidden" : "auto", height: "96vh" }}
         >
@@ -188,6 +189,7 @@ const MainPage = () => {
             />
           ) : (
             <div style={{ backgroundColor: "#2E475F", height: "100vh" }}>
+              <Header style={{ height: "4.5vh" }}></Header>
               <div
                 style={{
                   display: "flex",
