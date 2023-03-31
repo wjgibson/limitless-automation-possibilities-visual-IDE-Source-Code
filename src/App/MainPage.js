@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactFlow, { useNodesState, useEdgesState, Background } from "reactflow";
+import { Outlet, Link } from "react-router-dom";
 import "reactflow/dist/style.css";
 import {
   CloseOutlined,
@@ -112,17 +113,20 @@ const MainPage = () => {
 
   return (
     <div>
-      <SettingOutlined
-        style={{
-          position: "absolute",
-          top: "5px",
-          right: "5px",
-          color: "white",
-          fontSize: "30px",
-          cursor: "pointer",
-          zIndex: "99",
-        }}
-      />
+      <Link to="/settings">
+        Blogs
+        <SettingOutlined
+          style={{
+            position: "absolute",
+            top: "5px",
+            right: "5px",
+            color: "white",
+            fontSize: "30px",
+            cursor: "pointer",
+            zIndex: "99",
+          }}
+        />
+      </Link>
       <Layout>
         <Sider width={"12vw"} trigger={null} collapsible collapsed={collapsed}>
           <div
@@ -230,6 +234,7 @@ const MainPage = () => {
           </Content>
         </Layout>
       </Layout>
+      <Outlet />
     </div>
   );
 };
