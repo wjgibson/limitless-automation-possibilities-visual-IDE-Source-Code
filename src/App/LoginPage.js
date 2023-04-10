@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import ReactDOM from 'react-dom';
+import { Form, Input, Button } from 'antd';
 
-import APIHelper from "../utilities/APIHelper";
+import APIHelper from '../utilities/APIHelper';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [form] = Form.useForm();
 
-  const handleLogin = () => {
-    form.validateFields().then(values => {
+  const handleLogin = async () => {
+    try {
+      const values = await form.validateFields();
       console.log('Received values of form: ', values);
-      if (!values.username || !values.password) {
-        alert('Please enter your username and password.');
+
+      const response = await APIHelper.doGet(`getLoginData${values.username}`);
+      console.log(response);
+
+      if (values.password === response[0].password) {
+        const module = await import('./MainPage.js');
+        const MainPage = module.default;
+        ReactDOM.render(<MainPage />, document.getElementById('root'));
+      } else {
+        alert('Username or password is incorrect');
       }
-      else {
-        const restoreFlow = async () => {
-          const response = await APIHelper.doGet(`getLoginData${values.username}`);
-          console.log(response);
-          if (values.password == response[0].password){
-            console.log('Success')
-          }
-        };
-        restoreFlow();
-      }
-    });
+    } catch (error) {
+      console.log('Failed:', error);
+    }
   };
 
   return (
@@ -40,7 +42,7 @@ const LoginForm = () => {
         name="username"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
-        <Input onChange={e => setUsername(e.target.value)} />
+        <Input value={username} onChange={e => setUsername(e.target.value)} />
       </Form.Item>
 
       <Form.Item
@@ -48,7 +50,7 @@ const LoginForm = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password onChange={e => setPassword(e.target.value)} />
+        <Input.Password value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Item>
 
       <Form.Item>
