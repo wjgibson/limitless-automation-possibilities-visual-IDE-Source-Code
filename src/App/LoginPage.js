@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Card, Form, Input, Button } from 'antd';
 
 import APIHelper from '../utilities/APIHelper';
+import loginLogo from '../assets/lap.png';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -31,7 +32,10 @@ const LoginForm = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#2E475F' }}>
-      <Card title="Login" style={{ width: 300, textAlign: 'center' }}>
+      <Card 
+        title={<img src={loginLogo} alt="Login Logo" style={{ maxWidth: '100%', filter: 'invert(1)' }} />}
+        style={{ width: 300, textAlign: 'center' }}
+      >
         <Form
           form={form}
           name="loginForm"
