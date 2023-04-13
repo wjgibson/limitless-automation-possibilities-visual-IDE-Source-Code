@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Form, Input, Button } from 'antd';
+import { Card, Form, Input, Button } from 'antd';
 
 import APIHelper from '../utilities/APIHelper';
 
@@ -30,35 +30,37 @@ const LoginForm = () => {
   };
 
   return (
-    <Form
-      form={form}
-      name="loginForm"
-      onFinish={handleLogin}
-      initialValues={{ remember: true }}
-      style={{ width: '300px', margin: 'auto', marginTop: '50px' }}
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-      >
-        <Input value={username} onChange={e => setUsername(e.target.value)} />
-      </Form.Item>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#2E475F' }}>
+      <Card title="Login" style={{ width: 300, textAlign: 'center' }}>
+        <Form
+          form={form}
+          name="loginForm"
+          onFinish={handleLogin}
+          initialValues={{ remember: true }}
+          style={{ marginTop: 16 }}
+        >
+          <Form.Item
+            label="Username"
+            name="username"
+          >
+            <Input value={username} onChange={e => setUsername(e.target.value)} />
+          </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input.Password value={password} onChange={e => setPassword(e.target.value)} />
-      </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+          >
+            <Input.Password value={password} onChange={e => setPassword(e.target.value)} />
+          </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Sign in
-        </Button>
-      </Form.Item>
-    </Form>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Sign in
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </div>
   );
 };
 
