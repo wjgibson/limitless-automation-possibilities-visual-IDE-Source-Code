@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Collapse } from "antd";
+import { Outlet, Link } from "react-router-dom";
 import APIHelper from "../utilities/APIHelper";
 const { Panel } = Collapse;
 
@@ -101,6 +102,14 @@ const SettingsPage = () => {
           </Form>
         </Panel>
       </Collapse>
+      <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
+        <Link to="/">
+          <Button type="primary" size="large">
+            Done
+          </Button>
+        </Link>
+      </div>
+      <Outlet />
     </div>
   );
 };
