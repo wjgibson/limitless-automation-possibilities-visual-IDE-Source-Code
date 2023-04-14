@@ -3,6 +3,7 @@ import APIHelper from "./APIHelper";
 let nodesArray;
 let edgesArray;
 let cid;
+let insertEndpoint;
 
 async function insert(reactflowData) {
   parseReactFlowData(reactflowData);
@@ -24,9 +25,10 @@ function formatSequenceData(node) {
     Id: node.id,
     configId: node.data.configId,
     name: node.data.name,
-    typeuuid: node.data.type.split("|")[0],
+    typeuuid: node.data.type,
     description: "to be implemented in the future",
     color: node.data.color,
+    nodeType: node.data.nodeType,
   };
   return json;
 }
@@ -40,11 +42,11 @@ function formatEdgeData(edge) {
   return json;
 }
 
-function checkForType(node) {
-  if (node.name == "controlModule node") {
+async function checkForType(node) {
+  if (node.nodeType == "Control Module") {
     return "insertControlModule";
   }
-  if (node.name == "sequence node") {
+  if (node.nodeType == "Sequence") {
     return "insertSequence";
   }
 }
@@ -63,12 +65,31 @@ async function prepareNodeTables() {
   await prepareTableForInsert("ControlModule");
 }
 
+// async function sendNodeData(nodes) {
+//   await prepareNodeTables().then(() => {
+//     nodes.forEach((node) => {
+//       let body = formatSequenceData(node);
+//       console.log(body);
+//       setEndpoint(body);
+//       // console.log(`endpoint: ${insertEndpoint}`);
+//       // APIHelper.makePost(insertEndpoint, JSON.stringify(body));
+//     });
+//   });
+// }
+
+async function sendNodeToAPI(node) {
+  let body = formatSequenceData(node);
+  console.log(body);
+  await checkForType(body).then((endpoint) => {
+    console.log(endpoint);
+    APIHelper.makePost(endpoint, JSON.stringify(body));
+  });
+}
+
 async function sendNodeData(nodes) {
   await prepareNodeTables().then(() => {
     nodes.forEach((node) => {
-      let body = formatSequenceData(node);
-      let endpointToCall = checkForType(body);
-      APIHelper.makePost(endpointToCall, JSON.stringify(body));
+      sendNodeToAPI(node);
     });
   });
 }
@@ -81,7 +102,6 @@ async function sendEdgeData(edges) {
       response = APIHelper.makePost("insertSubSequence", JSON.stringify(body));
     });
   });
-  console.log(response);
 }
 
 async function prepareTableForInsert(table) {

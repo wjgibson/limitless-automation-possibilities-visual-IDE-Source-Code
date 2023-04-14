@@ -36,7 +36,6 @@ const CustomMenu = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(`loaded config:`, openConfig);
     props.addToOpen(openConfig);
   }, [openConfig]);
 
@@ -64,7 +63,6 @@ const CustomMenu = (props) => {
 
   async function checkForConfigSelection(selected) {
     if (selected.key === "1") {
-      console.log(`selected config id:${props.selectedConfig}`);
       saveConfiguration(reactFlowInstance, props.selectedConfig);
     } else if (selected.key === "5") {
       insertNewConfiguration(reactFlowInstance);
