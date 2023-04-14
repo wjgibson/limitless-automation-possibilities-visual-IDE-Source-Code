@@ -45,7 +45,7 @@ export default function SeqTypeSelectMenu(props) {
         value={props.seqType}
         style={{ width: "100%", }}
         options={seqTypes.map((seqType) => ({
-          value: seqType.typeuuid + "|" + seqType.plcid,
+          value: seqType.name,
           label: seqType.name,
         }))}
       />

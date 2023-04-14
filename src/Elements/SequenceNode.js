@@ -30,8 +30,7 @@ function SequenceNode({ data}) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageDisplayed, setMessageDisplayed] = useState(false);
-
-  const value = "";
+  const [colorPickerChanged, setColorPickerChanged] = useState(false);
   function openSteps() {
     setIsModalOpen(true);
     console.log(isModalOpen);
@@ -62,34 +61,35 @@ function SequenceNode({ data}) {
   }, [newTitle]);
 
   useEffect(() => {
+    data.color = color;
+  }, [color]);
+
+  useEffect(() => {
     if (invalidFlag) {
       invalidConnectionMessage();
       setInvalidFlag((flag) => !flag);
     }
   }, [invalidFlag]);
 
+
   useEffect(() => {
-    switch (seqType)  {
-      case 'Control Module':
-        value = '#FF0000';
-        value = color;
-        break;
-      case 'Phase':
-        value = '#0000FF';
-        value = color;
-        break;
-      case 'Operation':
-        value = '#008000';
-        value = color;
-        break;
-      case 'Procedure':
-        value = '#FFA500';
-        value = color;
-        break;
-      default:
-        data.color = color;
-    }
-  }, [color]);
+      switch (seqType) {
+        case "Control Module":
+          data.color = 'red';
+          break;
+        case "Phase":
+          data.color = 'green';
+          break;
+        case "Operation":
+          data.color = 'blue';
+          break;
+        case "Procedure":
+          data.color = 'purple'
+          break;
+        default:
+          data.color = color;
+      }
+  }, [seqType, color]);
 
   const invalidConnectionMessage = useCallback(() => {
     if (invalidFlag && !messageDisplayed) {

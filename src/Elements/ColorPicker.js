@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Input } from "antd";
-
+import SequenceNode from "./SequenceNode";
 export default function ColorPicker(props) {
   const [nodeColorPreview, setNodeColorPreview] = useState(
     props.initialColor || "#FFFFFF"
   );
+    const [isInteracted, setIsInteracted] = useState(false);
+
 
   const setNodeColorActual = () => {
     props.setColor(nodeColorPreview);
@@ -27,6 +29,7 @@ export default function ColorPicker(props) {
         onChange={(e) => {
           setNodeColorPreview(e.target.value);
           setNodeColorActual();
+          setIsInteracted(true);
         }}
       ></Input>
     </div>
