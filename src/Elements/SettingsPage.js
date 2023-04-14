@@ -18,18 +18,17 @@ const tailLayout = {
 };
 
 const SettingsPage = () => {
-  const [settings, setSettings] = useState(null);
+  const [settings, setSettings] = useState({});
 
   useEffect(() => {
-    axios.get("/settings.json").then((response) => {
-      setSettings(response.data);
-    });
+    // axios.get("/settings.json").then((response) => {
+    //   setSettings(response.data);
+    // });
+    console.log("retrieve initial settings");
   }, []);
 
   const onFinish = (values) => {
-    axios.post("/update-settings", values).then(() => {
-      // Do something after settings are updated
-    });
+    console.log("settings updated");
   };
 
   if (!settings) {

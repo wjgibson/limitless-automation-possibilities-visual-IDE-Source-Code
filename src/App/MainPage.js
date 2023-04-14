@@ -114,7 +114,6 @@ const MainPage = () => {
   return (
     <div>
       <Link to="/settings">
-        Blogs
         <SettingOutlined
           style={{
             position: "absolute",
