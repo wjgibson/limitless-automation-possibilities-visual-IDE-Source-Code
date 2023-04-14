@@ -10,11 +10,12 @@ const SettingsPage = () => {
     APIHelper.doGet("getDatabaseSettings").then((response) => {
       setSettings(response);
     });
-    console.log("retrieve initial settings");
+    console.log("retrieved initial settings");
   }, []);
 
   const onFinish = (values) => {
     console.log(values);
+    APIHelper.makePost("updateDatabaseSettings", JSON.stringify(values));
   };
 
   if (!settings) {
