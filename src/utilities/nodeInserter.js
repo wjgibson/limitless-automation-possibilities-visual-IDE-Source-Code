@@ -27,6 +27,7 @@ function formatSequenceData(node) {
     typeuuid: node.data.type.split("|")[0],
     description: "to be implemented in the future",
     color: node.data.color,
+    colorInteracted: node.data.colorInteracted
   };
   return json;
 }

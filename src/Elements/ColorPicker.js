@@ -5,12 +5,16 @@ export default function ColorPicker(props) {
   const [nodeColorPreview, setNodeColorPreview] = useState(
     props.initialColor || "#FFFFFF"
   );
-    const [isInteracted, setIsInteracted] = useState(false);
+  const [interacted, setInteracted] = useState(false);
 
 
   const setNodeColorActual = () => {
     props.setColor(nodeColorPreview);
   };
+
+  const setInteractedWith = () => {
+      props.setInteracted(interacted);
+  }
 
   return (
     <div
@@ -28,8 +32,10 @@ export default function ColorPicker(props) {
         value={nodeColorPreview}
         onChange={(e) => {
           setNodeColorPreview(e.target.value);
+          setInteracted(true);
           setNodeColorActual();
-          setIsInteracted(true);
+          setInteractedWith();
+
         }}
       ></Input>
     </div>

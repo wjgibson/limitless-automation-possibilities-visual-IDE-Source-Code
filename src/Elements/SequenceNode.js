@@ -20,6 +20,7 @@ function SequenceNode({ data}) {
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
+  const [colorInteracted, setColorInteracted] = useState(data.colorInteracted ? data.colorInteracted: false );
   const [invalidFlag, setInvalidFlag] = useState(false);
 
   const [cardTitle, setCardTitle] = useState(
@@ -30,19 +31,16 @@ function SequenceNode({ data}) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageDisplayed, setMessageDisplayed] = useState(false);
-  const [colorPickerChanged, setColorPickerChanged] = useState(false);
   function openSteps() {
     setIsModalOpen(true);
     console.log(isModalOpen);
   }
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
   function openSteps() {
     setIsModalOpen(true);
     console.log(isModalOpen);
@@ -65,6 +63,10 @@ function SequenceNode({ data}) {
   }, [color]);
 
   useEffect(() => {
+    data.colorInteracted = colorInteracted;
+  }, [colorInteracted]);
+
+  useEffect(() => {
     if (invalidFlag) {
       invalidConnectionMessage();
       setInvalidFlag((flag) => !flag);
@@ -73,23 +75,34 @@ function SequenceNode({ data}) {
 
 
   useEffect(() => {
+    if (colorInteracted)
+    {
+      data.color = color;
+    }
+    else {
       switch (seqType) {
-        case "Control Module":
-          data.color = 'red';
-          break;
-        case "Phase":
-          data.color = 'green';
-          break;
-        case "Operation":
-          data.color = 'blue';
-          break;
-        case "Procedure":
-          data.color = 'purple'
-          break;
+      case "Control Module":
+        setColor('red');
+        data.color = color;
+        break;
+      case "Phase":
+        setColor('green');
+        data.color = color;
+        break;
+      case "Operation":
+        setColor('blue');
+        data.color = color;
+        break;
+      case "Procedure":
+        setColor('purple');
+        data.color = color;
+        break;
         default:
           data.color = color;
       }
-  }, [seqType, color]);
+    }
+
+  }, [seqType]);
 
   const invalidConnectionMessage = useCallback(() => {
     if (invalidFlag && !messageDisplayed) {
@@ -214,7 +227,7 @@ function SequenceNode({ data}) {
             isValidConnection={isValidConnection}
           />
         </div>
-        <ColorPicker initialColor={color} setColor={setColor} />
+        <ColorPicker initialColor={color} setColor={setColor} setInteracted={setColorInteracted}/>
       </Card>
     </>
   );
