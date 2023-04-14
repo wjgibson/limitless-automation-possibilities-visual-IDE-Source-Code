@@ -11,12 +11,8 @@ export default function SeqTypeSelectMenu(props) {
 
   useEffect(() => {}, [seqTypes]);
 
-  const setNodeType = (type) => {
+  const onChange = (type) => {
     props.setSeqType(type);
-  };
-
-  const onChange = (value) => {
-    setNodeType(value);
   };
 
   const getAllSeqTypes = () => {

@@ -27,6 +27,7 @@ function formatSequenceData(node) {
     typeuuid: node.data.type.split("|")[0],
     description: "to be implemented in the future",
     color: node.data.color,
+    nodeType: node.data.nodeType,
   };
   return json;
 }
@@ -41,10 +42,10 @@ function formatEdgeData(edge) {
 }
 
 async function checkForType(node) {
-  if (node.name == "controlModule node") {
+  if (node.nodeType == "Control Module") {
     return "insertControlModule";
   }
-  if (node.name == "sequence node") {
+  if (node.nodeType == "Sequence") {
     return "insertSequence";
   }
 }
@@ -80,7 +81,7 @@ async function sendNodeToAPI(node) {
   console.log(body);
   await checkForType(body).then((endpoint) => {
     console.log(endpoint);
-    // APIHelper.makePost(insertEndpoint, JSON.stringify(body));
+    APIHelper.makePost(endpoint, JSON.stringify(body));
   });
 }
 
