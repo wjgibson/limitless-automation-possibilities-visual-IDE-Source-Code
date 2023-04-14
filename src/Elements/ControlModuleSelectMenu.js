@@ -9,6 +9,10 @@ export default function SeqTypeSelectMenu(props) {
     getAllControlModuleTypes();
   }, []);
 
+  useEffect(() => {
+    console.log(controlModuleTypes);
+  }, [controlModuleTypes]);
+
   const onChange = (type) => {
     props.setControlModuleType(type);
   };
@@ -44,7 +48,7 @@ export default function SeqTypeSelectMenu(props) {
         value={props.controlModuleType}
         style={{ width: "100%" }}
         options={controlModuleTypes.map((cmType) => ({
-          value: cmType.typeuuid + "|" + cmType.plcid,
+          value: cmType.typeuuid,
           label: cmType.name,
         }))}
       />

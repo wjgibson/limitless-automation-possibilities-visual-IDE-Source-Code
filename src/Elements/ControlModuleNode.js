@@ -26,6 +26,10 @@ function ControlModuleNode({ data }) {
   }, [color]);
 
   useEffect(() => {
+    console.log(controlModuleType);
+  }, [controlModuleType]);
+
+  useEffect(() => {
     data.seqType = "c|1";
   }, []);
 
