@@ -1,35 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Collapse } from "antd";
+import APIHelper from "../utilities/APIHelper";
 const { Panel } = Collapse;
-import axios from "axios";
-
-const layout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 18,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 6,
-    span: 18,
-  },
-};
 
 const SettingsPage = () => {
   const [settings, setSettings] = useState({});
 
   useEffect(() => {
-    // axios.get("/settings.json").then((response) => {
-    //   setSettings(response.data);
-    // });
+    APIHelper.doGet("getDatabaseSettings").then((response) => {
+      setSettings(response);
+    });
     console.log("retrieve initial settings");
   }, []);
 
   const onFinish = (values) => {
-    console.log("settings updated");
+    console.log(values);
   };
 
   if (!settings) {
@@ -37,7 +22,7 @@ const SettingsPage = () => {
   }
 
   return (
-    <>
+    <div>
       <h1>Settings</h1>
       <Collapse accordion>
         <Panel header="Database Connection Settings" key="1">
@@ -69,6 +54,19 @@ const SettingsPage = () => {
             </Form.Item>
 
             <Form.Item
+              label="Database Port"
+              name="port"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your database port!",
+                },
+              ]}
+            >
+              <Input placeholder="5432" />
+            </Form.Item>
+
+            <Form.Item
               label="Database Name"
               name="database"
               rules={[
@@ -94,19 +92,6 @@ const SettingsPage = () => {
               <Input.Password placeholder="password" />
             </Form.Item>
 
-            <Form.Item
-              label="Database Port"
-              name="port"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your database port!",
-                },
-              ]}
-            >
-              <Input placeholder="5432" />
-            </Form.Item>
-
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Save
@@ -115,7 +100,7 @@ const SettingsPage = () => {
           </Form>
         </Panel>
       </Collapse>
-    </>
+    </div>
   );
 };
 
