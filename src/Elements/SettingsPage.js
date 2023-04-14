@@ -1,11 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Collapse } from "antd";
+import { Form, Input, Button, Collapse, message } from "antd";
 import { Outlet, Link } from "react-router-dom";
 import APIHelper from "../utilities/APIHelper";
 const { Panel } = Collapse;
 
 const SettingsPage = () => {
   const [settings, setSettings] = useState({});
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Settings saved successfully",
+    });
+  };
+
+  const failure = () => {
+    messageApi.open({
+      type: "error",
+      content: "Something went wrong",
+    });
+  };
+
+  const displayStatus = (type, content) => {
+    messageApi.open({
+      type: type,
+      content: content,
+    });
+  };
 
   useEffect(() => {
     APIHelper.doGet("getDatabaseSettings").then((response) => {
@@ -16,7 +38,13 @@ const SettingsPage = () => {
 
   const onFinish = (values) => {
     console.log(values);
-    APIHelper.makePost("updateDatabaseSettings", JSON.stringify(values));
+    APIHelper.makePost("updateDatabaseSettings", JSON.stringify(values)).then(
+      displayStatus("success", "Settings saved successfully!"),
+      (err) => {
+        console.log(err);
+        displayStatus("error", "Something went wrong");
+      }
+    );
   };
 
   if (!settings) {
@@ -25,6 +53,7 @@ const SettingsPage = () => {
 
   return (
     <div>
+      {contextHolder}
       <h1>Settings</h1>
       <Collapse accordion>
         <Panel header="Database Connection Settings" key="1">

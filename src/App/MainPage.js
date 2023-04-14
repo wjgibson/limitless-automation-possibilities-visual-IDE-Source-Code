@@ -127,7 +127,7 @@ const MainPage = () => {
         />
       </Link>
       <Layout>
-        <Sider width={"12vw"} trigger={null} collapsible collapsed={collapsed}>
+        <Sider width={"15vw"} trigger={null} collapsible collapsed={collapsed}>
           <div
             style={{ overflowY: collapsed ? "hidden" : "auto", height: "96vh" }}
           >
