@@ -72,6 +72,32 @@ const SettingsPage = () => {
             </Form.Item>
 
             <Form.Item
+              label="Database Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your database password!",
+                },
+              ]}
+            >
+              <Input.Password placeholder="password" />
+            </Form.Item>
+
+            <Form.Item
+              label="Database Name"
+              name="database"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your database name!",
+                },
+              ]}
+            >
+              <Input placeholder="LAP_PG" />
+            </Form.Item>
+
+            <Form.Item
               label="Database Host"
               name="host"
               rules={[
@@ -95,32 +121,6 @@ const SettingsPage = () => {
               ]}
             >
               <Input placeholder="5432" />
-            </Form.Item>
-
-            <Form.Item
-              label="Database Name"
-              name="database"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your database name!",
-                },
-              ]}
-            >
-              <Input placeholder="LAP_PG" />
-            </Form.Item>
-
-            <Form.Item
-              label="Database Password"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your database password!",
-                },
-              ]}
-            >
-              <Input.Password placeholder="password" />
             </Form.Item>
 
             <Form.Item>
