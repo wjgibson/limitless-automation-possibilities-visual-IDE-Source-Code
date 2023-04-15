@@ -75,19 +75,15 @@ function ControlModuleNode({ data }) {
       switch (controlModuleType) {
         case "Type 1":
           setColor('red');
-          data.color = color;
           break;
         case "Type 2":
           setColor('green');
-          data.color = color;
           break;
         case "Type 3":
           setColor('blue');
-          data.color = color;
           break;
         case "Type 4":
           setColor('purple');
-          data.color = color;
           break;
         default:
           data.color = color;

@@ -75,6 +75,7 @@ function SequenceNode({ data}) {
 
 
   useEffect(() => {
+
     if (colorInteracted)
     {
       data.color = color;
@@ -83,19 +84,15 @@ function SequenceNode({ data}) {
       switch (seqType) {
       case "Control Module":
         setColor('red');
-        data.color = color;
         break;
       case "Phase":
         setColor('green');
-        data.color = color;
         break;
       case "Operation":
         setColor('blue');
-        data.color = color;
         break;
       case "Procedure":
         setColor('purple');
-        data.color = color;
         break;
         default:
           data.color = color;
