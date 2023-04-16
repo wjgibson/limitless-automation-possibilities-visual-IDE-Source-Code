@@ -27,9 +27,6 @@ const FlowEditor = (props) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
-  const [editLabel, setEditLabel] = useState(false);
-  const [newLabel, setNewLabel] = useState("");
-  const [selectedEdge, setSelectedEdge] = useState(null);
 
 
   useEffect(() => {
@@ -74,6 +71,9 @@ const FlowEditor = (props) => {
           labelBgStyle: {
             fill: "#f8f4f4",
           },
+          style: {
+            stroke: 'red',
+          }
         };
         setEdges((eds) => addEdge(newEdge, eds));
       },
