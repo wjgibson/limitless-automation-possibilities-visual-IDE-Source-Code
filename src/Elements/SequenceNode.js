@@ -13,13 +13,14 @@ const text = `
 This is a user defined description for this node
 `;
 
-function SequenceNode({ data }) {
+function SequenceNode({ data}) {
   const reactFlowInstance = useReactFlow();
 
   const [messageApi, contextHolder] = message.useMessage();
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.type);
   const [configId, setConfigId] = useState(data.configId);
+  const [colorInteracted, setColorInteracted] = useState(data.colorInteracted ? data.colorInteracted: false );
   const [invalidFlag, setInvalidFlag] = useState(false);
   const [nodeType, setNodeType] = useState("Sequence");
 
@@ -31,28 +32,21 @@ function SequenceNode({ data }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageDisplayed, setMessageDisplayed] = useState(false);
-
   function openSteps() {
     setIsModalOpen(true);
   }
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
   function openSteps() {
     setIsModalOpen(true);
   }
   useEffect(() => {
     data.type = seqType;
   }, [seqType]);
-
-  useEffect(() => {
-    data.color = color;
-  }, [color]);
 
   useEffect(() => {
     data.configId = configId;
@@ -63,6 +57,14 @@ function SequenceNode({ data }) {
   }, [newTitle]);
 
   useEffect(() => {
+    data.color = color;
+  }, [color]);
+
+  useEffect(() => {
+    data.colorInteracted = colorInteracted;
+  }, [colorInteracted]);
+  
+  useEffect(() => {
     data.nodeType = nodeType;
   }, []);
 
@@ -72,6 +74,34 @@ function SequenceNode({ data }) {
       setInvalidFlag((flag) => !flag);
     }
   }, [invalidFlag]);
+
+
+  useEffect(() => {
+
+    if (colorInteracted)
+    {
+      data.color = color;
+    }
+    else {
+      switch (seqType) {
+      case "Control Module":
+        setColor('red');
+        break;
+      case "Phase":
+        setColor('green');
+        break;
+      case "Operation":
+        setColor('blue');
+        break;
+      case "Procedure":
+        setColor('purple');
+        break;
+        default:
+          data.color = color;
+      }
+    }
+
+  }, [seqType]);
 
   const invalidConnectionMessage = useCallback(() => {
     if (invalidFlag && !messageDisplayed) {
@@ -196,7 +226,7 @@ function SequenceNode({ data }) {
             isValidConnection={isValidConnection}
           />
         </div>
-        <ColorPicker initialColor={color} setColor={setColor} />
+        <ColorPicker initialColor={color} setColor={setColor} setInteracted={setColorInteracted}/>
       </Card>
     </>
   );

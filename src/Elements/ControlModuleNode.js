@@ -20,14 +20,15 @@ function ControlModuleNode({ data }) {
   const [nodeType, setNodeType] = useState("Control Module");
 
   const [color, setColor] = useState(data.color);
+  const [colorInteracted, setColorInteracted] = useState(data.colorInteracted ? data.colorInteracted: false );
 
   useEffect(() => {
     data.color = color;
   }, [color]);
 
   useEffect(() => {
-    console.log(controlModuleType);
-  }, [controlModuleType]);
+    data.colorInteracted = colorInteracted;
+  }, [colorInteracted]);
 
   useEffect(() => {
     data.seqType = "c|1";
@@ -71,6 +72,32 @@ function ControlModuleNode({ data }) {
   const handleTitleCancel = () => {
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    if (colorInteracted)
+    {
+      data.color = color;
+    }
+    else {
+      switch (controlModuleType) {
+        case "Type 1":
+          setColor('red');
+          break;
+        case "Type 2":
+          setColor('green');
+          break;
+        case "Type 3":
+          setColor('blue');
+          break;
+        case "Type 4":
+          setColor('purple');
+          break;
+        default:
+          data.color = color;
+      }
+    }
+
+  }, [controlModuleType]);
 
   return (
     <Card
@@ -125,7 +152,7 @@ function ControlModuleNode({ data }) {
           isValidConnection={isValidConnection}
         />
       </div>
-      <ColorPicker initialColor={color} setColor={setColor} />
+      <ColorPicker initialColor={color} setColor={setColor} setInteracted={setColorInteracted}/>
     </Card>
   );
 }
