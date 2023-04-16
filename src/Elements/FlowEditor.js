@@ -57,8 +57,8 @@ const FlowEditor = (props,data) => {
       (params) => {
         const { source, target } = params;
 
-        // Set the label of the new edge here
-        const label = 'dummy';
+        // Prompt the user to enter a label for the new connection
+        const label = window.prompt("Enter a label for the new connection:");
 
         const newEdge = {
           id: `${source}-${target}`,
@@ -159,7 +159,6 @@ const FlowEditor = (props,data) => {
               fitView
             >
               <Controls position="top-left" />
-              <EdgeText>{data.label}</EdgeText>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
