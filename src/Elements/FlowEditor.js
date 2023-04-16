@@ -27,6 +27,10 @@ const FlowEditor = (props) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
+  const [editLabel, setEditLabel] = useState(false);
+  const [newLabel, setNewLabel] = useState("");
+  const [selectedEdge, setSelectedEdge] = useState(null);
+
 
   useEffect(() => {
     onRestore(props.configId);
@@ -53,18 +57,15 @@ const FlowEditor = (props) => {
     }
   }, [showExclamtionOnChange]);
 
+
   const onConnect = useCallback(
       (params) => {
         const { source, target } = params;
-
-
-        let label = window.prompt("Enter a label for the new connection:");
-        label = label.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
         const newEdge = {
           id: `${source}-${target}`,
           source: source,
           target: target,
-          label: label,
+          label: "",
           type: "step",
           animated: true,
           labelStyle: {
@@ -74,11 +75,28 @@ const FlowEditor = (props) => {
             fill: "#f8f4f4",
           },
         };
-
         setEdges((eds) => addEdge(newEdge, eds));
       },
       [setEdges]
   );
+
+  const onEdgeClick = useCallback((event, edge) => {
+    setSelectedEdge(edge);
+    setEditLabel(true);
+  }, []);
+
+  const onSaveLabel = useCallback(() => {
+    setEdges((edges) =>
+        edges.map((edge) =>
+            edge.id === `${selectedEdge.source}-${selectedEdge.target}`
+                ? { ...edge, label: newLabel }
+                : edge
+        )
+    );
+    setEditLabel(false);
+    setNewLabel("");
+  }, [selectedEdge, newLabel]);
+
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
@@ -150,6 +168,17 @@ const FlowEditor = (props) => {
       <div aria-label="rfProvider" className="dndflow">
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            <>
+              {editLabel && (
+                  <div>
+                    <input
+                        type="text"
+                        value={newLabel}
+                        onChange={(event) => setNewLabel(event.target.value)}
+                    />
+                    <button onClick={onSaveLabel}>Save</button>
+                  </div>
+              )}
             <ReactFlow
               nodes={nodes}
               nodeTypes={nodeTypes}
@@ -157,6 +186,7 @@ const FlowEditor = (props) => {
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
+              onEdgeClick={onEdgeClick}
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
@@ -165,6 +195,7 @@ const FlowEditor = (props) => {
             >
               <Controls position="top-left" />
             </ReactFlow>
+              </>
           </div>
         </ReactFlowProvider>
         <Sidebar />
