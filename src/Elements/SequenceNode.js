@@ -22,6 +22,7 @@ function SequenceNode({ data}) {
   const [configId, setConfigId] = useState(data.configId);
   const [colorInteracted, setColorInteracted] = useState(data.colorInteracted ? data.colorInteracted: false );
   const [invalidFlag, setInvalidFlag] = useState(false);
+  const [nodeType, setNodeType] = useState("Sequence");
 
   const [cardTitle, setCardTitle] = useState(
     data.name ? data.name : "Sequence"
@@ -33,7 +34,6 @@ function SequenceNode({ data}) {
   const [messageDisplayed, setMessageDisplayed] = useState(false);
   function openSteps() {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
   const handleOk = () => {
     setIsModalOpen(false);
@@ -43,11 +43,9 @@ function SequenceNode({ data}) {
   };
   function openSteps() {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
   useEffect(() => {
     data.type = seqType;
-    console.log(seqType);
   }, [seqType]);
 
   useEffect(() => {
@@ -65,6 +63,10 @@ function SequenceNode({ data}) {
   useEffect(() => {
     data.colorInteracted = colorInteracted;
   }, [colorInteracted]);
+  
+  useEffect(() => {
+    data.nodeType = nodeType;
+  }, []);
 
   useEffect(() => {
     if (invalidFlag) {
