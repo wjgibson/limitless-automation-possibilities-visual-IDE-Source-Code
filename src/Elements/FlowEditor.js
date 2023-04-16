@@ -27,6 +27,10 @@ const FlowEditor = (props) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
+  const [editLabel, setEditLabel] = useState(false);
+  const [newLabel, setNewLabel] = useState("");
+  const [selectedEdge, setSelectedEdge] = useState(null);
+
 
   useEffect(() => {
     onRestore(props.configId);
@@ -53,13 +57,42 @@ const FlowEditor = (props) => {
     }
   }, [showExclamtionOnChange]);
 
+
   const onConnect = useCallback(
-    (params) =>
-      setEdges((eds) =>
-        addEdge({ ...params, type: "step", animated: true }, eds)
-      ),
-    []
+      (params) => {
+        const { source, target } = params;
+        const newEdge = {
+          id: `${source}-${target}`,
+          source: source,
+          target: target,
+          label: "",
+          type: "step",
+          animated: true,
+          labelStyle: {
+            fontWeight: "bold",
+          },
+          labelBgStyle: {
+            fill: "#f8f4f4",
+          },
+        };
+        setEdges((eds) => addEdge(newEdge, eds));
+      },
+      [setEdges]
   );
+
+  const onEdgeDoubleClick = useCallback((event, edge) => {
+    setEdges((edges) =>
+        edges.map((e) =>
+            e.id === edge.id
+                ? {
+                  ...e,
+                  label: (prompt("Enter the new label for the edge", e.label) || e.label)
+                      .replace(/\b\w/g, (l) => l.toUpperCase())
+                }
+                : e
+        )
+    );
+  }, []);
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
@@ -138,6 +171,7 @@ const FlowEditor = (props) => {
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
+              onEdgeDoubleClick={onEdgeDoubleClick}
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
