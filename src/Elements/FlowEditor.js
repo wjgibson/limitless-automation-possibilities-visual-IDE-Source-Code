@@ -4,7 +4,7 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
-  Controls, EdgeText,
+  Controls,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -21,7 +21,7 @@ import nodeInserter from "../utilities/nodeInserter";
 
 const getId = () => `${uuidv4()}`;
 
-const FlowEditor = (props,data) => {
+const FlowEditor = (props) => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -69,6 +69,9 @@ const FlowEditor = (props,data) => {
           animated: true,
           labelStyle: {
             fontWeight: "bold",
+          },
+          labelBgStyle: {
+            fill: "#f8f4f4",
           },
         };
 
@@ -148,7 +151,6 @@ const FlowEditor = (props,data) => {
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
-
               nodes={nodes}
               nodeTypes={nodeTypes}
               edges={edges}
