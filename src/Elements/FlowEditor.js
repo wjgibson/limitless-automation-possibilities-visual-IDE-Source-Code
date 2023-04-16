@@ -4,7 +4,7 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
-  Controls,
+  Controls, EdgeText,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -21,7 +21,7 @@ import nodeInserter from "../utilities/nodeInserter";
 
 const getId = () => `${uuidv4()}`;
 
-const FlowEditor = (props) => {
+const FlowEditor = (props,data) => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -54,11 +54,24 @@ const FlowEditor = (props) => {
   }, [showExclamtionOnChange]);
 
   const onConnect = useCallback(
-    (params) =>
-      setEdges((eds) =>
-        addEdge({ ...params, type: "step", animated: true }, eds)
-      ),
-    []
+      (params) => {
+        const { source, target } = params;
+
+        // Set the label of the new edge here
+        const label = 'dummy';
+
+        const newEdge = {
+          id: `${source}-${target}`,
+          source: source,
+          target: target,
+          label: label, // Add the label property to the new edge
+          type: "step",
+          animated: true,
+        };
+
+        setEdges((eds) => addEdge(newEdge, eds));
+      },
+      [setEdges]
   );
 
   const onSave = () => {
@@ -132,6 +145,7 @@ const FlowEditor = (props) => {
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
+
               nodes={nodes}
               nodeTypes={nodeTypes}
               edges={edges}
@@ -145,6 +159,7 @@ const FlowEditor = (props) => {
               fitView
             >
               <Controls position="top-left" />
+              <EdgeText>{data.label}</EdgeText>
             </ReactFlow>
           </div>
         </ReactFlowProvider>
