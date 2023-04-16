@@ -57,16 +57,19 @@ const FlowEditor = (props,data) => {
       (params) => {
         const { source, target } = params;
 
-        // Prompt the user to enter a label for the new connection
-        const label = window.prompt("Enter a label for the new connection:");
 
+        let label = window.prompt("Enter a label for the new connection:");
+        label = label.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
         const newEdge = {
           id: `${source}-${target}`,
           source: source,
           target: target,
-          label: label, // Add the label property to the new edge
+          label: label,
           type: "step",
           animated: true,
+          labelStyle: {
+            fontWeight: "bold",
+          },
         };
 
         setEdges((eds) => addEdge(newEdge, eds));
