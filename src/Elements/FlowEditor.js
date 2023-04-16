@@ -80,11 +80,6 @@ const FlowEditor = (props) => {
       [setEdges]
   );
 
-  const onEdgeClick = useCallback((event, edge) => {
-    setSelectedEdge(edge);
-    setEditLabel(true);
-  }, []);
-
   const onSaveLabel = useCallback(() => {
     setEdges((edges) =>
         edges.map((edge) =>
@@ -97,6 +92,19 @@ const FlowEditor = (props) => {
     setNewLabel("");
   }, [selectedEdge, newLabel]);
 
+  const onEdgeDoubleClick = useCallback((event, edge) => {
+    setEdges((edges) =>
+        edges.map((e) =>
+            e.id === edge.id
+                ? {
+                  ...e,
+                  label: (prompt("Enter the new label for the edge", e.label) || e.label)
+                      .replace(/\b\w/g, (l) => l.toUpperCase())
+                }
+                : e
+        )
+    );
+  }, []);
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
@@ -168,17 +176,6 @@ const FlowEditor = (props) => {
       <div aria-label="rfProvider" className="dndflow">
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-            <>
-              {editLabel && (
-                  <div>
-                    <input
-                        type="text"
-                        value={newLabel}
-                        onChange={(event) => setNewLabel(event.target.value)}
-                    />
-                    <button onClick={onSaveLabel}>Save</button>
-                  </div>
-              )}
             <ReactFlow
               nodes={nodes}
               nodeTypes={nodeTypes}
@@ -186,7 +183,7 @@ const FlowEditor = (props) => {
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
-              onEdgeClick={onEdgeClick}
+              onEdgeDoubleClick={onEdgeDoubleClick}
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
@@ -195,7 +192,6 @@ const FlowEditor = (props) => {
             >
               <Controls position="top-left" />
             </ReactFlow>
-              </>
           </div>
         </ReactFlowProvider>
         <Sidebar />
