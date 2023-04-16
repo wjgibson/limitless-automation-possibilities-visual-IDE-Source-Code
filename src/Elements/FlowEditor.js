@@ -80,18 +80,6 @@ const FlowEditor = (props) => {
       [setEdges]
   );
 
-  const onSaveLabel = useCallback(() => {
-    setEdges((edges) =>
-        edges.map((edge) =>
-            edge.id === `${selectedEdge.source}-${selectedEdge.target}`
-                ? { ...edge, label: newLabel }
-                : edge
-        )
-    );
-    setEditLabel(false);
-    setNewLabel("");
-  }, [selectedEdge, newLabel]);
-
   const onEdgeDoubleClick = useCallback((event, edge) => {
     setEdges((edges) =>
         edges.map((e) =>
