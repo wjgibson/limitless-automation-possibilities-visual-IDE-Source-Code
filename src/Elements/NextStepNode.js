@@ -27,6 +27,11 @@ const NextStepNode = (props) => {
   const [valueNextSteps1, setvalueNextSteps1] = useState();
   const [valueNextSteps2, setvalueNextSteps2] = useState();
   const [valueNextSteps3, setvalueNextSteps3] = useState();
+    const [stepTitle, setStepTitle] = useState(
+    data.name ? data.name : "Next Step"
+  );
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
 
   var nodesOnPage = [];
 
@@ -108,6 +113,25 @@ const NextStepNode = (props) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const doubleClickChangeInitialze = () => {
+    setIsEditing(true);
+
+    setNewTitle(stepTitle)
+  };
+  const changeHandler = (event) => {
+    setNewTitle(event.target.value)
+  };
+  const saveHandler = () => {
+    setStepTitle(newTitle);
+    setIsEditing(false);
+  };
+  const cancelHandler = () => {
+    setIsEditing(false);
+  };
+
+  useEffect(() => {
+    data.name = newTitle;
+  }, [newTitle]);
   return (
     <>
       <Modal
@@ -677,7 +701,17 @@ const NextStepNode = (props) => {
 
       <Card
         title={
-          <div className="drag-handle">
+          <div className="drag-handle" onDoubleClick={doubleClickChangeInitialze}>
+            {isEditing ? (
+              <Input
+              value={newTitle}
+              onChange={changeHandler}
+              onPressEnter={saveHandler}
+              onBlur={cancelHandler}
+              autofocus
+              autoSize={true}
+              />
+            ) : (
             <h3
               style={{
                 display: "inline",
@@ -685,7 +719,7 @@ const NextStepNode = (props) => {
                 mixBlendMode: "difference",
               }}
             >
-              {props.id}
+              {stepTitle}
               <Tooltip placement="bottom" title={"Conditions"}>
                 <a
                   style={{
@@ -699,6 +733,7 @@ const NextStepNode = (props) => {
                 </a>
               </Tooltip>
             </h3>
+            )}
           </div>
         }
         bordered={false}
