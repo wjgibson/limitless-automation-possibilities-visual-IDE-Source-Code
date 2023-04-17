@@ -16,6 +16,7 @@ describe("Validator returns the validity of connections", () => {
     instance = {
       sourceNodeLevel: "3",
       targetNodeLevel: "2",
+      targetNodeType: "Sequence",
     };
     let validity = Validator(instance, connection);
     expect(validity).to.equal(true);
@@ -27,6 +28,7 @@ describe("Validator returns the validity of connections", () => {
     instance = {
       sourceNodeLevel: "2",
       targetNodeLevel: "3",
+      targetNodeType: "Sequence",
     };
     let validity = Validator(instance, connection);
     expect(validity).to.equal(false);
@@ -38,6 +40,7 @@ describe("Validator returns the validity of connections", () => {
     instance = {
       sourceNodeLevel: "2",
       targetNodeLevel: "2",
+      targetNodeType: "Sequence",
     };
     let validity = Validator(instance, connection);
     expect(validity).to.equal(false);
@@ -49,19 +52,9 @@ describe("Validator returns the validity of connections", () => {
     instance = {
       sourceNodeLevel: "2",
       targetNodeLevel: "1",
+      targetNodeType: "Control Module",
     };
     let validity = Validator(instance, connection);
     expect(validity).to.equal(true);
-  });
-
-  it("returns false for specific operation to control module connection", () => {
-    setTestingFlag(true);
-
-    instance = {
-      sourceNodeLevel: "3",
-      targetNodeLevel: "1",
-    };
-    let validity = Validator(instance, connection);
-    expect(validity).to.equal(false);
   });
 });

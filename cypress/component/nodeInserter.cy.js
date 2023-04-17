@@ -10,6 +10,8 @@ describe("formatting functions", () => {
         name: "Node 1",
         type: "uuid|A",
         color: "green",
+        colorInteracted: true,
+        nodeType: "Sequence",
       },
     };
 
@@ -24,6 +26,8 @@ describe("formatting functions", () => {
       typeuuid: "uuid",
       description: "to be implemented in the future",
       color: "green",
+      colorInteracted: true,
+      nodeType: "Sequence",
     });
   });
 
@@ -46,34 +50,34 @@ describe("formatting functions", () => {
 });
 
 describe("checkForType", () => {
-  it('returns "insertControlModule" when node name is "controlModule node"', () => {
+  it('returns "insertControlModule" when node name is "controlModule node"', async () => {
     // Define the input data
-    const node = { name: "controlModule node" };
+    const node = { nodeType: "Control Module" };
 
     // Call the function with test data
-    const result = nodeInserter.checkForType(node);
+    const result = await nodeInserter.checkForType(node);
 
     // Assert that the function returns the expected output
     expect(result).to.equal("insertControlModule");
   });
 
-  it('returns "insertSequence" when node name is "sequence node"', () => {
+  it('returns "insertSequence" when node name is "sequence node"', async () => {
     // Define the input data
-    const node = { name: "sequence node" };
+    const node = { nodeType: "Sequence" };
 
     // Call the function with test data
-    const result = nodeInserter.checkForType(node);
+    const result = await nodeInserter.checkForType(node);
 
     // Assert that the function returns the expected output
     expect(result).to.equal("insertSequence");
   });
 
-  it('returns undefined when node name is not "controlModule node" or "sequence node"', () => {
+  it('returns undefined when node name is not "controlModule node" or "sequence node"', async () => {
     // Define the input data
-    const node = { name: "unknown node" };
+    const node = { nodeType: "unknown node" };
 
     // Call the function with test data
-    const result = nodeInserter.checkForType(node);
+    const result = await nodeInserter.checkForType(node);
 
     // Assert that the function returns the expected output
     expect(result).to.be.undefined;

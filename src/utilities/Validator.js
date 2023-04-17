@@ -7,6 +7,7 @@ function setTestingFlag(bool) {
 function Validator(instance, connection, list) {
   let sourceNodeLevel;
   let targetNodeLevel;
+  let targetNodeType;
 
   //if test: bypass reactflow specific code
   if (testingFlag) {
