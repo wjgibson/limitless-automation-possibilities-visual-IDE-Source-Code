@@ -27,54 +27,31 @@ const stepsModal = (props) => {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
     const[checkEdges, setCheckEdges] = useState(false);
+    const[addedStep, setaddedStep] = useState(false);
+    const[addedEdge, setaddedEdge] = useState(false);
 
     const onNodesChange = useCallback(
       (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
       []
     );
-    const onEdgesChange = useCallback(
-      (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    const onEdgesChange = 
+    
+    useCallback(
+      (changes) =>{ setCheckEdges(true);setEdges((eds) => applyEdgeChanges(changes, eds))},
       []
     );
-   useEffect(()=>{
-    if(checkEdges == true){
-    if(edges.length != 0){
-      let newEdges = edges;
-      
-      for(let j =0; j<nodes.length; j++){
-        if(nodes[j].type =="ResetStep"){
-          let nodeName = nodes[j].id
-        for(let i =0; i<edges.length; i++){
-        if(newEdges[i].target ==nodeName){
-          newEdges[i].style = {stroke:"Orange"};
-        }
-      }
-      }
-      for(let i =0; i<edges.length; i++){
-        if(newEdges[i].targetHandle == "b"){
-          newEdges[i].style = {stroke:"Blue"};
-        }
-        if(newEdges[i].targetHandle == "a"){
-          newEdges[i].style = {stroke:"Green"};
-        }
-        if(newEdges[i].targetHandle == "c"){
-          newEdges[i].style = {stroke:"Pink"};
-        }
-      }
-    }
-     
-
-      setEdges([...newEdges]);
-    }
     
-  }
-  setCheckEdges(false)
-   },[checkEdges])
 
-
-   useEffect(()=>{setCheckEdges(true)},[edges])
-
-    const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+    const onConnect =
+    
+    useCallback(
+      (params) =>{ setCheckEdges(true); setEdges((eds) => addEdge(params, eds))
+      }  
+    , []);
+    
+    useEffect(() => {
+      console.log("checkEdges changed:", checkEdges);
+    }, [checkEdges]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -104,11 +81,37 @@ const stepsModal = (props) => {
     }
 
     function addNextStep(){
+      setaddedStep(true);
+      setaddedEdge(true);
       setNodes(nodes.concat({id: "Next"+curID.toString(), type:'NextStep',
-        data: { label: 'Next' },
+        data: { label: 'Next', nodes:nodes, edges:edges, setEdges:setEdges, setNodes:setNodes, checkEdges:checkEdges, setCheckEdges:setCheckEdges},
         position: { x: 100, y: 100 },}));
         curID += 1;
+
     }
+
+    useEffect(()=>{
+      
+      if(addedEdge){
+        nodes.forEach(node => {
+          node.data.edges=edges
+        })
+        setaddedEdge(false);
+      }
+
+    },[edges])
+
+
+    useEffect(()=>{
+      
+      if(addedStep){
+        nodes.forEach(node => {
+          node.data.nodes = nodes
+        })
+        setaddedStep(false);
+      }
+
+    },[nodes])
 
 
   return (
@@ -116,6 +119,7 @@ const stepsModal = (props) => {
     <div className="site-layout-background">
       <Button onClick={addResetStep}>Reset Step</Button>
       <Button onClick={addNextStep}>Next Step</Button>
+      <Button onClick={e=>(console.log(edges))}>Print</Button>
       <div aria-label="rfProvider" className="dndflow" style={{height: 700}}>
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
