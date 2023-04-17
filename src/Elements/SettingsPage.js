@@ -39,18 +39,19 @@ const SettingsPage = () => {
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#2E475F",
-      }}
+    // style={{
+    //   height: "100vh",
+    //   backgroundColor: "#2E475F",
+    // }}
     >
       {contextHolder}
-      <h1>Settings</h1>
+      <h1 style={{ fontFamily: "sans-serif" }}>Settings</h1>
       <Collapse accordion>
-        <Panel header="Database Connection Settings" key="1">
+        <Panel
+          header="Database Connection Settings"
+          key="1"
+          // style={{ color: "white", fontFamily: "sans-serif" }}
+        >
           <Form initialValues={settings} onFinish={onFinish}>
             <Form.Item
               label="Database User"
