@@ -30,6 +30,7 @@ const SettingsPage = () => {
       marginBottom: "20px",
       color: "#000",
       background: "#fff",
+      fontWeight: "bold",
     },
     label: {
       color: "#b4babf",
