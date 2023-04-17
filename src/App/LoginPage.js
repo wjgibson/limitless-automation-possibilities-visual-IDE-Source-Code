@@ -5,7 +5,7 @@ import { Card, Form, Input, Button } from "antd";
 import APIHelper from "../utilities/APIHelper";
 import loginLogo from "../assets/lap.png";
 
-const LoginForm = () => {
+const LoginForm = ({ setAuth }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [form] = Form.useForm();
@@ -21,6 +21,7 @@ const LoginForm = () => {
       const response = await APIHelper.doGet(`getLoginData${values.username}`);
 
       if (values.password === response[0].password) {
+        setAuth(true);
         localStorage.setItem("authToken", true);
         history("/main");
       } else {
