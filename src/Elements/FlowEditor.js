@@ -27,9 +27,6 @@ const FlowEditor = (props) => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
-  const [editLabel, setEditLabel] = useState(false);
-  const [newLabel, setNewLabel] = useState("");
-  const [selectedEdge, setSelectedEdge] = useState(null);
 
 
   useEffect(() => {
@@ -74,6 +71,9 @@ const FlowEditor = (props) => {
           labelBgStyle: {
             fill: "#f8f4f4",
           },
+          style: {
+            stroke: 'grey',
+          }
         };
         setEdges((eds) => addEdge(newEdge, eds));
       },
@@ -93,6 +93,25 @@ const FlowEditor = (props) => {
         )
     );
   }, []);
+
+    const onEdgeContextMenu = useCallback((event, edge) => {
+        event.preventDefault();
+        const color = prompt("Enter the new color for the edge", edge.style.stroke) || edge.style.stroke;
+        const newColor = color.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
+        setEdges((edges) =>
+            edges.map((e) =>
+                e.id === edge.id
+                    ? {
+                        ...e,
+                        style: {
+                            ...e.style,
+                            stroke: newColor,
+                        },
+                    }
+                    : e
+            )
+        );
+    }, []);
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
@@ -172,6 +191,7 @@ const FlowEditor = (props) => {
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
               onEdgeDoubleClick={onEdgeDoubleClick}
+              onEdgeContextMenu={onEdgeContextMenu}
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
