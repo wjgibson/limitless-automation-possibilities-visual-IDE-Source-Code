@@ -8,15 +8,20 @@ import {
   Space,
   Select,
 } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { Handle, Position } from "reactflow";
 import { useState } from "react";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import { Content, Header } from "antd/es/layout/layout";
 
-const NextStepNode = () => {
+const NextStepNode = ({data}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState(1);
+  const [stepTitle, setStepTitle] = useState(
+    data.name ? data.name : "Next Step"
+  );
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
@@ -30,6 +35,25 @@ const NextStepNode = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const doubleClickChangeInitialze = () => {
+    setIsEditing(true);
+
+    setNewTitle(stepTitle)
+  };
+  const changeHandler = (event) => {
+    setNewTitle(event.target.value)
+  };
+  const saveHandler = () => {
+    setStepTitle(newTitle);
+    setIsEditing(false);
+  };
+  const cancelHandler = () => {
+    setIsEditing(false);
+  };
+
+  useEffect(() => {
+    data.name = newTitle;
+  }, [newTitle]);
   return (
     <>
       <Modal
@@ -459,7 +483,17 @@ const NextStepNode = () => {
 
       <Card
         title={
-          <div className="drag-handle">
+          <div className="drag-handle" onDoubleClick={doubleClickChangeInitialze}>
+            {isEditing ? (
+              <Input
+              value={newTitle}
+              onChange={changeHandler}
+              onPressEnter={saveHandler}
+              onBlur={cancelHandler}
+              autofocus
+              autoSize={true}
+              />
+            ) : (
             <h3
               style={{
                 display: "inline",
@@ -467,7 +501,7 @@ const NextStepNode = () => {
                 mixBlendMode: "difference",
               }}
             >
-              Next Step
+              {stepTitle}
               <Tooltip placement="bottom" title={"Conditions"}>
                 <a
                   style={{
@@ -481,6 +515,7 @@ const NextStepNode = () => {
                 </a>
               </Tooltip>
             </h3>
+            )}
           </div>
         }
         bordered={false}
