@@ -2,7 +2,6 @@ let testingFlag = false;
 
 function setTestingFlag(bool) {
   testingFlag = bool;
-  console.log(`new testing flag value is ${testingFlag}`);
 }
 
 function Validator(instance, connection, list) {
@@ -22,12 +21,10 @@ function Validator(instance, connection, list) {
     targetNodeLevel = instance
       .getNode(connection.target)
       .data.type.split("|")[1];
-
-    console.log(`source node level: ${sourceNodeLevel}`);
-    console.log(`target node level: ${targetNodeLevel}`);
+    targetNodeType = instance.getNode(connection.target).data.nodeType;
   }
 
-  if (targetNodeLevel != 5) {
+  if (targetNodeType == "Control Module") {
     if (sourceNodeLevel == 2) {
       return true;
     } else {

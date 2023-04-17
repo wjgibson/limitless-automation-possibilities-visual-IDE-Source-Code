@@ -27,8 +27,8 @@ const NextStepNode = (props) => {
   const [valueNextSteps1, setvalueNextSteps1] = useState();
   const [valueNextSteps2, setvalueNextSteps2] = useState();
   const [valueNextSteps3, setvalueNextSteps3] = useState();
-    const [stepTitle, setStepTitle] = useState(
-    data.name ? data.name : "Next Step"
+  const [stepTitle, setStepTitle] = useState(
+    props.data.name ? props.data.name : "Next Step"
   );
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState("");
@@ -116,10 +116,10 @@ const NextStepNode = (props) => {
   const doubleClickChangeInitialze = () => {
     setIsEditing(true);
 
-    setNewTitle(stepTitle)
+    setNewTitle(stepTitle);
   };
   const changeHandler = (event) => {
-    setNewTitle(event.target.value)
+    setNewTitle(event.target.value);
   };
   const saveHandler = () => {
     setStepTitle(newTitle);
@@ -130,7 +130,7 @@ const NextStepNode = (props) => {
   };
 
   useEffect(() => {
-    data.name = newTitle;
+    props.data.name = newTitle;
   }, [newTitle]);
   return (
     <>
@@ -701,38 +701,41 @@ const NextStepNode = (props) => {
 
       <Card
         title={
-          <div className="drag-handle" onDoubleClick={doubleClickChangeInitialze}>
+          <div
+            className="drag-handle"
+            onDoubleClick={doubleClickChangeInitialze}
+          >
             {isEditing ? (
               <Input
-              value={newTitle}
-              onChange={changeHandler}
-              onPressEnter={saveHandler}
-              onBlur={cancelHandler}
-              autofocus
-              autoSize={true}
+                value={newTitle}
+                onChange={changeHandler}
+                onPressEnter={saveHandler}
+                onBlur={cancelHandler}
+                autofocus
+                autoSize={true}
               />
             ) : (
-            <h3
-              style={{
-                display: "inline",
-                color: "white",
-                mixBlendMode: "difference",
-              }}
-            >
-              {stepTitle}
-              <Tooltip placement="bottom" title={"Conditions"}>
-                <a
-                  style={{
-                    position: "relative",
-                    left: "125px",
-                    color: "white",
-                  }}
-                  onClick={showModal}
-                >
-                  <UnorderedListOutlined />
-                </a>
-              </Tooltip>
-            </h3>
+              <h3
+                style={{
+                  display: "inline",
+                  color: "white",
+                  mixBlendMode: "difference",
+                }}
+              >
+                {stepTitle}
+                <Tooltip placement="bottom" title={"Conditions"}>
+                  <a
+                    style={{
+                      position: "relative",
+                      left: "125px",
+                      color: "white",
+                    }}
+                    onClick={showModal}
+                  >
+                    <UnorderedListOutlined />
+                  </a>
+                </Tooltip>
+              </h3>
             )}
           </div>
         }

@@ -198,7 +198,7 @@ const FlowEditor = (props) => {
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
-              deleteKeyCode={["Backspace"]}
+              deleteKeyCode={["Backspace", "Delete"]}
               fitView
             >
               <Controls position="top-left" />
