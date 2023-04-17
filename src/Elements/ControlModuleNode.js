@@ -80,21 +80,23 @@ function ControlModuleNode({ data }) {
     if (colorInteracted) {
       data.color = color;
     } else {
-      switch (controlModuleType) {
-        case controlModuleTypeList[0].typeuuid:
-          setColor("red");
-          break;
-        case controlModuleTypeList[1].typeuuid:
-          setColor("green");
-          break;
-        case controlModuleTypeList[2].typeuuid:
-          setColor("blue");
-          break;
-        case controlModuleTypeList[3].typeuuid:
-          setColor("purple");
-          break;
-        default:
-          data.color = color;
+      if (controlModuleType != undefined && controlModuleTypeList.length != 0) {
+        switch (controlModuleType.split("|")[0]) {
+          case controlModuleTypeList[0].typeuuid:
+            setColor("red");
+            break;
+          case controlModuleTypeList[1].typeuuid:
+            setColor("green");
+            break;
+          case controlModuleTypeList[2].typeuuid:
+            setColor("blue");
+            break;
+          case controlModuleTypeList[3].typeuuid:
+            setColor("purple");
+            break;
+          default:
+            data.color = color;
+        }
       }
     }
   }, [controlModuleType]);

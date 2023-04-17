@@ -25,7 +25,7 @@ function formatSequenceData(node) {
     Id: node.id,
     configId: node.data.configId,
     name: node.data.name,
-    typeuuid: node.data.type,
+    typeuuid: node.data.type.split("|")[0],
     description: "to be implemented in the future",
     color: node.data.color,
     colorInteracted: node.data.colorInteracted,

@@ -82,21 +82,23 @@ function SequenceNode({ data }) {
     if (colorInteracted) {
       data.color = color;
     } else {
-      switch (seqType) {
-        case seqTypeList[0].typeuuid:
-          setColor("red");
-          break;
-        case seqTypeList[1].typeuuid:
-          setColor("green");
-          break;
-        case seqTypeList[2].typeuuid:
-          setColor("blue");
-          break;
-        case seqTypeList[3].typeuuid:
-          setColor("purple");
-          break;
-        default:
-          data.color = color;
+      if (seqType != undefined && seqTypeList.length != 0) {
+        switch (seqType.split("|")[0]) {
+          case seqTypeList[0].typeuuid:
+            setColor("red");
+            break;
+          case seqTypeList[1].typeuuid:
+            setColor("green");
+            break;
+          case seqTypeList[2].typeuuid:
+            setColor("blue");
+            break;
+          case seqTypeList[3].typeuuid:
+            setColor("purple");
+            break;
+          default:
+            data.color = color;
+        }
       }
     }
   }, [seqType]);
@@ -115,7 +117,11 @@ function SequenceNode({ data }) {
   }, [invalidFlag, messageDisplayed]);
 
   function isValidConnection(connection) {
-    let connectionValidity = Validator(reactFlowInstance, connection);
+    let connectionValidity = Validator(
+      reactFlowInstance,
+      connection,
+      seqTypeList
+    );
 
     if (!connectionValidity && !invalidFlag) {
       setInvalidFlag(true);
