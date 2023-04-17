@@ -6,6 +6,10 @@ html {
   overflow: hidden;
 }
 
+.settings {
+  background: "#001529";
+}
+
 .dndflow {
   flex-direction: column;
   display: flex;
