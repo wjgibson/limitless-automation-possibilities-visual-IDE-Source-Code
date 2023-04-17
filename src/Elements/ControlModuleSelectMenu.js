@@ -9,10 +9,6 @@ export default function SeqTypeSelectMenu(props) {
     getAllControlModuleTypes();
   }, []);
 
-  useEffect(() => {
-    console.log(controlModuleTypes);
-  }, [controlModuleTypes]);
-
   const onChange = (type) => {
     props.setControlModuleType(type);
   };
@@ -23,6 +19,7 @@ export default function SeqTypeSelectMenu(props) {
         `getAllControlModuleTypes${props.configId}`
       );
       setControlModuleTypes(response);
+      props.setControlModuleTypeList(response);
     };
     retrieveControlModuleTypes();
   };

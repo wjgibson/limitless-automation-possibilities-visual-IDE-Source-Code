@@ -12,6 +12,7 @@ function ControlModuleNode({ data }) {
 
   const [configId, setConfigId] = useState(data.configId);
   const [controlModuleType, setControlModuleType] = useState(data.type);
+  const [controlModuleTypeList, setControlModuleTypeList] = useState([]);
   const [cardTitle, setCardTitle] = useState(
     data.name ? data.name : "Control Module"
   );
@@ -20,7 +21,9 @@ function ControlModuleNode({ data }) {
   const [nodeType, setNodeType] = useState("Control Module");
 
   const [color, setColor] = useState(data.color);
-  const [colorInteracted, setColorInteracted] = useState(data.colorInteracted ? data.colorInteracted: false );
+  const [colorInteracted, setColorInteracted] = useState(
+    data.colorInteracted ? data.colorInteracted : false
+  );
 
   useEffect(() => {
     data.color = color;
@@ -74,29 +77,26 @@ function ControlModuleNode({ data }) {
   };
 
   useEffect(() => {
-    if (colorInteracted)
-    {
+    if (colorInteracted) {
       data.color = color;
-    }
-    else {
+    } else {
       switch (controlModuleType) {
-        case "Type 1":
-          setColor('red');
+        case controlModuleTypeList[0].typeuuid:
+          setColor("red");
           break;
-        case "Type 2":
-          setColor('green');
+        case controlModuleTypeList[1].typeuuid:
+          setColor("green");
           break;
-        case "Type 3":
-          setColor('blue');
+        case controlModuleTypeList[2].typeuuid:
+          setColor("blue");
           break;
-        case "Type 4":
-          setColor('purple');
+        case controlModuleTypeList[3].typeuuid:
+          setColor("purple");
           break;
         default:
           data.color = color;
       }
     }
-
   }, [controlModuleType]);
 
   return (
@@ -137,6 +137,7 @@ function ControlModuleNode({ data }) {
           configId={configId}
           setControlModuleType={setControlModuleType}
           controlModuleType={controlModuleType}
+          setControlModuleTypeList={setControlModuleTypeList}
         ></ControlModuleSelectMenu>
         <p
           style={{
@@ -152,7 +153,11 @@ function ControlModuleNode({ data }) {
           isValidConnection={isValidConnection}
         />
       </div>
-      <ColorPicker initialColor={color} setColor={setColor} setInteracted={setColorInteracted}/>
+      <ColorPicker
+        initialColor={color}
+        setColor={setColor}
+        setInteracted={setColorInteracted}
+      />
     </Card>
   );
 }

@@ -13,14 +13,17 @@ const text = `
 This is a user defined description for this node
 `;
 
-function SequenceNode({ data}) {
+function SequenceNode({ data }) {
   const reactFlowInstance = useReactFlow();
 
   const [messageApi, contextHolder] = message.useMessage();
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.type);
+  const [seqTypeList, setSeqTypeList] = useState([]);
   const [configId, setConfigId] = useState(data.configId);
-  const [colorInteracted, setColorInteracted] = useState(data.colorInteracted ? data.colorInteracted: false );
+  const [colorInteracted, setColorInteracted] = useState(
+    data.colorInteracted ? data.colorInteracted : false
+  );
   const [invalidFlag, setInvalidFlag] = useState(false);
   const [nodeType, setNodeType] = useState("Sequence");
 
@@ -63,7 +66,7 @@ function SequenceNode({ data}) {
   useEffect(() => {
     data.colorInteracted = colorInteracted;
   }, [colorInteracted]);
-  
+
   useEffect(() => {
     data.nodeType = nodeType;
   }, []);
@@ -75,32 +78,27 @@ function SequenceNode({ data}) {
     }
   }, [invalidFlag]);
 
-
   useEffect(() => {
-
-    if (colorInteracted)
-    {
+    if (colorInteracted) {
       data.color = color;
-    }
-    else {
+    } else {
       switch (seqType) {
-      case "Control Module":
-        setColor('red');
-        break;
-      case "Phase":
-        setColor('green');
-        break;
-      case "Operation":
-        setColor('blue');
-        break;
-      case "Procedure":
-        setColor('purple');
-        break;
+        case seqTypeList[0].typeuuid:
+          setColor("red");
+          break;
+        case seqTypeList[1].typeuuid:
+          setColor("green");
+          break;
+        case seqTypeList[2].typeuuid:
+          setColor("blue");
+          break;
+        case seqTypeList[3].typeuuid:
+          setColor("purple");
+          break;
         default:
           data.color = color;
       }
     }
-
   }, [seqType]);
 
   const invalidConnectionMessage = useCallback(() => {
@@ -203,6 +201,7 @@ function SequenceNode({ data}) {
                 configId={configId}
                 setSeqType={setSeqType}
                 seqType={seqType}
+                setSeqTypeList={setSeqTypeList}
                 aria-label="seqTypeSelectMenu"
               ></SeqTypeSelectMenu>
             </div>
@@ -226,7 +225,11 @@ function SequenceNode({ data}) {
             isValidConnection={isValidConnection}
           />
         </div>
-        <ColorPicker initialColor={color} setColor={setColor} setInteracted={setColorInteracted}/>
+        <ColorPicker
+          initialColor={color}
+          setColor={setColor}
+          setInteracted={setColorInteracted}
+        />
       </Card>
     </>
   );

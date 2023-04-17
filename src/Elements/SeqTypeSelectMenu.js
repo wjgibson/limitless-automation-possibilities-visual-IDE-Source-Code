@@ -21,6 +21,7 @@ export default function SeqTypeSelectMenu(props) {
         `getAllSequenceTypes${props.configId}`
       );
       setSeqTypes(response);
+      props.setSeqTypeList(response);
     };
     retrieveSeqTypes();
   };

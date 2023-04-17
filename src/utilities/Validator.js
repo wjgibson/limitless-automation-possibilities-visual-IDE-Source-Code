@@ -16,12 +16,9 @@ function Validator(instance, connection) {
   }
   //if not test: execute code in production form
   else {
-    sourceNodeLevel = instance
-      .getNode(connection.source)
-      .data.type.split("|")[1];
-    targetNodeLevel = instance
-      .getNode(connection.target)
-      .data.type.split("|")[1];
+    console.log(instance.getNode(connection.source).data.type);
+    sourceNodeLevel = instance.getNode(connection.source).data.type;
+    targetNodeLevel = instance.getNode(connection.target).data.type;
   }
 
   if (targetNodeLevel == 1) {
