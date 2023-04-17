@@ -28,7 +28,6 @@ const FlowEditor = (props) => {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showExclamtionOnChange, setShowExclamationOnChange] = useState(false);
 
-
   useEffect(() => {
     onRestore(props.configId);
   }, []);
@@ -54,64 +53,68 @@ const FlowEditor = (props) => {
     }
   }, [showExclamtionOnChange]);
 
-
   const onConnect = useCallback(
-      (params) => {
-        const { source, target } = params;
-        const newEdge = {
-          id: `${source}-${target}`,
-          source: source,
-          target: target,
-          label: "",
-          type: "step",
-          animated: true,
-          labelStyle: {
-            fontWeight: "bold",
-          },
-          labelBgStyle: {
-            fill: "#f8f4f4",
-          },
-          style: {
-            stroke: 'grey',
-          }
-        };
-        setEdges((eds) => addEdge(newEdge, eds));
-      },
-      [setEdges]
+    (params) => {
+      const { source, target } = params;
+      const newEdge = {
+        id: `${source}-${target}`,
+        source: source,
+        target: target,
+        label: "",
+        type: "step",
+        animated: true,
+        labelStyle: {
+          fontWeight: "bold",
+        },
+        labelBgStyle: {
+          fill: "#f8f4f4",
+        },
+        style: {
+          stroke: "grey",
+        },
+      };
+      setEdges((eds) => addEdge(newEdge, eds));
+    },
+    [setEdges]
   );
 
   const onEdgeDoubleClick = useCallback((event, edge) => {
     setEdges((edges) =>
-        edges.map((e) =>
-            e.id === edge.id
-                ? {
-                  ...e,
-                  label: (prompt("Enter the new label for the edge", e.label) || e.label)
-                      .replace(/\b\w/g, (l) => l.toUpperCase())
-                }
-                : e
-        )
+      edges.map((e) =>
+        e.id === edge.id
+          ? {
+              ...e,
+              label: (
+                prompt("Enter the new label for the edge", e.label) || e.label
+              ).replace(/\b\w/g, (l) => l.toUpperCase()),
+            }
+          : e
+      )
     );
   }, []);
 
-    const onEdgeContextMenu = useCallback((event, edge) => {
-        event.preventDefault();
-        const color = prompt("Enter the new color for the edge", edge.style.stroke) || edge.style.stroke;
-        const newColor = color.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
-        setEdges((edges) =>
-            edges.map((e) =>
-                e.id === edge.id
-                    ? {
-                        ...e,
-                        style: {
-                            ...e.style,
-                            stroke: newColor,
-                        },
-                    }
-                    : e
-            )
-        );
-    }, []);
+  const onEdgeContextMenu = useCallback((event, edge) => {
+    event.preventDefault();
+    const color =
+      prompt("Enter the new color for the edge", edge.style.stroke) ||
+      edge.style.stroke;
+    const newColor = color
+      .toLowerCase()
+      .replace(/\b\w/g, (l) => l.toUpperCase());
+    setEdges((edges) =>
+      edges.map((e) =>
+        e.id === edge.id
+          ? {
+              ...e,
+              style: {
+                ...e.style,
+                stroke: newColor,
+              },
+            }
+          : e
+      )
+    );
+  }, []);
 
   const onSave = () => {
     if (props.selectedConfig == props.configId) {
