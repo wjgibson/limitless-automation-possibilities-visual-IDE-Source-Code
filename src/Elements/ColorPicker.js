@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { Input } from "antd";
-
 export default function ColorPicker(props) {
   const [nodeColorPreview, setNodeColorPreview] = useState(
-    props.initialColor || "#FFFFFF"
+    props.initialColor
   );
+  const [interacted, setInteracted] = useState(false);
+
 
   const setNodeColorActual = () => {
     props.setColor(nodeColorPreview);
   };
+
+  const setInteractedWith = () => {
+      props.setInteracted(interacted);
+  }
 
   return (
     <div
@@ -26,7 +31,10 @@ export default function ColorPicker(props) {
         value={nodeColorPreview}
         onChange={(e) => {
           setNodeColorPreview(e.target.value);
+          setInteracted(true);
           setNodeColorActual();
+          setInteractedWith();
+
         }}
       ></Input>
     </div>

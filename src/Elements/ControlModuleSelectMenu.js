@@ -9,13 +9,8 @@ export default function SeqTypeSelectMenu(props) {
     getAllControlModuleTypes();
   }, []);
 
-  const setNodeType = (type) => {
+  const onChange = (type) => {
     props.setControlModuleType(type);
-  };
-
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
-    setNodeType(value);
   };
 
   const getAllControlModuleTypes = () => {
@@ -24,13 +19,22 @@ export default function SeqTypeSelectMenu(props) {
         `getAllControlModuleTypes${props.configId}`
       );
       setControlModuleTypes(response);
+      props.setControlModuleTypeList(response);
     };
     retrieveControlModuleTypes();
   };
   return (
     <>
-      <p style={{ margin: 0, fontSize: "10px", color: "white",
-        mixBlendMode: "difference" }}>Control Module Type</p>
+      <p
+        style={{
+          margin: 0,
+          fontSize: "10px",
+          color: "white",
+          mixBlendMode: "difference",
+        }}
+      >
+        Control Module Type
+      </p>
       <Select
         placeholder="Select a control module type"
         optionFilterProp="children"
@@ -39,9 +43,9 @@ export default function SeqTypeSelectMenu(props) {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         value={props.controlModuleType}
-        style={{ width: "100%", }}
+        style={{ width: "100%" }}
         options={controlModuleTypes.map((cmType) => ({
-          value: cmType.name,
+          value: cmType.typeuuid + "|" + cmType.plcid,
           label: cmType.name,
         }))}
       />

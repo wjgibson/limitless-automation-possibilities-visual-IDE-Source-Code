@@ -19,8 +19,13 @@ function SequenceNode({ data }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [color, setColor] = useState(data.color);
   const [seqType, setSeqType] = useState(data.type);
+  const [seqTypeList, setSeqTypeList] = useState([]);
   const [configId, setConfigId] = useState(data.configId);
+  const [colorInteracted, setColorInteracted] = useState(
+    data.colorInteracted ? data.colorInteracted : false
+  );
   const [invalidFlag, setInvalidFlag] = useState(false);
+  const [nodeType, setNodeType] = useState("Sequence");
 
   const [cardTitle, setCardTitle] = useState(
     data.name ? data.name : "Sequence"
@@ -30,31 +35,21 @@ function SequenceNode({ data }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageDisplayed, setMessageDisplayed] = useState(false);
-
   function openSteps() {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
   function openSteps() {
     setIsModalOpen(true);
-    console.log(isModalOpen);
   }
   useEffect(() => {
     data.type = seqType;
-    console.log(seqType);
   }, [seqType]);
-
-  useEffect(() => {
-    data.color = color;
-  }, [color]);
 
   useEffect(() => {
     data.configId = configId;
@@ -65,11 +60,48 @@ function SequenceNode({ data }) {
   }, [newTitle]);
 
   useEffect(() => {
+    data.color = color;
+  }, [color]);
+
+  useEffect(() => {
+    data.colorInteracted = colorInteracted;
+  }, [colorInteracted]);
+
+  useEffect(() => {
+    data.nodeType = nodeType;
+  }, []);
+
+  useEffect(() => {
     if (invalidFlag) {
       invalidConnectionMessage();
       setInvalidFlag((flag) => !flag);
     }
   }, [invalidFlag]);
+
+  useEffect(() => {
+    if (colorInteracted) {
+      data.color = color;
+    } else {
+      if (seqType != undefined && seqTypeList.length != 0) {
+        switch (seqType.split("|")[0]) {
+          case seqTypeList[0].typeuuid:
+            setColor("red");
+            break;
+          case seqTypeList[1].typeuuid:
+            setColor("green");
+            break;
+          case seqTypeList[2].typeuuid:
+            setColor("blue");
+            break;
+          case seqTypeList[3].typeuuid:
+            setColor("purple");
+            break;
+          default:
+            data.color = color;
+        }
+      }
+    }
+  }, [seqType]);
 
   const invalidConnectionMessage = useCallback(() => {
     if (invalidFlag && !messageDisplayed) {
@@ -85,7 +117,11 @@ function SequenceNode({ data }) {
   }, [invalidFlag, messageDisplayed]);
 
   function isValidConnection(connection) {
-    let connectionValidity = Validator(reactFlowInstance, connection);
+    let connectionValidity = Validator(
+      reactFlowInstance,
+      connection,
+      seqTypeList
+    );
 
     if (!connectionValidity && !invalidFlag) {
       setInvalidFlag(true);
@@ -171,6 +207,7 @@ function SequenceNode({ data }) {
                 configId={configId}
                 setSeqType={setSeqType}
                 seqType={seqType}
+                setSeqTypeList={setSeqTypeList}
                 aria-label="seqTypeSelectMenu"
               ></SeqTypeSelectMenu>
             </div>
@@ -194,7 +231,11 @@ function SequenceNode({ data }) {
             isValidConnection={isValidConnection}
           />
         </div>
-        <ColorPicker initialColor={color} setColor={setColor} />
+        <ColorPicker
+          initialColor={color}
+          setColor={setColor}
+          setInteracted={setColorInteracted}
+        />
       </Card>
     </>
   );
