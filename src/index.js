@@ -4,15 +4,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App/index.css";
 import MainPage from "./App/MainPage.js";
 import SettingsPage from "./Elements/SettingsPage";
-import LoginPage from './App/LoginPage.js';
-
+import LoginPage from "./App/LoginPage.js";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/" element={<MainPage />}></Route>
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
@@ -21,6 +21,6 @@ export default function App() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LoginPage />
-  </React.StrictMode>,
+    <App />
+  </React.StrictMode>
 );

@@ -8,20 +8,6 @@ const SettingsPage = () => {
   const [settings, setSettings] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
 
-  const success = () => {
-    messageApi.open({
-      type: "success",
-      content: "Settings saved successfully",
-    });
-  };
-
-  const failure = () => {
-    messageApi.open({
-      type: "error",
-      content: "Something went wrong",
-    });
-  };
-
   const displayStatus = (type, content) => {
     messageApi.open({
       type: type,
@@ -52,7 +38,15 @@ const SettingsPage = () => {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#2E475F",
+      }}
+    >
       {contextHolder}
       <h1>Settings</h1>
       <Collapse accordion>

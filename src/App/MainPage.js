@@ -113,7 +113,7 @@ const MainPage = () => {
     <div>
       <Link to="/settings">
         <SettingOutlined
-                  style={{
+          style={{
             position: "absolute",
             top: "5px",
             right: "5px",
@@ -124,25 +124,6 @@ const MainPage = () => {
           }}
         />
       </Link>
-
-    <Layout>
-      <Sider width={"12vw"} trigger={null} collapsible collapsed={collapsed}>
-        <div
-          style={{ overflowY: collapsed ? "hidden" : "auto", height: "96vh" }}
-        >
-          <div className="logo" />
-          <CustomMenu
-            selectedConfig={selectedConfig}
-            setSelectedConfig={setSelectedConfig}
-            save={onSave}
-            insert={onInsert}
-            delete={onDelete}
-            addToOpen={openNewConfig}
-          />
-        </div>
-        <Button
-          onClick={() => setCollapsed(!collapsed)}
-
       <Layout>
         <Sider width={"15vw"} trigger={null} collapsible collapsed={collapsed}>
           <div
