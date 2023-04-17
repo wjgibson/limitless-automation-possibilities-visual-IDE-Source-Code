@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App/index.css";
 import MainPage from "./App/MainPage.js";
 import SettingsPage from "./Elements/SettingsPage";
+import LoginPage from './App/LoginPage.js';
+
 
 export default function App() {
   return (
@@ -19,6 +21,6 @@ export default function App() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <LoginPage />
+  </React.StrictMode>,
 );
