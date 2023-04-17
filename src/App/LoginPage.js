@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Card, Form, Input, Button } from "antd";
 
@@ -11,17 +11,17 @@ const LoginForm = () => {
   const [form] = Form.useForm();
   const history = useNavigate();
 
+  useEffect(() => {
+    localStorage.setItem("authToken", false);
+  }, []);
+
   const handleLogin = async () => {
     try {
       const values = await form.validateFields();
-      console.log("Received values of form: ", values);
-
       const response = await APIHelper.doGet(`getLoginData${values.username}`);
-      console.log(response);
 
       if (values.password === response[0].password) {
-        const module = await import("./MainPage.js");
-        const MainPage = module.default;
+        localStorage.setItem("authToken", true);
         history("/main");
       } else {
         alert("Username or password is incorrect");

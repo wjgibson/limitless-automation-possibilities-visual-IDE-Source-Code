@@ -126,7 +126,7 @@ const SettingsPage = () => {
         </Panel>
       </Collapse>
       <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
-        <Link to="/">
+        <Link to="/main">
           <Button type="primary" size="large">
             Done
           </Button>
